@@ -1,6 +1,8 @@
 # AI-First CRM HCP Module
 
-An AI-first CRM module for Healthcare Professionals (HCPs) built as part of a technical assignment.
+## Overview
+
+AI-first CRM module for Healthcare Professionals (HCPs) built using FastAPI, React, PostgreSQL, LangGraph, and Groq.
 
 ## Tech Stack
 
@@ -17,15 +19,17 @@ An AI-first CRM module for Healthcare Professionals (HCPs) built as part of a te
 
 ### AI
 - LangGraph
-- Groq (gemma2-9b-it)
+- LangChain
+- Groq
+- Model: llama-3.3-70b-versatile
 
 ## Project Structure
 
 ```text
 backend/
-frontend/
 database/
 docs/
+frontend/
 ```
 
 ## Frontend Setup
@@ -36,10 +40,6 @@ npm install
 npm run dev
 ```
 
-The development server runs at:
-
-http://localhost:5173
-
 ## Backend Setup
 
 ```bash
@@ -47,7 +47,7 @@ cd backend
 
 python -m venv .venv
 
-# Activate the virtual environment (PowerShell)
+# Windows PowerShell
 .venv\Scripts\Activate.ps1
 
 pip install -r requirements.txt
@@ -65,11 +65,27 @@ Health Check:
 
 ## Database Setup
 
-1. Install PostgreSQL
-2. Create the `ai_first_crm_hcp` database
-3. Configure `backend/.env`
-4. Start the backend application
+1. Install PostgreSQL.
+2. Create a database named `ai_first_crm_hcp`.
+3. Configure `backend/.env`.
+4. Start the backend server.
 
-## Project Status
+## AI Setup
 
-🚧 Under Development
+Create `backend/.env`:
+
+```env
+GROQ_API_KEY=your_api_key
+MODEL_NAME=llama-3.3-70b-versatile
+```
+
+The project uses LangGraph with Groq as the LLM provider.
+
+> **Note:** The original assignment specifies `gemma2-9b-it`. Since that model has been deprecated by Groq, this implementation uses `llama-3.3-70b-versatile`, a currently supported model, while keeping the overall architecture unchanged.
+
+## Current Status
+
+- ✅ Project Setup
+- 🚧 Backend Development
+- 🚧 Frontend Development
+- 🚧 LangGraph Integration
