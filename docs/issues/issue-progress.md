@@ -19,8 +19,8 @@
 
 | Issue | Status |
 |-------|--------|
-| #9 Design Database Schema | 🚧 In Progress |
-| #10 Implement SQLAlchemy Models | ⏳ Pending |
+| #9 Design Database Schema | ✅ Completed |
+| #10 Implement SQLAlchemy Models | 🚧 In Progress |
 | #11 Create Pydantic Schemas | ⏳ Pending |
 | #12 Implement Repository Layer | ⏳ Pending |
 | #13 Implement Service Layer | ⏳ Pending |

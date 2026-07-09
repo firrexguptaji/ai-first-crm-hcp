@@ -114,6 +114,16 @@ The following components have been verified:
 - ✅ LangGraph
 - ✅ Groq Integration
 
+## Database Design
+
+The database schema has been designed and documented.
+
+Documentation:
+
+- `database/schema/schema.md`
+- `database/schema/erd.md`
+- `database/schema/erd.png`
+
 ## Current Status
 
 - ✅ Project Setup
