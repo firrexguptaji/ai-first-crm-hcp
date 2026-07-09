@@ -76,3 +76,16 @@ class InteractionService:
         self.repository.delete(interaction)
 
         return True
+    def get_interaction_history(
+    self,
+    hcp_id,
+    limit: int | None = None,
+    ):
+        """
+        Retrieve the interaction history for a Healthcare Professional.
+        """
+
+        return self.repository.get_history_by_hcp(
+            hcp_id=hcp_id,
+            limit=limit,
+        )

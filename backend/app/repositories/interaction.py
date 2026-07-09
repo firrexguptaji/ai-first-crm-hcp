@@ -96,3 +96,25 @@ class InteractionRepository:
         """
 
         return self.repository.get_latest_by_hcp(hcp_id)
+    
+    def get_history_by_hcp(
+    self,
+    hcp_id: UUID,
+    limit: int | None = None,
+    ) -> list[Interaction]:
+        """
+        Retrieve interaction history for a Healthcare Professional.
+
+        Results are returned in reverse chronological order.
+        """
+
+        query = (
+            self.db.query(Interaction)
+            .filter(Interaction.hcp_id == hcp_id)
+            .order_by(Interaction.interaction_date.desc())
+        )
+
+        if limit is not None:
+            query = query.limit(limit)
+
+        return query.all()

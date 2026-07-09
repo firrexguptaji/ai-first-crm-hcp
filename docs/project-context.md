@@ -248,10 +248,10 @@ Five LangGraph tools will be implemented in later milestones.
 
 | Item | Value |
 |------|-------|
-| Version | v0.2.3 |
+| Version | v0.2.4 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#15, #23–#26 |
-| Current Issue | #27 Implement Retrieve Interaction History Tool |
-| Next Issue | #28 Implement Follow-up Suggestion Tool |
-| Active Branch | feature/27-retrieve-interaction-history |
-| Last Verified | Implement Search HCP Tool |
+| Completed Issues | #1–#15, #23–#27 |
+| Current Issue | #28 Implement Follow-up Suggestion Tool |
+| Next Issue | #29 Integrate LangGraph with FastAPI |
+| Active Branch | feature/28-follow-up-suggestion |
+| Last Verified | Implement Retrieve Interaction History Tool |
