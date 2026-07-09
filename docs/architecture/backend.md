@@ -151,3 +151,17 @@ Responsibilities
 
 The service layer is independent of FastAPI and SQLAlchemy sessions, making it reusable across different interfaces.
 
+### api/
+
+Contains FastAPI routers that expose REST endpoints.
+
+Current Routes
+
+- Healthcare Professional API
+
+Responsibilities
+
+- Receive HTTP requests
+- Validate request payloads
+- Call the Service Layer
+- Return serialized responses
