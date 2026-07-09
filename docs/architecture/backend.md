@@ -5,22 +5,21 @@
 The backend is implemented using FastAPI and follows a layered architecture.
 
 ```text
-API
-
-↓
-
-Services
-
-↓
-
-Repositories
-
-↓
-
+FastAPI Routes
+        │
+        ▼
+Pydantic Schemas
+        │
+        ▼
+Service Layer
+        │
+        ▼
+Repository Layer
+        │
+        ▼
 SQLAlchemy Models
-
-↓
-
+        │
+        ▼
 PostgreSQL
 ```
 
@@ -38,6 +37,7 @@ app/
 ├── llm/
 ├── models/
 ├── prompts/
+├── repositories/
 └── schemas/
 ```
 
@@ -113,4 +113,21 @@ Contains Pydantic models responsible for:
 - Request validation
 - Response serialization
 - API data contracts
+
+### repositories/
+
+Contains the data access layer responsible for CRUD operations using SQLAlchemy ORM.
+
+Current repositories:
+
+- HealthcareProfessionalRepository
+- InteractionRepository
+
+Responsibilities:
+
+- Create entities
+- Retrieve entities
+- Update entities
+- Delete entities
+- Query the database
 
