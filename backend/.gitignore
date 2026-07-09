@@ -1,0 +1,20 @@
+# Virtual Environment
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Environment
+.env
+
+# Testing
+.pytest_cache/
+
+# Type Checking
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
