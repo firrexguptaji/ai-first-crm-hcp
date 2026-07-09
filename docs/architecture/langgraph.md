@@ -133,7 +133,7 @@ Implemented
 - ✅ Log Interaction Tool
 - ✅ Edit Interaction Tool
 - ✅ Search HCP Tool
+- ✅ Retrieve Interaction History Tool
 Planned
 
-- ⏳ Retrieve Interaction History Tool
 - ⏳ Suggest Follow-up Tool

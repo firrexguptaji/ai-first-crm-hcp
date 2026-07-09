@@ -16,31 +16,29 @@ The application is divided into four major layers:
 ## High-Level Architecture
 
 ```text
-                 React + Redux
-                       │
-                       ▼
-                FastAPI REST API
-                       │
-                       ▼
-                 Service Layer
-                       │
-                       ▼
-               Repository Layer
-                       │
-                       ▼
-             SQLAlchemy ORM Models
-                       │
-                       ▼
-              PostgreSQL Database
-
-                       ▲
-                       │
-                 LangGraph Graph
-                       │
-              LangGraph Tools
-                       │
-                       ▼
-                  Groq LLM
+User
+ │
+ ▼
+FastAPI
+ │
+ ▼
+LangGraph
+ │
+ ▼
+Router
+ │
+ ├────────────┬──────────────┬───────────────┐
+ ▼            ▼              ▼               ▼
+Log Tool   Edit Tool   Search Tool   History Tool
+ │            │              │               │
+ └────────────┴──────────────┴───────────────┘
+                    │
+                    ▼
+              Service Layer
+                    ▼
+            Repository Layer
+                    ▼
+               PostgreSQL
 ```
 
 ---

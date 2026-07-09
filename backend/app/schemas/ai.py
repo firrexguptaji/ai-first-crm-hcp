@@ -55,3 +55,12 @@ class HCPSearchExtraction(BaseSchema):
     name: str | None = None
     specialization: str | None = None
     organization: str | None = None
+    
+class InteractionHistoryExtraction(BaseSchema):
+    """
+    Structured interaction history request extracted
+    from natural language.
+    """
+
+    hcp_name: str
+    limit: int | None = None

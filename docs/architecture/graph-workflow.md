@@ -30,22 +30,27 @@ Intent Detection (Router)
    ▼
 Tool Selection
    │
-   ├──────────────┬──────────────┐
-   ▼              ▼              ▼
-Log          Edit          Search HCP
-Interaction  Interaction
-   │              │              │
-   └──────────────┼──────────────┘
-                  ▼
-            Service Layer
-                  ▼
-          Repository Layer
-                  ▼
-             PostgreSQL
-                  ▼
-         Generate Response
-                  ▼
-                 END
+   ├─────────────┬─────────────┬─────────────────────┐
+   ▼             ▼             ▼                     ▼
+Log         Edit          Search HCP      Interaction History
+Interaction Interaction
+   │             │             │                     │
+   └─────────────┴─────────────┴─────────────────────┘
+                         │
+                         ▼
+                   Service Layer
+                         │
+                         ▼
+                 Repository Layer
+                         │
+                         ▼
+                    PostgreSQL
+                         │
+                         ▼
+                 Generate Response
+                         │
+                         ▼
+                        END
 ```
 
 ---

@@ -51,7 +51,7 @@
 | #24 Log Interaction Tool | ✅ Completed |
 | #25 Edit Interaction Tool | ✅ Completed |
 | #26 Search HCP Tool | ✅ Completed |
-| #27 Retrieve Interaction History Tool | 🚧 In Progress |
-| #28 Suggest Follow-up Tool | ⏳ Pending |
+| #27 Retrieve Interaction History Tool | ✅ Completed |
+| #28 Suggest Follow-up Tool | 🚧 In Progress |
 | #29 Integrate LangGraph with FastAPI | ⏳ Pending |
 | #30 End-to-End AI Workflow Validation | ⏳ Pending |

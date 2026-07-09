@@ -40,7 +40,7 @@ The selected tool executes the required business operation and returns a structu
 | Log Interaction | Create a new interaction - IMPLEMENTED |
 | Edit Interaction | Update an existing interaction - IMPLEMENTED |
 | Search HCP | Search Healthcare Professionals - IMPLEMENTED |
-| Retrieve Interaction History | Retrieve previous interactions - PLANNED |
+| Retrieve Interaction History | Retrieve previous interactions - IMPLEMENTED |
 | Suggest Follow-up | Generate follow-up recommendations - PLANNED |
 
 ---

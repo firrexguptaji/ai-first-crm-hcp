@@ -44,3 +44,16 @@ def test_router_selects_search_hcp():
     result = route(state)
 
     assert result["tool_name"] == "search_hcp"
+    
+def test_router_selects_interaction_history():
+    state = {
+        "message": "Show interaction history for Dr. Alice Brown",
+        "tool_name": "",
+        "tool_input": {},
+        "tool_output": {},
+        "response": "",
+    }
+
+    result = route(state)
+
+    assert result["tool_name"] == "interaction_history"
