@@ -58,8 +58,6 @@ Responsible for:
 
 ## Backend
 
-## Backend
-
 Responsible for:
 
 - Exposing REST APIs
