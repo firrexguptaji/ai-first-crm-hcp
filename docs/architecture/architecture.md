@@ -22,20 +22,25 @@ The application is divided into four major layers:
                 FastAPI REST API
                        │
                        ▼
+                 Service Layer
+                       │
+                       ▼
+               Repository Layer
+                       │
+                       ▼
+             SQLAlchemy ORM Models
+                       │
+                       ▼
+              PostgreSQL Database
+
+                       ▲
+                       │
                  LangGraph Graph
                        │
-        ┌──────────────┴──────────────┐
-        ▼                             ▼
-    LangGraph Tools             Groq LLM
-        │
-        ▼
-   Service Layer
-        │
-        ▼
- Repository Layer
-        │
-        ▼
- PostgreSQL Database
+              LangGraph Tools
+                       │
+                       ▼
+                  Groq LLM
 ```
 
 ---
@@ -53,13 +58,17 @@ Responsible for:
 
 ## Backend
 
+## Backend
+
 Responsible for:
 
 - Exposing REST APIs
+- Request validation
 - Business logic
-- Database access
+- Repository coordination
+- ORM model management
+- Database persistence
 - Executing LangGraph workflows
-
 ---
 
 ## AI Layer

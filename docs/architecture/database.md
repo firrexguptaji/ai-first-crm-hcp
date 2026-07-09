@@ -1,30 +1,31 @@
 ## Current Status
 
-The database infrastructure has been configured and the relational schema has been designed.
-
-Current progress:
+### Infrastructure
 
 - ✅ PostgreSQL configured
 - ✅ SQLAlchemy configured
 - ✅ Database connection verified
+
+### Domain
+
 - ✅ Database schema designed
-- ⏳ SQLAlchemy models pending implementation
+- ✅ SQLAlchemy ORM models implemented
 
 ---
 
-## Current Schema
+## Current Entities
 
-The application currently consists of two core entities:
+### HealthcareProfessional
 
-### Healthcare Professional
-
-Stores master information about healthcare professionals.
+Stores master information about Healthcare Professionals.
 
 ### Interaction
 
-Stores every interaction recorded with a healthcare professional.
+Stores AI-managed interaction records linked to a Healthcare Professional.
 
-Relationship:
+---
+
+## Relationship
 
 ```text
 HealthcareProfessional (1)
@@ -33,8 +34,23 @@ HealthcareProfessional (1)
         └──────────────< Interaction (Many)
 ```
 
-Detailed schema documentation is available in:
+---
 
-- `database/schema/schema.md`
-- `database/schema/erd.md`
-- `database/schema/erd.png`
+## ORM Implementation
+
+The database schema has been translated into SQLAlchemy 2.0 ORM models using typed declarative mappings.
+
+Implemented features include:
+
+- UUID primary keys
+- One-to-many relationships
+- Enumerations
+- JSONB fields
+- Automatic timestamps
+- Foreign key constraints
+
+---
+
+## Next Step
+
+Implement Pydantic schemas for request validation and API serialization.

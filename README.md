@@ -1,27 +1,46 @@
 # AI-First CRM HCP Module
 
-## Overview
+> AI-first CRM module for Healthcare Professionals (HCPs) where interaction records are created and updated exclusively through an AI assistant powered by LangGraph.
 
-AI-first CRM module for Healthcare Professionals (HCPs) built using FastAPI, React, PostgreSQL, LangGraph, and Groq.
+---
+
+## Features
+
+- AI-driven interaction logging
+- AI-driven interaction editing
+- Search Healthcare Professionals
+- Retrieve interaction history
+- AI-generated follow-up suggestions
+- Split-screen CRM interface
+- FastAPI REST API
+- PostgreSQL persistence
+- LangGraph workflow orchestration
+
+---
 
 ## Tech Stack
 
 ### Frontend
+
 - React
-- Vite
 - TypeScript
+- Vite
 - Redux Toolkit
 
 ### Backend
+
 - FastAPI
-- SQLAlchemy
+- SQLAlchemy 2.0
 - PostgreSQL
 
 ### AI
+
 - LangGraph
 - LangChain
 - Groq
-- Model: llama-3.3-70b-versatile
+- llama-3.3-70b-versatile
+
+---
 
 ## Project Structure
 
@@ -30,9 +49,14 @@ backend/
 database/
 docs/
 frontend/
+README.md
 ```
 
-## Frontend Setup
+---
+
+## Getting Started
+
+### Frontend
 
 ```bash
 cd frontend
@@ -40,14 +64,12 @@ npm install
 npm run dev
 ```
 
-## Backend Setup
+### Backend
 
 ```bash
 cd backend
 
 python -m venv .venv
-
-# Windows PowerShell
 .venv\Scripts\Activate.ps1
 
 pip install -r requirements.txt
@@ -55,68 +77,94 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-API Documentation:
+---
 
-- http://127.0.0.1:8000/docs
+## Database
 
-Health Check:
+1. Install PostgreSQL
+2. Create database:
 
-- http://127.0.0.1:8000/health
+```text
+ai_first_crm_hcp
+```
 
-## Database Setup
+3. Configure:
 
-1. Install PostgreSQL.
-2. Create a database named `ai_first_crm_hcp`.
-3. Configure `backend/.env`.
-4. Start the backend server.
+```text
+backend/.env
+```
 
-## AI Setup
+---
 
-Create `backend/.env`:
+## AI Configuration
 
 ```env
 GROQ_API_KEY=your_api_key
+
 MODEL_NAME=llama-3.3-70b-versatile
 ```
 
-The project uses LangGraph with Groq as the LLM provider.
+> **Note**
+>
+> The original assignment specifies `gemma2-9b-it`. Since the model has been deprecated by Groq, this project uses `llama-3.3-70b-versatile` while preserving the intended LangGraph architecture.
 
-> **Note:** The original assignment specifies `gemma2-9b-it`. Since that model has been deprecated by Groq, this implementation uses `llama-3.3-70b-versatile`, a currently supported model, while keeping the overall architecture unchanged.
+---
 
 ## Documentation
 
-Project documentation is available under the `docs/` directory.
+| Document | Description |
+|----------|-------------|
+| Project Context | Current project state |
+| Architecture | System architecture |
+| ADR | Architecture decisions |
+| Issue Progress | Development roadmap |
+| Database Schema | ERD and schema documentation |
 
-### Architecture
+---
 
-- System Architecture
-- Backend Architecture
-- Frontend Architecture
-- Database Architecture
-- LangGraph Architecture
+## Current Progress
 
-### Architecture Decision Records
+### Milestone 1
 
-- ADR-001 — Project Structure
+- ✅ Project Setup
 
-### Issue Tracking
+### Milestone 2
 
-- Issue Progress
-- GitHub Project Board
+- 🚧 Backend Development
 
-## Project Verification
+### Milestone 3
 
-The following components have been verified:
+- ⏳ Frontend Development
 
-- ✅ Frontend (React + Vite)
-- ✅ Backend (FastAPI)
-- ✅ PostgreSQL Connection
+### Milestone 4
+
+- ⏳ LangGraph Integration
+
+### Milestone 5
+
+- ⏳ DevOps & Deployment
+
+---
+
+## Verification
+
+Verified components:
+
+- ✅ React + Vite
+- ✅ FastAPI
+- ✅ PostgreSQL
+- ✅ SQLAlchemy
 - ✅ LangGraph
-- ✅ Groq Integration
+- ✅ Groq
 
-## Database Design
+---
 
-The database schema has been designed and documented.
+## Database
+
+Current domain model:
+
+- HealthcareProfessional
+- Interaction
 
 Documentation:
 
@@ -124,9 +172,8 @@ Documentation:
 - `database/schema/erd.md`
 - `database/schema/erd.png`
 
-## Current Status
+---
 
-- ✅ Project Setup
-- 🚧 Backend Development
-- 🚧 Frontend Development
-- 🚧 LangGraph Integration
+## License
+
+Created as part of a technical assessment.
