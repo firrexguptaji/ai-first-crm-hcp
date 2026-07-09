@@ -63,6 +63,13 @@ Health Check:
 
 - http://127.0.0.1:8000/health
 
+## Database Setup
+
+1. Install PostgreSQL
+2. Create the `ai_first_crm_hcp` database
+3. Configure `backend/.env`
+4. Start the backend application
+
 ## Project Status
 
 🚧 Under Development
