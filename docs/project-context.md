@@ -159,12 +159,12 @@ Five LangGraph tools will be implemented in later milestones.
 
 **Current Version:** v0.1.0
 
-**Current Milestone:** Project Setup
+**Current Milestone:** Backend Development
 
-**Completed Issues:** 1–6
+**Completed Issues:** 1–8
 
-**Current Issue:** #7 Project Documentation Foundation
+**Current Issue:** #9 Design Database Schema
 
-**Next Issue:** #8 Verify Development Environment
+**Next Issue:** #10 Implement SQLAlchemy Models
 
-**Active Branch:** feature/7-project-documentation-foundation
+**Active Branch:** feature/9-design-database-schema
