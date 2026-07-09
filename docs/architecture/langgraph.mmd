@@ -1,0 +1,37 @@
+flowchart TD
+
+    U[User]
+
+    G[LangGraph]
+
+    R[Intent Router]
+
+    T1[Log Interaction]
+    T2[Edit Interaction]
+    T3[Search HCP]
+    T4[Retrieve History]
+    T5[Suggest Follow-up]
+
+    S[Service Layer]
+
+    REPO[Repository Layer]
+
+    DB[(PostgreSQL)]
+
+    U --> G
+    G --> R
+
+    R --> T1
+    R --> T2
+    R --> T3
+    R --> T4
+    R --> T5
+
+    T1 --> S
+    T2 --> S
+    T3 --> S
+    T4 --> S
+    T5 --> S
+
+    S --> REPO
+    REPO --> DB

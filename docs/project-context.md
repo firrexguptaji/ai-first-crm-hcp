@@ -250,8 +250,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.1.0 |
 | Milestone | Frontend Development |
-| Completed Issues | #1–#15 |
-| Current Issue | #16 Design Application Layout|
-| Next Issue | #17 Configure Redux Toolkit |
-| Active Branch | feature/16-design-application-layout |
-| Last Verified | Interaction API |
+| Completed Issues | #1–#15, #23 |
+| Current Issue | #24 Implement Log Interaction Tool |
+| Next Issue | #25 Implement Edit Interaction Tool |
+| Active Branch | feature/24-implement-log-interaction-tool |
+| Last Verified | Design LangGraph Architecture |

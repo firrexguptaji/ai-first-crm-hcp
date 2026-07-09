@@ -185,11 +185,11 @@ Upcoming:
 
 ### Milestone 3
 
-- 🚧 Frontend Development
+- ⏳ Frontend Development
 
 ### Milestone 4
 
-- ⏳ LangGraph Integration
+- 🚧 LangGraph Integration
 
 ### Milestone 5
 
