@@ -1,27 +1,32 @@
-from typing import TypedDict
+from __future__ import annotations
 
 from langgraph.graph import END, START, StateGraph
 
-from app.llm.groq import llm
+from app.graph.registry import get_tool
+from app.graph.router import route
+from app.graph.state import CRMState
 
 
-class GraphState(TypedDict):
-    message: str
+def execute_tool(state: CRMState) -> CRMState:
+    """
+    Execute the selected LangGraph tool.
+    """
+
+    tool = get_tool(state["tool_name"])
+
+    return tool(state)
 
 
-def chat_node(state: GraphState):
-    response = llm.invoke(state["message"])
+builder = StateGraph(CRMState)
 
-    return {
-        "message": response.content,
-    }
+builder.add_node("router", route)
 
+builder.add_node("tool", execute_tool)
 
-builder = StateGraph(GraphState)
+builder.add_edge(START, "router")
 
-builder.add_node("chat", chat_node)
+builder.add_edge("router", "tool")
 
-builder.add_edge(START, "chat")
-builder.add_edge("chat", END)
+builder.add_edge("tool", END)
 
 graph = builder.compile()

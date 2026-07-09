@@ -1,3 +1,5 @@
+from app.schemas.ai import InteractionExtraction
+
 from app.schemas.healthcare_professional import (
     HealthcareProfessionalCreate,
     HealthcareProfessionalResponse,
@@ -11,10 +13,11 @@ from app.schemas.interaction import (
 )
 
 __all__ = [
+    "InteractionExtraction",
     "HealthcareProfessionalCreate",
-    "HealthcareProfessionalUpdate",
     "HealthcareProfessionalResponse",
+    "HealthcareProfessionalUpdate",
     "InteractionCreate",
-    "InteractionUpdate",
     "InteractionResponse",
+    "InteractionUpdate",
 ]

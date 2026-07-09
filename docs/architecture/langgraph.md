@@ -125,18 +125,16 @@ The graph does **not**:
 
 ## Current Status
 
-Completed
+Implemented
 
-- ✅ LangGraph configured
-- ✅ Groq configured
-- ✅ Base graph verified
-- ✅ Backend architecture completed
-- ✅ REST APIs completed
+- ✅ Graph State
+- ✅ Tool Registry
+- ✅ Routing Node
+- ✅ Log Interaction Tool
 
-Upcoming
+Planned
 
-- 🚧 Graph State
-- 🚧 Tool Registry
-- 🚧 Routing Node
-- 🚧 AI Tools
-- 🚧 Conversation Workflow
+- ⏳ Edit Interaction Tool
+- ⏳ Search HCP Tool
+- ⏳ Retrieve Interaction History Tool
+- ⏳ Suggest Follow-up Tool

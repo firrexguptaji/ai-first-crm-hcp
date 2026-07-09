@@ -281,6 +281,24 @@ Next Milestone
 
 ---
 
+## LangGraph
+
+### Milestone 3 — LangGraph Integration
+
+Completed
+
+- ✅ LangGraph Architecture
+- ✅ Log Interaction Tool
+
+In Progress
+
+- ⏳ Edit Interaction Tool
+- ⏳ Search HCP Tool
+- ⏳ Retrieve Interaction History Tool
+- ⏳ Suggest Follow-up Tool
+
+---
+
 ## License
 
 Created as part of a technical assessment.
