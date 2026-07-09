@@ -155,11 +155,12 @@ PostgreSQL
 - SQLAlchemy models implemented
 - Pydantic schemas
 - Repository layer
+- Service layer
 
 ### Pending
 
-- Service layer
-- REST API endpoints
+- REST API
+- LangGraph Tools
 
 ## Frontend Status
 
@@ -247,8 +248,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.1.0 |
 | Milestone | Backend Development |
-| Completed Issues | #1–#12 |
-| Current Issue | #13 Service Layer |
-| Next Issue | #14 HCP API Endpoints |
-| Active Branch | feature/13-service-layer |
-| Last Verified | Repository Layer |
+| Completed Issues | #1–#13 |
+| Current Issue | #14 HCP API Endpoints |
+| Next Issue | #15 Interaction API Endpoints |
+| Active Branch | feature/14-hcp-api-endpoints |
+| Last Verified | Service Layer |
