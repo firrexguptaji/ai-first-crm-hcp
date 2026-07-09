@@ -250,8 +250,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.1.0 |
 | Milestone | Frontend Development |
-| Completed Issues | #1–#15, #23 |
-| Current Issue | #24 Implement Log Interaction Tool |
-| Next Issue | #25 Implement Edit Interaction Tool |
+| Completed Issues | #1–#15, #23-$24 |
+| Current Issue | #25  Implement Edit Interaction Tool |
+| Next Issue | #26 Implement Search HCP Tool |
 | Active Branch | feature/24-implement-log-interaction-tool |
-| Last Verified | Design LangGraph Architecture |
+| Last Verified | Implement Log Interaction |

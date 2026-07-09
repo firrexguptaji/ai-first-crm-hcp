@@ -37,11 +37,11 @@ The selected tool executes the required business operation and returns a structu
 
 | Tool | Responsibility |
 |------|----------------|
-| Log Interaction | Create a new interaction |
-| Edit Interaction | Update an existing interaction |
-| Search HCP | Search Healthcare Professionals |
-| Retrieve Interaction History | Retrieve previous interactions |
-| Suggest Follow-up | Generate follow-up recommendations |
+| Log Interaction | Create a new interaction - IMPLEMENTED |
+| Edit Interaction | Update an existing interaction - PLANNED |
+| Search HCP | Search Healthcare Professionals - PLANNED |
+| Retrieve Interaction History | Retrieve previous interactions - PLANNED |
+| Suggest Follow-up | Generate follow-up recommendations - PLANNED |
 
 ---
 

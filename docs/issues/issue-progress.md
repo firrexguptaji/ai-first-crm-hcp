@@ -48,8 +48,8 @@
 | Issue | Status |
 |-------|--------|
 | #23 Design LangGraph Architecture | ✅ Completed |
-| #24 Log Interaction Tool | 🚧 In Progress |
-| #25 Edit Interaction Tool | ⏳ Pending |
+| #24 Log Interaction Tool | ✅ Completed |
+| #25 Edit Interaction Tool | 🚧 In Progress |
 | #26 Search HCP Tool | ⏳ Pending |
 | #27 Retrieve Interaction History Tool | ⏳ Pending |
 | #28 Suggest Follow-up Tool | ⏳ Pending |
