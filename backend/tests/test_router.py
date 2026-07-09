@@ -57,3 +57,18 @@ def test_router_selects_interaction_history():
     result = route(state)
 
     assert result["tool_name"] == "interaction_history"
+    
+def test_router_selects_suggest_followup():
+    state = {
+        "message": (
+            "What should I do next with Dr. Alice Brown?"
+        ),
+        "tool_name": "",
+        "tool_input": {},
+        "tool_output": {},
+        "response": "",
+    }
+
+    result = route(state)
+
+    assert result["tool_name"] == "suggest_followup"

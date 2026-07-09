@@ -134,6 +134,9 @@ Implemented
 - ✅ Edit Interaction Tool
 - ✅ Search HCP Tool
 - ✅ Retrieve Interaction History Tool
-Planned
+- ✅ Suggest Follow-up Tool
 
-- ⏳ Suggest Follow-up Tool
+
+## Status
+
+All planned LangGraph tools have been implemented.
