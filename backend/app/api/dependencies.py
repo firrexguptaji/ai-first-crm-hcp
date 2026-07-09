@@ -11,6 +11,8 @@ from app.services.healthcare_professional import (
     HealthcareProfessionalService,
 )
 
+from app.repositories.interaction import InteractionRepository
+from app.services.interaction import InteractionService
 
 def get_db() -> Generator[Session, None, None]:
     """Provide a database session."""
@@ -31,3 +33,12 @@ def get_hcp_service(
     repository = HealthcareProfessionalRepository(db)
 
     return HealthcareProfessionalService(repository)
+
+def get_interaction_service(
+    db: Session = Depends(get_db),
+) -> InteractionService:
+    """Provide the Interaction service."""
+
+    repository = InteractionRepository(db)
+
+    return InteractionService(repository)

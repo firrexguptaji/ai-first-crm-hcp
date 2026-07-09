@@ -167,11 +167,9 @@ Current implementation:
 - ✅ Pydantic Schemas
 - ✅ Repository Layer
 - ✅ Service Layer
+- ✅ Healthcare Professional REST API
+- ✅ Interaction REST API
 
-Upcoming:
-
-- ⏳ Service Layer
-- ⏳ REST API Endpoints
 
 ## Current Progress
 
@@ -181,11 +179,11 @@ Upcoming:
 
 ### Milestone 2
 
-- 🚧 Backend Development
+- ✅ Backend Development
 
 ### Milestone 3
 
-- ⏳ Frontend Development
+- 🚧 Frontend Development
 
 ### Milestone 4
 
@@ -207,6 +205,9 @@ Verified components:
 - ✅ SQLAlchemy ORM Models
 - ✅ Pydantic Schemas
 - ✅ Repository Layer
+- ✅ Service Layer
+- ✅ Healthcare Professional API
+- ✅ Interaction API
 - ✅ LangGraph
 - ✅ Groq
 
@@ -255,6 +256,26 @@ Current Focus
 Next Milestone
 
 - FastAPI REST API
+
+---
+
+## REST API
+
+### Healthcare Professionals
+
+- POST `/hcps`
+- GET `/hcps`
+- GET `/hcps/{hcp_id}`
+- PUT `/hcps/{hcp_id}`
+- DELETE `/hcps/{hcp_id}`
+
+### Interactions
+
+- POST `/interactions`
+- GET `/interactions`
+- GET `/interactions/{interaction_id}`
+- PUT `/interactions/{interaction_id}`
+- DELETE `/interactions/{interaction_id}`
 
 ---
 

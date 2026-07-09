@@ -5,21 +5,24 @@
 The backend is implemented using FastAPI and follows a layered architecture.
 
 ```text
-FastAPI Routes
-        │
-        ▼
-Pydantic Schemas
-        │
-        ▼
+HTTP Request
+      │
+      ▼
+FastAPI Router
+      │
+      ▼
+Pydantic Schema Validation
+      │
+      ▼
 Service Layer
-        │
-        ▼
+      │
+      ▼
 Repository Layer
-        │
-        ▼
-SQLAlchemy Models
-        │
-        ▼
+      │
+      ▼
+SQLAlchemy ORM
+      │
+      ▼
 PostgreSQL
 ```
 
@@ -153,15 +156,17 @@ The service layer is independent of FastAPI and SQLAlchemy sessions, making it r
 
 ### api/
 
-Contains FastAPI routers that expose REST endpoints.
-
-Current Routes
-
-- Healthcare Professional API
+Contains the REST API layer implemented using FastAPI.
 
 Responsibilities
 
-- Receive HTTP requests
+- Handle HTTP requests
 - Validate request payloads
-- Call the Service Layer
-- Return serialized responses
+- Invoke the Service Layer
+- Serialize responses
+- Return appropriate HTTP status codes
+
+Current Routers
+
+- Healthcare Professional API
+- Interaction API

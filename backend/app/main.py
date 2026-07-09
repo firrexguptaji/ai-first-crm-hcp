@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.api.healthcare_professional import router as hcp_router
+from app.api.interaction import router as interaction_router
 from app.db.init_db import init_db
 
 app = FastAPI(
@@ -20,3 +21,4 @@ def health_check():
 
 
 app.include_router(hcp_router)
+app.include_router(interaction_router)

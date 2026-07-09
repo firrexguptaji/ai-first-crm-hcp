@@ -156,11 +156,13 @@ PostgreSQL
 - Pydantic schemas
 - Repository layer
 - Service layer
+- Healthcare Professional API
+- Interaction API
 
 ### Pending
 
-- REST API
 - LangGraph Tools
+- AI Workflow
 
 ## Frontend Status
 
@@ -247,9 +249,9 @@ Five LangGraph tools will be implemented in later milestones.
 | Item | Value |
 |------|-------|
 | Version | v0.1.0 |
-| Milestone | Backend Development |
-| Completed Issues | #1–#14 |
-| Current Issue | #15  Interaction API Endpoints |
-| Next Issue | #16 Develop Interaction API Endpoints |
-| Active Branch | feature/15-interaction-api-endpoints |
-| Last Verified | Healthcare Professional API |
+| Milestone | Frontend Development |
+| Completed Issues | #1–#15 |
+| Current Issue | #16 Design Application Layout|
+| Next Issue | #17 Configure Redux Toolkit |
+| Active Branch | feature/16-design-application-layout |
+| Last Verified | Interaction API |

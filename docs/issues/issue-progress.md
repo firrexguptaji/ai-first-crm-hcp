@@ -15,7 +15,7 @@
 
 ---
 
-## Milestone 2 — Backend Development
+## Milestone 2 — Backend Development — ✅ Completed
 
 | Issue | Status |
 |-------|--------|
@@ -25,7 +25,7 @@
 | #12 Implement Repository Layer | ✅ Completed |
 | #13 Implement Service Layer | ✅ Completed |
 | #14 Develop HCP API Endpoints | ✅ Completed |
-| #15 Develop Interaction API Endpoints | 🚧 In Progress |
+| #15 Develop Interaction API Endpoints | ✅ Completed |
 
 ---
 
@@ -33,7 +33,7 @@
 
 | Issue | Status |
 |-------|--------|
-| #16 Design Application Layout | ⏳ Pending |
+| #16 Design Application Layout | 🚧 In Progress |
 | #17 Configure Redux Toolkit | ⏳ Pending |
 | #18 Build Interaction Form | ⏳ Pending |
 | #19 Build AI Chat Interface | ⏳ Pending |
