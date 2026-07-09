@@ -86,6 +86,7 @@ Current implementation
 - Tool Registry
 - Log Interaction Tool
 - Edit Interaction Tool
+- Search Healthcare Professional Tool
 
 ---
 

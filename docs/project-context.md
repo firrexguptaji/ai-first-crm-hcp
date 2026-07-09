@@ -248,10 +248,10 @@ Five LangGraph tools will be implemented in later milestones.
 
 | Item | Value |
 |------|-------|
-| Version | v0.2.2 |
+| Version | v0.2.3 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#15, #23–#25 |
-| Current Issue | #26 Implement Search HCP Tool |
-| Next Issue | #27 Implement Retrieve Interaction History Tool |
-| Active Branch | feature/26-search-hcp-tool |
-| Last Verified | Implement Edit Interaction Tool |
+| Completed Issues | #1–#15, #23–#26 |
+| Current Issue | #27 Implement Retrieve Interaction History Tool |
+| Next Issue | #28 Implement Follow-up Suggestion Tool |
+| Active Branch | feature/27-retrieve-interaction-history |
+| Last Verified | Implement Search HCP Tool |

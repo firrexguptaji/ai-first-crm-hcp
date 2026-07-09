@@ -75,3 +75,29 @@ class HealthcareProfessionalService:
         self.repository.delete(hcp)
 
         return True
+    
+    def search_hcp_by_name(
+    self,
+    name: str,
+    ):
+        """
+        Search a Healthcare Professional by name.
+        """
+
+        return self.repository.search_by_name(name)
+    
+    def search_hcps(
+    self,
+    name: str | None = None,
+    specialization: str | None = None,
+    organization: str | None = None,
+    ):
+        """
+        Search Healthcare Professionals.
+        """
+
+        return self.repository.search(
+            name=name,
+            specialization=specialization,
+            organization=organization,
+        )

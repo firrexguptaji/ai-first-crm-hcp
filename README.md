@@ -287,16 +287,18 @@ Next Milestone
 
 ## LangGraph
 
+## LangGraph
+
 Implemented tools:
 
 - ✅ Log Interaction Tool
 - ✅ Edit Interaction Tool
+- ✅ Search Healthcare Professional Tool
 
 Planned tools:
 
-- ⏳ Search Healthcare Professional
-- ⏳ Retrieve Interaction History
-- ⏳ Suggest Follow-up
+- ⏳ Retrieve Interaction History Tool
+- ⏳ Suggest Follow-up Tool
 
 ---
 
