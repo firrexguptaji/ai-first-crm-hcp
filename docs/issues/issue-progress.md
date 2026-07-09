@@ -24,8 +24,8 @@
 | #11 Create Pydantic Schemas | ✅ Completed |
 | #12 Implement Repository Layer | ✅ Completed |
 | #13 Implement Service Layer | ✅ Completed |
-| #14 Develop HCP API Endpoints | 🚧 In Progress |
-| #15 Develop Interaction API Endpoints | ⏳ Pending |
+| #14 Develop HCP API Endpoints | ✅ Completed |
+| #15 Develop Interaction API Endpoints | 🚧 In Progress |
 
 ---
 
