@@ -167,9 +167,11 @@ Current implementation:
 - ✅ Pydantic Schemas
 - ✅ Repository Layer
 - ✅ Service Layer
-- ✅ Healthcare Professional REST API
-- ✅ Interaction REST API
 
+Upcoming:
+
+- ⏳ Service Layer
+- ⏳ REST API Endpoints
 
 ## Current Progress
 
