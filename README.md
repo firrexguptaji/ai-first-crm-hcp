@@ -83,6 +83,27 @@ The project uses LangGraph with Groq as the LLM provider.
 
 > **Note:** The original assignment specifies `gemma2-9b-it`. Since that model has been deprecated by Groq, this implementation uses `llama-3.3-70b-versatile`, a currently supported model, while keeping the overall architecture unchanged.
 
+## Documentation
+
+Project documentation is available under the `docs/` directory.
+
+### Architecture
+
+- System Architecture
+- Backend Architecture
+- Frontend Architecture
+- Database Architecture
+- LangGraph Architecture
+
+### Architecture Decision Records
+
+- ADR-001 — Project Structure
+
+### Issue Tracking
+
+- Issue Progress
+- GitHub Project Board
+
 ## Current Status
 
 - ✅ Project Setup
