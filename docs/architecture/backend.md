@@ -30,15 +30,15 @@ PostgreSQL
 
 ```text
 app/
-
-api/
-config/
-core/
-db/
-graph/
-llm/
-models/
-prompts/
+├── api/
+├── config/
+├── core/
+├── db/
+├── graph/
+├── llm/
+├── models/
+├── prompts/
+└── schemas/
 ```
 
 ---
@@ -105,4 +105,12 @@ Responsibilities
 - Apply database constraints
 - Map Python objects to PostgreSQL tables
 - Define enumerations used by the ORM
+
+### schemas/
+
+Contains Pydantic models responsible for:
+
+- Request validation
+- Response serialization
+- API data contracts
 

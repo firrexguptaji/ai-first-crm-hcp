@@ -247,8 +247,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.1.0 |
 | Milestone | Backend Development |
-| Completed Issues | #1–#10 |
-| Current Issue | #11 Create Pydantic Schemas |
-| Next Issue | #12 Implement Repository Layer |
-| Active Branch | feature/11-create-pydantic-schemas |
-| Last Verified | SQLAlchemy Models |
+| Completed Issues | #1–#11 |
+| Current Issue | #12 Repository Layer  |
+| Next Issue | #13 Service Layer |
+| Active Branch | feature/12-repository-layer |
+| Last Verified | Pydantic Schemas |

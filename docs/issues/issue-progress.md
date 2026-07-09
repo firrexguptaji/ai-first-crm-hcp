@@ -21,8 +21,8 @@
 |-------|--------|
 | #9 Design Database Schema | ✅ Completed |
 | #10 Implement SQLAlchemy Models | ✅ Completed |
-| #11 Create Pydantic Schemas | 🚧 In Progress |
-| #12 Implement Repository Layer | ⏳ Pending |
+| #11 Create Pydantic Schemas | ✅ Completed |
+| #12 Implement Repository Layer | 🚧 In Progress |
 | #13 Implement Service Layer | ⏳ Pending |
 | #14 Develop HCP API Endpoints | ⏳ Pending |
 | #15 Develop Interaction API Endpoints | ⏳ Pending |

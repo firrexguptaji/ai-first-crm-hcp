@@ -122,6 +122,21 @@ MODEL_NAME=llama-3.3-70b-versatile
 
 ---
 
+## API Schemas
+
+Pydantic schemas have been implemented for:
+
+- HealthcareProfessional
+- Interaction
+
+Each entity provides:
+
+- Create schema
+- Update schema
+- Response schema
+
+---
+
 ## Current Progress
 
 ### Milestone 1
