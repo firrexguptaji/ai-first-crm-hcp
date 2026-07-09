@@ -30,6 +30,7 @@
 ### Backend
 
 - FastAPI
+- Pydantic v2
 - SQLAlchemy 2.0
 - PostgreSQL
 
@@ -137,6 +138,40 @@ Each entity provides:
 
 ---
 
+## Backend Architecture
+
+The backend follows a layered architecture to maintain separation of concerns.
+
+```text
+FastAPI Routes
+        │
+        ▼
+Pydantic Schemas
+        │
+        ▼
+Service Layer
+        │
+        ▼
+Repository Layer
+        │
+        ▼
+SQLAlchemy ORM Models
+        │
+        ▼
+PostgreSQL
+```
+
+Current implementation:
+
+- ✅ SQLAlchemy ORM Models
+- ✅ Pydantic Schemas
+- ✅ Repository Layer
+
+Upcoming:
+
+- ⏳ Service Layer
+- ⏳ REST API Endpoints
+
 ## Current Progress
 
 ### Milestone 1
@@ -168,7 +203,9 @@ Verified components:
 - ✅ React + Vite
 - ✅ FastAPI
 - ✅ PostgreSQL
-- ✅ SQLAlchemy
+- ✅ SQLAlchemy ORM Models
+- ✅ Pydantic Schemas
+- ✅ Repository Layer
 - ✅ LangGraph
 - ✅ Groq
 
@@ -181,11 +218,42 @@ Current domain model:
 - HealthcareProfessional
 - Interaction
 
+Implemented:
+
+- SQLAlchemy 2.0 ORM models
+- One-to-many relationships
+- UUID primary keys
+- PostgreSQL JSONB support
+- Enumerations
+- Repository layer for data access
+
 Documentation:
 
 - `database/schema/schema.md`
 - `database/schema/erd.md`
 - `database/schema/erd.png`
+
+---
+
+## Development Status
+
+Current Version
+
+- v0.1.0
+
+Completed Backend Layers
+
+- SQLAlchemy ORM Models
+- Pydantic Schemas
+- Repository Layer
+
+Current Focus
+
+- Service Layer
+
+Next Milestone
+
+- FastAPI REST API
 
 ---
 

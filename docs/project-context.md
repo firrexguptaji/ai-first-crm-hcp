@@ -153,11 +153,11 @@ PostgreSQL
 - SQLAlchemy configured
 - Database schema designed
 - SQLAlchemy models implemented
+- Pydantic schemas
+- Repository layer
 
 ### Pending
 
-- Pydantic schemas
-- Repository layer
 - Service layer
 - REST API endpoints
 
@@ -247,8 +247,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.1.0 |
 | Milestone | Backend Development |
-| Completed Issues | #1–#11 |
-| Current Issue | #12 Repository Layer  |
-| Next Issue | #13 Service Layer |
-| Active Branch | feature/12-repository-layer |
-| Last Verified | Pydantic Schemas |
+| Completed Issues | #1–#12 |
+| Current Issue | #13 Service Layer |
+| Next Issue | #14 HCP API Endpoints |
+| Active Branch | feature/13-service-layer |
+| Last Verified | Repository Layer |
