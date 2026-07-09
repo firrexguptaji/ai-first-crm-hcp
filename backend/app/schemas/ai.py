@@ -24,3 +24,23 @@ class InteractionExtraction(BaseSchema):
     products_discussed: list[str] = []
     follow_up_required: bool = False
     follow_up_date: date | None = None
+    
+    
+class InteractionUpdateExtraction(BaseSchema):
+    """
+    Structured interaction update extracted by the LLM.
+
+    Only the fields that should be updated are populated.
+    """
+
+    hcp_name: str
+    interaction_id: str | None = None
+
+    interaction_date: datetime | None = None
+    channel: InteractionChannel | None = None
+    raw_notes: str | None = None
+    summary: str | None = None
+    sentiment: Sentiment | None = None
+    products_discussed: list[str] | None = None
+    follow_up_required: bool | None = None
+    follow_up_date: date | None = None

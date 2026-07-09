@@ -285,17 +285,18 @@ Next Milestone
 
 ### Milestone 3 — LangGraph Integration
 
-Completed
+## LangGraph
 
-- ✅ LangGraph Architecture
+Implemented tools:
+
 - ✅ Log Interaction Tool
+- ✅ Edit Interaction Tool
 
-In Progress
+Planned tools:
 
-- ⏳ Edit Interaction Tool
-- ⏳ Search HCP Tool
-- ⏳ Retrieve Interaction History Tool
-- ⏳ Suggest Follow-up Tool
+- ⏳ Search Healthcare Professional
+- ⏳ Retrieve Interaction History
+- ⏳ Suggest Follow-up
 
 ---
 
