@@ -79,14 +79,13 @@ Database configuration.
 
 ### graph/
 
-Contains the LangGraph workflow implementation.
+Current implementation
 
-Current components:
-
-- Graph state
+- Graph State
 - Router
-- Tool registry
-- Log Interaction tool
+- Tool Registry
+- Log Interaction Tool
+- Edit Interaction Tool
 
 ---
 

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from app.graph.tools.log_interaction import log_interaction
+from app.graph.tools.edit_interaction import edit_interaction
 
 TOOLS = {
     "log_interaction": log_interaction,
+    "edit_interaction": edit_interaction,
 }
 
 

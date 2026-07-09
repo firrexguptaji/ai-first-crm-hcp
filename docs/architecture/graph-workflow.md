@@ -26,12 +26,17 @@ Receive User Message
    │
    ▼
 Intent Detection
-   │
-   ▼
+        │
+        ▼
 Tool Selection
-   │
-   ▼
-Execute Tool
+        │
+   ┌────┴─────┐
+   ▼          ▼
+Log       Edit
+Interaction Interaction
+        │
+        ▼
+Service Layer
    │
    ▼
 Generate Response

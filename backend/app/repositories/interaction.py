@@ -69,3 +69,30 @@ class InteractionRepository:
 
         self.db.delete(interaction)
         self.db.commit()
+        
+        
+    def get_latest_by_hcp(
+    self,
+    hcp_id: UUID,
+    ) -> Interaction | None:
+        """
+        Retrieve the most recent interaction for
+        a Healthcare Professional.
+        """
+
+        return (
+            self.db.query(Interaction)
+            .filter(Interaction.hcp_id == hcp_id)
+            .order_by(Interaction.interaction_date.desc())
+            .first()
+        )
+        
+    def get_latest_interaction(
+        self,
+        hcp_id,
+    ):
+        """
+        Retrieve the latest interaction for an HCP.
+        """
+
+        return self.repository.get_latest_by_hcp(hcp_id)

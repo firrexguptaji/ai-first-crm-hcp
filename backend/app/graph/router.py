@@ -1,16 +1,25 @@
-from __future__ import annotations
-
 from app.graph.state import CRMState
 
 
 def route(state: CRMState) -> CRMState:
     """
-    Determine which LangGraph tool should handle
-    the current request.
-
-    Currently only the Log Interaction tool exists.
+    Route the request to the appropriate tool.
     """
 
-    state["tool_name"] = "log_interaction"
+    message = state["message"].lower()
+
+    if any(
+        keyword in message
+        for keyword in (
+            "update",
+            "edit",
+            "change",
+            "modify",
+            "correct",
+        )
+    ):
+        state["tool_name"] = "edit_interaction"
+    else:
+        state["tool_name"] = "log_interaction"
 
     return state
