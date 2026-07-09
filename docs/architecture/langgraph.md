@@ -2,9 +2,43 @@
 
 ## Overview
 
-The project uses a single LangGraph workflow.
+The AI-First CRM uses a single LangGraph workflow to process every user request.
 
-A multi-agent architecture is intentionally avoided to keep the solution simple and aligned with the assignment.
+The graph is responsible for:
+
+- Receiving natural language requests
+- Determining user intent
+- Selecting the appropriate AI tool
+- Executing business logic through the Service Layer
+- Returning structured responses to the user
+
+A multi-agent architecture is intentionally avoided to keep the solution simple, maintainable, and aligned with the assignment requirements.
+
+---
+
+## Architecture
+
+```text
+                User
+                  │
+                  ▼
+          LangGraph Graph
+                  │
+                  ▼
+           Intent Router
+                  │
+      ┌───────────┼────────────┐
+      ▼           ▼            ▼
+ HCP Tools   Interaction Tools  AI Utilities
+      │           │            │
+      └───────────┼────────────┘
+                  ▼
+           Service Layer
+                  ▼
+        Repository Layer
+                  ▼
+            PostgreSQL
+```
 
 ---
 
@@ -12,57 +46,97 @@ A multi-agent architecture is intentionally avoided to keep the solution simple 
 
 ```text
 User Prompt
-
-↓
-
-LangGraph
-
-↓
-
-Router
-
-↓
-
+      │
+      ▼
+Graph Entry
+      │
+      ▼
+Intent Detection
+      │
+      ▼
 Tool Selection
-
-↓
-
+      │
+      ▼
 Tool Execution
-
-↓
-
+      │
+      ▼
+Service Layer
+      │
+      ▼
+Repository Layer
+      │
+      ▼
+Database
+      │
+      ▼
 LLM Response
-
-↓
-
-Database Update
-
-↓
-
-API Response
+      │
+      ▼
+User
 ```
+
+---
+
+## Graph Responsibilities
+
+The LangGraph workflow is responsible for:
+
+- Parsing user requests
+- Determining user intent
+- Selecting the correct tool
+- Executing business operations
+- Returning structured AI responses
+
+The graph does **not**:
+
+- Access the database directly
+- Contain business logic
+- Execute SQL queries
+- Manage HTTP requests
 
 ---
 
 ## Planned Tools
 
-Mandatory
+### Mandatory
 
 1. Log Interaction
 2. Edit Interaction
 
-Additional
+### Additional
 
-3. Search HCP
+3. Search Healthcare Professional
 4. Retrieve Interaction History
 5. Suggest Follow-up
 
 ---
 
+## Design Principles
+
+- Single graph architecture
+- Intent-based routing
+- Tool-driven execution
+- Reusable Service Layer
+- Repository pattern for database access
+- Separation of concerns
+- Stateless graph execution
+
+---
+
 ## Current Status
 
-- LangGraph configured
-- Groq configured
-- Base graph verified
+Completed
 
-Tool implementation begins in Milestone 4.
+- ✅ LangGraph configured
+- ✅ Groq configured
+- ✅ Base graph verified
+- ✅ Backend architecture completed
+- ✅ REST APIs completed
+
+Upcoming
+
+- 🚧 Graph State
+- 🚧 Tool Registry
+- 🚧 Routing Node
+- 🚧 AI Tools
+- 🚧 Conversation Workflow

@@ -33,7 +33,7 @@
 
 | Issue | Status |
 |-------|--------|
-| #16 Design Application Layout | 🚧 In Progress |
+| #16 Design Application Layout | ⏳ Pending |
 | #17 Configure Redux Toolkit | ⏳ Pending |
 | #18 Build Interaction Form | ⏳ Pending |
 | #19 Build AI Chat Interface | ⏳ Pending |
@@ -47,7 +47,7 @@
 
 | Issue | Status |
 |-------|--------|
-| #23 Design LangGraph Architecture | ⏳ Pending |
+| #23 Design LangGraph Architecture | 🚧 In Progress |
 | #24 Log Interaction Tool | ⏳ Pending |
 | #25 Edit Interaction Tool | ⏳ Pending |
 | #26 Search HCP Tool | ⏳ Pending |
