@@ -6,15 +6,22 @@ The backend is implemented using FastAPI and follows a layered architecture.
 
 ```text
 API
-│
-▼
+
+↓
+
 Services
-│
-▼
+
+↓
+
 Repositories
-│
-▼
-Database
+
+↓
+
+SQLAlchemy Models
+
+↓
+
+PostgreSQL
 ```
 
 ---
@@ -30,6 +37,7 @@ core/
 db/
 graph/
 llm/
+models/
 prompts/
 ```
 
@@ -80,3 +88,21 @@ Groq client.
 ### prompts/
 
 System prompts and prompt templates.
+
+### models/
+
+Contains the SQLAlchemy ORM models that represent the application's core business entities.
+
+Current Models
+
+- HealthcareProfessional
+- Interaction
+
+Responsibilities
+
+- Define entity attributes
+- Configure relationships
+- Apply database constraints
+- Map Python objects to PostgreSQL tables
+- Define enumerations used by the ORM
+

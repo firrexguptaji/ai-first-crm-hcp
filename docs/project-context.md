@@ -144,6 +144,92 @@ PostgreSQL
 
 ---
 
+## Backend Status
+
+### Completed
+
+- FastAPI initialized
+- PostgreSQL configured
+- SQLAlchemy configured
+- Database schema designed
+- SQLAlchemy models implemented
+
+### Pending
+
+- Pydantic schemas
+- Repository layer
+- Service layer
+- REST API endpoints
+
+## Frontend Status
+
+### Completed
+
+- React initialized
+- Vite configured
+- TypeScript configured
+
+### Pending
+
+- Layout
+- Redux Toolkit
+- Read-only interaction form
+- AI chat
+- API integration
+
+## AI Status
+
+### Completed
+
+- LangGraph configured
+- Groq configured
+- Base graph implemented
+- Graph invocation verified
+
+### Pending
+
+- Graph routing
+- Log Interaction Tool
+- Edit Interaction Tool
+- Search HCP Tool
+- Interaction History Tool
+- Follow-up Suggestion Tool
+## Database Status
+
+Current Entities
+
+- HealthcareProfessional
+- Interaction
+
+Relationship
+
+HealthcareProfessional (1)
+
+↓
+
+Interaction (Many)
+
+Current State
+
+- Schema designed
+- ORM models implemented
+
+Pending
+
+- Alembic migrations
+- Repository layer
+
+
+
+## Assignment Constraints
+
+- Read-only interaction form
+- All updates performed through AI chat
+- Minimum two mandatory LangGraph tools
+- Total of five LangGraph tools planned
+- Keep architecture simple
+- Avoid multi-agent workflows unless required
+
 ## Notes
 
 The interaction form is intentionally read-only.
@@ -157,14 +243,12 @@ Five LangGraph tools will be implemented in later milestones.
 
 ## Current Snapshot
 
-**Current Version:** v0.1.0
-
-**Current Milestone:** Backend Development
-
-**Completed Issues:** 1–9
-
-**Current Issue:** #10 Implement SQLAlchemy Models
-
-**Next Issue:** #11 Create Pydantic Schemas
-
-**Active Branch:** feature/10-implement-sqlalchemy-models
+| Item | Value |
+|------|-------|
+| Version | v0.1.0 |
+| Milestone | Backend Development |
+| Completed Issues | #1–#10 |
+| Current Issue | #11 Create Pydantic Schemas |
+| Next Issue | #12 Implement Repository Layer |
+| Active Branch | feature/11-create-pydantic-schemas |
+| Last Verified | SQLAlchemy Models |
