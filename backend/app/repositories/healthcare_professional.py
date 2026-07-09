@@ -1,5 +1,5 @@
-from unicodedata import name
 from uuid import UUID
+
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
@@ -70,19 +70,16 @@ class HealthcareProfessionalRepository:
 
         self.db.delete(hcp)
         self.db.commit()
-    
+
     def search_by_name(
         self,
         name: str,
-    ):
+    ) -> HealthcareProfessional | None:
         """
         Find a Healthcare Professional by name.
-
-        Performs a case-insensitive search against the first
-        and last name.
         """
 
-        search = f"%{name.lower()}%"
+        search = f"%{name}%"
 
         return (
             self.db.query(HealthcareProfessional)
@@ -94,13 +91,41 @@ class HealthcareProfessionalRepository:
             )
             .first()
         )
-        
-    def search_hcp_by_name(
+
+    def search(
         self,
-        name: str,
-    ):
+        name: str | None = None,
+        specialization: str | None = None,
+        organization: str | None = None,
+    ) -> list[HealthcareProfessional]:
         """
-        Search a Healthcare Professional by name.
+        Search Healthcare Professionals using optional filters.
         """
 
-        return self.repository.search_by_name(name)
+        query = self.db.query(HealthcareProfessional)
+
+        if name:
+            search = f"%{name}%"
+
+            query = query.filter(
+                or_(
+                    HealthcareProfessional.first_name.ilike(search),
+                    HealthcareProfessional.last_name.ilike(search),
+                )
+            )
+
+        if specialization:
+            query = query.filter(
+                HealthcareProfessional.specialization.ilike(
+                    f"%{specialization}%"
+                )
+            )
+
+        if organization:
+            query = query.filter(
+                HealthcareProfessional.organization.ilike(
+                    f"%{organization}%"
+                )
+            )
+
+        return query.all()

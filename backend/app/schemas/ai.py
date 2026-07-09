@@ -44,3 +44,14 @@ class InteractionUpdateExtraction(BaseSchema):
     products_discussed: list[str] | None = None
     follow_up_required: bool | None = None
     follow_up_date: date | None = None
+    
+    
+class HCPSearchExtraction(BaseSchema):
+    """
+    Structured Healthcare Professional search request
+    extracted from natural language.
+    """
+
+    name: str | None = None
+    specialization: str | None = None
+    organization: str | None = None

@@ -131,10 +131,9 @@ Implemented
 - ✅ Tool Registry
 - ✅ Routing Node
 - ✅ Log Interaction Tool
-
+- ✅ Edit Interaction Tool
+- ✅ Search HCP Tool
 Planned
 
-- ⏳ Edit Interaction Tool
-- ⏳ Search HCP Tool
 - ⏳ Retrieve Interaction History Tool
 - ⏳ Suggest Follow-up Tool

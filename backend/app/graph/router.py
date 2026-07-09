@@ -3,22 +3,34 @@ from app.graph.state import CRMState
 
 def route(state: CRMState) -> CRMState:
     """
-    Route the request to the appropriate tool.
+    Determine which LangGraph tool should
+    handle the user's request.
     """
 
     message = state["message"].lower()
 
-    if any(
-        keyword in message
-        for keyword in (
-            "update",
-            "edit",
-            "change",
-            "modify",
-            "correct",
-        )
-    ):
+    search_keywords = (
+        "find",
+        "search",
+        "show",
+        "list",
+        "locate",
+    )
+
+    edit_keywords = (
+        "edit",
+        "update",
+        "modify",
+        "change",
+        "correct",
+    )
+
+    if any(keyword in message for keyword in search_keywords):
+        state["tool_name"] = "search_hcp"
+
+    elif any(keyword in message for keyword in edit_keywords):
         state["tool_name"] = "edit_interaction"
+
     else:
         state["tool_name"] = "log_interaction"
 

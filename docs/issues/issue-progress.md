@@ -50,8 +50,8 @@
 | #23 Design LangGraph Architecture | ✅ Completed |
 | #24 Log Interaction Tool | ✅ Completed |
 | #25 Edit Interaction Tool | ✅ Completed |
-| #26 Search HCP Tool | 🚧 In Progress |
-| #27 Retrieve Interaction History Tool | ⏳ Pending |
+| #26 Search HCP Tool | ✅ Completed |
+| #27 Retrieve Interaction History Tool | 🚧 In Progress |
 | #28 Suggest Follow-up Tool | ⏳ Pending |
 | #29 Integrate LangGraph with FastAPI | ⏳ Pending |
 | #30 End-to-End AI Workflow Validation | ⏳ Pending |

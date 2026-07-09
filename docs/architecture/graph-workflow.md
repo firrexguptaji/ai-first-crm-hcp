@@ -25,24 +25,27 @@ START
 Receive User Message
    │
    ▼
-Intent Detection
-        │
-        ▼
+Intent Detection (Router)
+   │
+   ▼
 Tool Selection
-        │
-   ┌────┴─────┐
-   ▼          ▼
-Log       Edit
-Interaction Interaction
-        │
-        ▼
-Service Layer
    │
-   ▼
-Generate Response
-   │
-   ▼
-END
+   ├──────────────┬──────────────┐
+   ▼              ▼              ▼
+Log          Edit          Search HCP
+Interaction  Interaction
+   │              │              │
+   └──────────────┼──────────────┘
+                  ▼
+            Service Layer
+                  ▼
+          Repository Layer
+                  ▼
+             PostgreSQL
+                  ▼
+         Generate Response
+                  ▼
+                 END
 ```
 
 ---
