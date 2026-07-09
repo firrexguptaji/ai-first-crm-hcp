@@ -27,18 +27,18 @@ LangGraph
  ▼
 Router
  │
- ├────────────┬──────────────┬───────────────┐
- ▼            ▼              ▼               ▼
-Log Tool   Edit Tool   Search Tool   History Tool
- │            │              │               │
- └────────────┴──────────────┴───────────────┘
-                    │
-                    ▼
-              Service Layer
-                    ▼
-            Repository Layer
-                    ▼
-               PostgreSQL
+ ├────────────┬────────────┬────────────┬────────────┐
+ ▼            ▼            ▼            ▼            ▼
+Log Tool   Edit Tool   Search Tool   History Tool   Follow-up Tool
+ │            │            │            │            │
+ └────────────┴────────────┴────────────┴────────────┘
+                      │
+                      ▼
+                Service Layer
+                      ▼
+              Repository Layer
+                      ▼
+                 PostgreSQL
 ```
 
 ---

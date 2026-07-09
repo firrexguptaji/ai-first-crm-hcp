@@ -88,6 +88,7 @@ Current implementation
 - Edit Interaction Tool
 - Search Healthcare Professional Tool
 - Retrieve Interaction History Tool
+- Suggest Follow-up Tool
 ---
 
 ### llm/

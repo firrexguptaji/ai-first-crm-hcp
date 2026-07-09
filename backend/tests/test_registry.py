@@ -22,3 +22,8 @@ def test_interaction_history_registered():
     tool = get_tool("interaction_history")
 
     assert callable(tool)
+    
+def test_suggest_followup_registered():
+    tool = get_tool("suggest_followup")
+
+    assert callable(tool)

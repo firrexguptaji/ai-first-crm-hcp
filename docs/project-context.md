@@ -188,15 +188,13 @@ PostgreSQL
 - Groq configured
 - Base graph implemented
 - Graph invocation verified
-
-### Pending
-
 - Graph routing
 - Log Interaction Tool
 - Edit Interaction Tool
 - Search HCP Tool
 - Interaction History Tool
 - Follow-up Suggestion Tool
+
 ## Database Status
 
 Current Entities
@@ -248,10 +246,10 @@ Five LangGraph tools will be implemented in later milestones.
 
 | Item | Value |
 |------|-------|
-| Version | v0.2.4 |
+| Version | v0.2.5 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#15, #23–#27 |
-| Current Issue | #28 Implement Follow-up Suggestion Tool |
-| Next Issue | #29 Integrate LangGraph with FastAPI |
-| Active Branch | feature/28-follow-up-suggestion |
-| Last Verified | Implement Retrieve Interaction History Tool |
+| Completed Issues | #1–#15, #23–#28 |
+| Current Issue | #29 Integrate LangGraph with FastAPI |
+| Next Issue | #30 End-to-End AI Workflow Validation |
+| Active Branch | feature/29-langgraph-fastapi |
+| Last Verified | Implement Suggest Follow-up Tool |

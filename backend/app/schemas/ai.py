@@ -64,3 +64,19 @@ class InteractionHistoryExtraction(BaseSchema):
 
     hcp_name: str
     limit: int | None = None
+    
+class FollowUpExtraction(BaseSchema):
+    """
+    Structured follow-up request extracted
+    from natural language.
+    """
+
+    hcp_name: str
+
+class FollowUpRecommendation(BaseSchema):
+    """
+    AI-generated follow-up recommendation.
+    """
+
+    recommendation: str
+    rationale: str

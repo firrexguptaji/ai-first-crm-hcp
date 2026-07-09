@@ -9,6 +9,19 @@ def route(state: CRMState) -> CRMState:
 
     message = state["message"].lower()
 
+    followup_keywords = (
+    "follow up",
+    "follow-up",
+    "next",
+    "next step",
+    "next action",
+    "what should i do",
+    "recommend",
+    "recommendation",
+    "suggest",
+    "advice",
+    )
+
     history_keywords = (
         "history",
         "interaction history",
@@ -34,7 +47,10 @@ def route(state: CRMState) -> CRMState:
         "correct",
     )
 
-    if any(keyword in message for keyword in history_keywords):
+    if any(keyword in message for keyword in followup_keywords):
+        state["tool_name"] = "suggest_followup"
+
+    elif any(keyword in message for keyword in history_keywords):
         state["tool_name"] = "interaction_history"
 
     elif any(keyword in message for keyword in search_keywords):
