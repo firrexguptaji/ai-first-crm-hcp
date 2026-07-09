@@ -161,10 +161,10 @@ Five LangGraph tools will be implemented in later milestones.
 
 **Current Milestone:** Backend Development
 
-**Completed Issues:** 1–8
+**Completed Issues:** 1–9
 
-**Current Issue:** #9 Design Database Schema
+**Current Issue:** #10 Implement SQLAlchemy Models
 
-**Next Issue:** #10 Implement SQLAlchemy Models
+**Next Issue:** #11 Create Pydantic Schemas
 
-**Active Branch:** feature/9-design-database-schema
+**Active Branch:** feature/10-implement-sqlalchemy-models
