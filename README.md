@@ -166,6 +166,7 @@ Current implementation:
 - ✅ SQLAlchemy ORM Models
 - ✅ Pydantic Schemas
 - ✅ Repository Layer
+- ✅ Service Layer
 
 Upcoming:
 

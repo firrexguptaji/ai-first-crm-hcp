@@ -38,6 +38,7 @@ app/
 ├── models/
 ├── prompts/
 ├── repositories/
+├── services/
 └── schemas/
 ```
 
@@ -130,4 +131,23 @@ Responsibilities:
 - Update entities
 - Delete entities
 - Query the database
+
+### services/
+
+Contains the application's business logic layer.
+
+Current Services
+
+- HealthcareProfessionalService
+- InteractionService
+
+Responsibilities
+
+- Coordinate repositories
+- Apply business rules
+- Convert Pydantic schemas to SQLAlchemy models
+- Serve FastAPI routes
+- Serve LangGraph tools
+
+The service layer is independent of FastAPI and SQLAlchemy sessions, making it reusable across different interfaces.
 
