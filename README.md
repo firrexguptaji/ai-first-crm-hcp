@@ -16,7 +16,8 @@
 - PostgreSQL persistence
 - LangGraph workflow orchestration
 - End-to-end AI workflow validation
-
+- Responsive split-screen application layout
+- Reusable frontend layout components
 ---
 
 ## Tech Stack
@@ -228,7 +229,11 @@ The endpoint automatically routes user requests to the appropriate LangGraph too
 
 ### Milestone 3
 
-- ⏳ Frontend Development
+- 🚧 Frontend Development
+
+Completed:
+
+- ✅ Application Layout
 
 ### Milestone 4
 

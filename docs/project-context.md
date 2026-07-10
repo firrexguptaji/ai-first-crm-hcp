@@ -246,8 +246,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.3.0 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#15, #23–#29 |
-| Current Issue | #30 End-to-End AI Workflow Validation |
-| Next Issue | #16 Design Application Layout |
-| Active Branch | feature/30-end-to-end-ai-workflow-validation |
-| Last Verified | Integrating LangGraph with FastAPI |
+| Completed Issues | #1–#16, #23–#29 |
+| Current Issue | #17 Configure Redux Toolkit |
+| Next Issue | #18 Build Interaction Form |
+| Active Branch | feature/17-configure-redux-toolkit |
+| Last Verified | Design Application Layout |
