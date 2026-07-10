@@ -143,3 +143,22 @@ The AI workflow has been validated from the initial user request through LangGra
                   │
                   ▼
         Structured JSON Response
+```
+
+## Frontend State Management
+
+The frontend uses Redux Toolkit for global state management.
+
+```text
+React Components
+        │
+        ▼
+Redux Toolkit Store
+        │
+ ┌──────┼────────┐
+ ▼      ▼        ▼
+App   Chat   Interaction
+ Slice Slice     Slice
+```
+
+The Redux store provides centralized application state while keeping business logic separate from presentation components.

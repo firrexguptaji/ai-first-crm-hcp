@@ -34,8 +34,8 @@
 | Issue | Status |
 |-------|--------|
 | #16 Design Application Layout | ✅ Completed |
-| #17 Configure Redux Toolkit | 🚧 In Progress |
-| #18 Build Interaction Form | ⏳ Pending |
+| #17 Configure Redux Toolkit | ✅ Completed |
+| #18 Build Interaction Form | 🚧 In Progress |
 | #19 Build AI Chat Interface | ⏳ Pending |
 | #20 Create Reusable UI Components | ⏳ Pending |
 | #21 Integrate Frontend with Backend APIs | ⏳ Pending |

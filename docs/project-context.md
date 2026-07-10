@@ -169,11 +169,11 @@ PostgreSQL
 - React initialized
 - Vite configured
 - TypeScript configured
+- Layout
+- Redux Toolkit
 
 ### Pending
 
-- Layout
-- Redux Toolkit
 - Read-only interaction form
 - AI chat
 - API integration
@@ -246,8 +246,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.3.0 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#16, #23–#29 |
-| Current Issue | #17 Configure Redux Toolkit |
-| Next Issue | #18 Build Interaction Form |
-| Active Branch | feature/17-configure-redux-toolkit |
-| Last Verified | Design Application Layout |
+| Completed Issues | #1–#17, #23–#29 |
+| Current Issue | #18 Build Interaction Form |
+| Next Issue | #19 Build AI Chat Interface |
+| Active Branch | feature/18-build-interaction-form |
+| Last Verified | Configure Redux Toolkit |

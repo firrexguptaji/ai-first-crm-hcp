@@ -135,13 +135,28 @@ AppLayout
 
 ## State Management
 
-Redux Toolkit will manage:
+Redux Toolkit is configured as the global state management solution.
 
-- Chat state
-- Interaction state
-- Healthcare Professional state
+### Store
 
----
+The application store combines the following feature slices:
+
+- App
+- Chat
+- Interaction
+
+### Provider
+
+The Redux Provider wraps the root React application, making the global store available throughout the component tree.
+
+### Typed Hooks
+
+Typed hooks are provided for:
+
+- useAppDispatch
+- useAppSelector
+
+These hooks simplify dispatching actions and selecting state while maintaining full TypeScript support.
 
 ## API Integration
 

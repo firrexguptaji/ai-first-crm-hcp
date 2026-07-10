@@ -234,6 +234,11 @@ The endpoint automatically routes user requests to the appropriate LangGraph too
 Completed:
 
 - ✅ Application Layout
+- ✅ Redux Toolkit Configuration
+
+Current
+
+- Configure Interaction Details Form
 
 ### Milestone 4
 
