@@ -86,6 +86,28 @@ Stores:
 - Interaction records
 - Future application data
 
+# Frontend Architecture
+
+The frontend follows a component-based architecture using reusable layout components.
+
+## Layout Structure
+
+```text
+App
+ │
+ ▼
+HomePage
+ │
+ ▼
+AppLayout
+ │
+ ├── Header
+ │
+ └── SplitLayout
+        │
+        ├── LeftPanel
+        └── RightPanel
+
 # End-to-End AI Workflow
 
 The AI workflow has been validated from the initial user request through LangGraph execution, business logic, database persistence, and structured API responses.

@@ -2,66 +2,175 @@
 
 ## Overview
 
-The frontend is built using React, Vite, TypeScript, and Redux Toolkit.
+The frontend is built with React and TypeScript and follows a component-based architecture. The UI is designed as a responsive split-screen interface where the left panel displays interaction details and the right panel provides an AI assistant chat.
 
-The UI follows the assignment requirement of a split-screen interface.
+---
+
+## Technology
+
+- React
+- TypeScript
+- Redux Toolkit
+- Vite
+
+---
+
+## Folder Structure
+
+```text
+src/
+│
+├── api/
+├── app/
+├── assets/
+├── components/
+│   ├── chat/
+│   ├── common/
+│   ├── form/
+│   └── layout/
+├── features/
+├── hooks/
+├── pages/
+├── styles/
+├── types/
+└── utils/
+```
 
 ---
 
 ## Layout
 
+The application uses a responsive split-screen layout.
+
+### Layout Components
+
+- AppLayout
+- Header
+- SplitLayout
+- LeftPanel
+- RightPanel
+
+### Component Hierarchy
+
 ```text
----------------------------------------
-| Interaction Form | AI Assistant Chat |
----------------------------------------
+App
+│
+▼
+HomePage
+│
+▼
+AppLayout
+│
+├── Header
+│
+└── SplitLayout
+    │
+    ├── LeftPanel
+    └── RightPanel
 ```
 
 ---
 
-## Directory Structure
+## Responsive Design
+
+### Desktop
 
 ```text
-src/
++-----------------------------+----------------------------+
+|                             |                            |
+|      Left Panel             |      Right Panel           |
+|                             |                            |
++-----------------------------+----------------------------+
+```
 
-api/
-app/
-components/
-features/
-hooks/
-pages/
-styles/
-types/
-utils/
+### Mobile
+
+```text
++-----------------------------+
+|        Left Panel           |
++-----------------------------+
+|        Right Panel          |
++-----------------------------+
 ```
 
 ---
 
-## Responsibilities
+## Current Components
 
-### components/
+### Layout
 
-Reusable UI components.
+- ✅ AppLayout
+- ✅ Header
+- ✅ SplitLayout
+- ✅ LeftPanel
+- ✅ RightPanel
 
-### features/
+---
 
-Feature-specific modules.
+## Upcoming Components
 
-### app/
+### Interaction
 
-Application configuration.
+- Interaction Details Form
+- Form Sections
+- Material Cards
+- Follow-up Section
 
-### api/
+### AI Assistant
 
-API communication.
+- Chat Panel
+- Chat History
+- Chat Input
+- Message Components
 
-### pages/
+### Shared Components
 
-Application pages.
+- Buttons
+- Cards
+- Inputs
+- Loading States
+- Empty States
 
-### hooks/
+---
 
-Reusable hooks.
+## State Management
 
-### utils/
+Redux Toolkit will manage:
 
-Shared helper functions.
+- Chat state
+- Interaction state
+- Healthcare Professional state
+
+---
+
+## API Integration
+
+The frontend will communicate with the FastAPI backend through:
+
+- `/chat`
+- `/hcps`
+- `/interactions`
+
+The AI assistant will be the primary interface for creating and updating interaction records.
+
+---
+
+## Development Progress
+
+### Completed
+
+- ✅ Responsive application layout
+- ✅ Header
+- ✅ Split-screen layout
+- ✅ Reusable layout components
+
+### In Progress
+
+- 🚧 Interaction Details Form
+
+### Planned
+
+- AI Assistant Chat
+- Redux Integration
+- Backend Integration
+- End-to-End Frontend Workflow
