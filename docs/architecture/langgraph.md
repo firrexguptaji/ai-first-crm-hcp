@@ -137,6 +137,32 @@ Implemented
 - ✅ Suggest Follow-up Tool
 
 
+# Workflow Validation
+
+The LangGraph workflow has been validated through end-to-end integration testing.
+
+## Registered Tools
+
+- Log Interaction
+- Edit Interaction
+- Search HCP
+- Retrieve Interaction History
+- Suggest Follow-up
+
+## Execution Flow
+
+```text
+START
+   │
+   ▼
+Router
+   │
+   ▼
+Selected Tool
+   │
+   ▼
+END
+
 ## Status
 
 All planned LangGraph tools have been implemented.

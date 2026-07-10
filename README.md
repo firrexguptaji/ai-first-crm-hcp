@@ -6,15 +6,16 @@
 
 ## Features
 
+- AI-powered chat interface through LangGraph
 - AI-driven interaction logging
 - AI-driven interaction editing
-- Search Healthcare Professionals
+- Healthcare Professional search
 - Retrieve interaction history
-- AI-generated follow-up suggestions
-- Split-screen CRM interface
+- AI-generated follow-up recommendations
 - FastAPI REST API
 - PostgreSQL persistence
 - LangGraph workflow orchestration
+- End-to-end AI workflow validation
 
 ---
 
@@ -137,41 +138,48 @@ Each entity provides:
 - Response schema
 
 ---
-
 ## Backend Architecture
 
-The backend follows a layered architecture to maintain separation of concerns.
+The backend follows a layered architecture with LangGraph orchestrating AI workflows.
 
 ```text
-FastAPI Routes
-        │
-        ▼
-Pydantic Schemas
-        │
-        ▼
-Service Layer
-        │
-        ▼
-Repository Layer
-        │
-        ▼
-SQLAlchemy ORM Models
-        │
-        ▼
-PostgreSQL
+                User
+                  │
+                  ▼
+             POST /chat
+                  │
+                  ▼
+              FastAPI API
+                  │
+                  ▼
+             LangGraph Router
+                  │
+                  ▼
+          Selected AI Tool
+                  │
+                  ▼
+            Service Layer
+                  │
+                  ▼
+          Repository Layer
+                  │
+                  ▼
+        SQLAlchemy ORM Models
+                  │
+                  ▼
+             PostgreSQL
 ```
 
-Current implementation:
+Implemented:
 
 - ✅ SQLAlchemy ORM Models
 - ✅ Pydantic Schemas
 - ✅ Repository Layer
 - ✅ Service Layer
-
-Upcoming:
-
-- ⏳ Service Layer
-- ⏳ REST API Endpoints
+- ✅ REST API
+- ✅ LangGraph Integration
+- ✅ AI Chat Endpoint
+---
 
 ## AI Chat Endpoint
 
@@ -179,7 +187,9 @@ The application exposes a LangGraph-powered chat endpoint.
 
 ### Endpoint
 
+```http
 POST /chat
+```
 
 ### Request
 
@@ -187,6 +197,24 @@ POST /chat
 {
   "message": "Find Alice Brown"
 }
+```
+
+### Response
+
+```json
+{
+  "response": "Found 7 Healthcare Professional(s).",
+  "tool_name": "search_hcp",
+  "tool_output": {
+    "success": true,
+    "count": 7,
+    "results": []
+  }
+}
+```
+
+The endpoint automatically routes user requests to the appropriate LangGraph tool.
+---
 
 ## Current Progress
 
@@ -204,30 +232,34 @@ POST /chat
 
 ### Milestone 4
 
-- 🚧 LangGraph Integration
+- ✅ LangGraph Integration
 
 ### Milestone 5
 
 - ⏳ DevOps & Deployment
-
 ---
 
 ## Verification
 
-Verified components:
+Validated components:
 
-- ✅ React + Vite
 - ✅ FastAPI
 - ✅ PostgreSQL
 - ✅ SQLAlchemy ORM Models
-- ✅ Pydantic Schemas
 - ✅ Repository Layer
 - ✅ Service Layer
-- ✅ Healthcare Professional API
-- ✅ Interaction API
-- ✅ LangGraph
-- ✅ Groq
+- ✅ REST API
+- ✅ LangGraph Router
+- ✅ Tool Registry
+- ✅ AI Chat Endpoint
 
+Validated AI Tools:
+
+- ✅ Log Interaction
+- ✅ Edit Interaction
+- ✅ Search HCP
+- ✅ Retrieve Interaction History
+- ✅ Suggest Follow-up
 ---
 
 ## Database
@@ -253,28 +285,28 @@ Documentation:
 - `database/schema/erd.png`
 
 ---
+## Verification
 
-## Development Status
+Validated components:
 
-Current Version
+- ✅ FastAPI
+- ✅ PostgreSQL
+- ✅ SQLAlchemy ORM Models
+- ✅ Repository Layer
+- ✅ Service Layer
+- ✅ REST API
+- ✅ LangGraph Router
+- ✅ Tool Registry
+- ✅ AI Chat Endpoint
 
-- v0.1.0
+Validated AI Tools:
 
-Completed Backend Layers
-
-- SQLAlchemy ORM Models
-- Pydantic Schemas
-- Repository Layer
-
-Current Focus
-
-- Service Layer
-
-Next Milestone
-
-- FastAPI REST API
-
----
+- ✅ Log Interaction
+- ✅ Edit Interaction
+- ✅ Search HCP
+- ✅ Retrieve Interaction History
+- ✅ Suggest Follow-up
+--- 
 
 ## REST API
 
@@ -294,20 +326,80 @@ Next Milestone
 - PUT `/interactions/{interaction_id}`
 - DELETE `/interactions/{interaction_id}`
 
+### AI
+
+```http
+POST /chat
+```
+
 ---
 
 ## LangGraph
 
-### Milestone 3 — LangGraph Integration
+Implemented AI tools:
 
-Implemented tools:
+- ✅ Log Interaction
+- ✅ Edit Interaction
+- ✅ Search Healthcare Professional
+- ✅ Retrieve Interaction History
+- ✅ Suggest Follow-up
 
-- ✅ Log Interaction Tool
-- ✅ Edit Interaction Tool
-- ✅ Search Healthcare Professional Tool
-- ✅ Retrieve Interaction History Tool
-- ✅ Suggest Follow-up Tool
+Workflow:
 
+```text
+User
+   │
+   ▼
+POST /chat
+   │
+   ▼
+FastAPI
+   │
+   ▼
+LangGraph
+   │
+   ▼
+Router
+   │
+   ▼
+Selected Tool
+   │
+   ▼
+Service Layer
+   │
+   ▼
+Repository
+   │
+   ▼
+PostgreSQL
+   │
+   ▼
+Structured Response
+```
+
+---
+
+## End-to-End AI Workflow Validation
+
+The complete AI workflow has been validated from user request to database persistence.
+
+Validation includes:
+
+- ✅ Intent routing
+- ✅ LangGraph execution
+- ✅ Tool execution
+- ✅ Service layer
+- ✅ Repository layer
+- ✅ PostgreSQL persistence
+- ✅ Structured API responses
+
+Validated workflows:
+
+- Log Interaction
+- Edit Interaction
+- Search Healthcare Professional
+- Retrieve Interaction History
+- Suggest Follow-up
 ---
 
 ## License

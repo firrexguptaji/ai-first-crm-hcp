@@ -158,11 +158,9 @@ PostgreSQL
 - Service layer
 - Healthcare Professional API
 - Interaction API
-
-### Pending
-
 - LangGraph Tools
 - AI Workflow
+
 
 ## Frontend Status
 
@@ -246,7 +244,7 @@ Five LangGraph tools will be implemented in later milestones.
 
 | Item | Value |
 |------|-------|
-| Version | v0.2.5 |
+| Version | v0.3.0 |
 | Milestone | LangGraph Integration |
 | Completed Issues | #1–#15, #23–#29 |
 | Current Issue | #30 End-to-End AI Workflow Validation |
