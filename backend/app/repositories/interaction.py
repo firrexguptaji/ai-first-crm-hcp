@@ -88,14 +88,14 @@ class InteractionRepository:
         )
         
     def get_latest_interaction(
-        self,
-        hcp_id,
-    ):
+    self,
+    hcp_id: UUID,
+    ) -> Interaction | None:
         """
         Retrieve the latest interaction for an HCP.
         """
 
-        return self.repository.get_latest_by_hcp(hcp_id)
+        return self.get_latest_by_hcp(hcp_id)
     
     def get_history_by_hcp(
     self,

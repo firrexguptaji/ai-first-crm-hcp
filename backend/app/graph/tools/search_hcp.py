@@ -27,9 +27,15 @@ def extract_search(
     prompt = f"""
     Extract the Healthcare Professional search criteria.
 
+    Rules:
+    - Remove titles like Dr., Doctor, Prof., Mr., Mrs., Ms.
+    - Return only the person's actual name.
+    - Do not include prefixes or honorifics.
+    - If the user asks for specialization or organization, extract them.
+
     User Message:
     {message}
-    """
+"""
 
     return structured_llm.invoke(prompt)
 
@@ -68,6 +74,7 @@ def search_hcp(
     extraction = extract_search(
         state["message"]
     )
+    print(f"Extracted search criteria: {extraction}")
 
     hcps = search_hcp_records(
         extraction

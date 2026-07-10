@@ -79,18 +79,29 @@ class HealthcareProfessionalRepository:
         Find a Healthcare Professional by name.
         """
 
-        search = f"%{name}%"
+        parts = name.strip().split()
 
-        return (
-            self.db.query(HealthcareProfessional)
-            .filter(
+        query = self.db.query(HealthcareProfessional)
+
+        if len(parts) == 1:
+            search = f"%{parts[0]}%"
+
+            query = query.filter(
                 or_(
                     HealthcareProfessional.first_name.ilike(search),
                     HealthcareProfessional.last_name.ilike(search),
                 )
             )
-            .first()
-        )
+        
+        else:
+            first = f"%{parts[0]}%"
+            last = f"%{parts[-1]}%"
+
+            query = query.filter(
+                HealthcareProfessional.first_name.ilike(first),
+                HealthcareProfessional.last_name.ilike(last),
+            )
+        return query.first()
 
     def search(
         self,
@@ -105,13 +116,27 @@ class HealthcareProfessionalRepository:
         query = self.db.query(HealthcareProfessional)
 
         if name:
-            search = f"%{name}%"
+            parts = name.strip().split()
+
+            if len(parts) == 1:
+                search = f"%{parts[0]}%"
+
+                query = query.filter(
+                    or_(
+                        HealthcareProfessional.first_name.ilike(search),
+                        HealthcareProfessional.last_name.ilike(search),
+                    )
+                )
+            
+            
+
+        else:
+            first = f"%{parts[0]}%"
+            last = f"%{parts[-1]}%"
 
             query = query.filter(
-                or_(
-                    HealthcareProfessional.first_name.ilike(search),
-                    HealthcareProfessional.last_name.ilike(search),
-                )
+                HealthcareProfessional.first_name.ilike(first),
+                HealthcareProfessional.last_name.ilike(last),
             )
 
         if specialization:
