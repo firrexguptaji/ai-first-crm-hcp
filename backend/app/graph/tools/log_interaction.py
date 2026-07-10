@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date, datetime, timedelta
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.llm.groq import llm
@@ -26,9 +27,13 @@ def extract_interaction(
     structured_llm = llm.with_structured_output(
         InteractionExtraction
     )
-
     prompt = f"""
     Extract the healthcare interaction.
+
+    Rules:
+    - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
+    - interaction_date may be natural language such as "today" or "yesterday".
+    - follow_up_date may be natural language such as "tomorrow" or "next week".
 
     User Message:
     {message}
@@ -66,14 +71,14 @@ def create_interaction_record(
 
         schema = InteractionCreate(
             hcp_id=hcp.id,
-            interaction_date=extraction.interaction_date,
+            interaction_date=parse_interaction_date(extraction.interaction_date),
             channel=extraction.channel,
             raw_notes=extraction.raw_notes,
             summary=extraction.summary,
             sentiment=extraction.sentiment,
             products_discussed=extraction.products_discussed,
             follow_up_required=extraction.follow_up_required,
-            follow_up_date=extraction.follow_up_date,
+            follow_up_date=parse_followup_date(extraction.follow_up_date),
         )
 
         return interaction_service.create_interaction(
@@ -112,3 +117,48 @@ def log_interaction(
     )
 
     return state
+
+
+def parse_interaction_date(value: str) -> datetime:
+    """
+    Convert natural language or ISO datetime into datetime.
+    """
+
+    value = value.strip().lower()
+
+    if value == "today":
+        return datetime.now()
+
+    if value == "yesterday":
+        return datetime.now() - timedelta(days=1)
+
+    try:
+        return datetime.fromisoformat(value)
+    except ValueError:
+        # Fallback if the LLM returns something unexpected
+        return datetime.now()
+
+
+def parse_followup_date(value: str | None) -> date | None:
+    """
+    Convert natural language or ISO date into date.
+    """
+
+    if value is None:
+        return None
+
+    value = value.strip().lower()
+
+    if value == "today":
+        return date.today()
+
+    if value == "tomorrow":
+        return date.today() + timedelta(days=1)
+
+    if value == "next week":
+        return date.today() + timedelta(days=7)
+
+    try:
+        return date.fromisoformat(value)
+    except ValueError:
+        return None

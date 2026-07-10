@@ -248,8 +248,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.2.5 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#15, #23–#28 |
-| Current Issue | #29 Integrate LangGraph with FastAPI |
-| Next Issue | #30 End-to-End AI Workflow Validation |
-| Active Branch | feature/29-langgraph-fastapi |
-| Last Verified | Implement Suggest Follow-up Tool |
+| Completed Issues | #1–#15, #23–#29 |
+| Current Issue | #30 End-to-End AI Workflow Validation |
+| Next Issue | #16 Design Application Layout |
+| Active Branch | feature/30-end-to-end-ai-workflow-validation |
+| Last Verified | Integrating LangGraph with FastAPI |

@@ -9,36 +9,21 @@ def route(state: CRMState) -> CRMState:
 
     message = state["message"].lower()
 
-    followup_keywords = (
-    "follow up",
-    "follow-up",
-    "next",
-    "next step",
-    "next action",
-    "what should i do",
-    "recommend",
-    "recommendation",
-    "suggest",
-    "advice",
+    # Interaction logging
+    log_keywords = (
+        "met",
+        "meeting",
+        "visited",
+        "visit",
+        "called",
+        "call",
+        "spoke",
+        "talked",
+        "discussed",
+        "discussion",
     )
 
-    history_keywords = (
-        "history",
-        "interaction history",
-        "previous",
-        "past",
-        "previous interactions",
-        "last interactions",
-        "retrieve interactions",
-    )
-
-    search_keywords = (
-        "find",
-        "search",
-        "list",
-        "locate",
-    )
-
+    # Interaction editing
     edit_keywords = (
         "edit",
         "update",
@@ -47,8 +32,46 @@ def route(state: CRMState) -> CRMState:
         "correct",
     )
 
-    if any(keyword in message for keyword in followup_keywords):
-        state["tool_name"] = "suggest_followup"
+    # Interaction history
+    history_keywords = (
+        "history",
+        "interaction history",
+        "previous interactions",
+        "retrieve interactions",
+        "show interactions",
+        "past interactions",
+        "last interactions",
+    )
+
+    # HCP search
+    search_keywords = (
+        "find",
+        "search",
+        "locate",
+        "list",
+        "doctor",
+        "physician",
+        "hcp",
+    )
+
+    # Follow-up recommendations
+    followup_keywords = (
+        "follow up",
+        "follow-up",
+        "next step",
+        "next action",
+        "what should i do",
+        "recommend",
+        "recommendation",
+        "suggest",
+        "advice",
+    )
+
+    if any(keyword in message for keyword in log_keywords):
+        state["tool_name"] = "log_interaction"
+
+    elif any(keyword in message for keyword in edit_keywords):
+        state["tool_name"] = "edit_interaction"
 
     elif any(keyword in message for keyword in history_keywords):
         state["tool_name"] = "interaction_history"
@@ -56,10 +79,11 @@ def route(state: CRMState) -> CRMState:
     elif any(keyword in message for keyword in search_keywords):
         state["tool_name"] = "search_hcp"
 
-    elif any(keyword in message for keyword in edit_keywords):
-        state["tool_name"] = "edit_interaction"
+    elif any(keyword in message for keyword in followup_keywords):
+        state["tool_name"] = "suggest_followup"
 
     else:
+        # Default to logging a new interaction
         state["tool_name"] = "log_interaction"
 
     return state

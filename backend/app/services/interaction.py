@@ -55,7 +55,9 @@ class InteractionService:
         if interaction is None:
             return None
 
-        update_data = schema.model_dump(exclude_unset=True)
+        update_data = schema.model_dump(
+            exclude_unset=True,
+            exclude_none=True,)
 
         for field, value in update_data.items():
             setattr(interaction, field, value)
@@ -89,3 +91,13 @@ class InteractionService:
             hcp_id=hcp_id,
             limit=limit,
         )
+        
+    def get_latest_interaction(
+    self,
+    hcp_id: UUID,
+    ) -> Interaction | None:
+        """
+        Retrieve the latest interaction for a Healthcare Professional.
+        """
+
+        return self.repository.get_latest_by_hcp(hcp_id)

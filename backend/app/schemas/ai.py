@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from datetime import date, datetime
-
 from app.models.enums import InteractionChannel, Sentiment
 from app.schemas.common import BaseSchema
 
@@ -16,16 +14,16 @@ class InteractionExtraction(BaseSchema):
     """
 
     hcp_name: str
-    interaction_date: datetime
+    interaction_date: str
     channel: InteractionChannel
     raw_notes: str
     summary: str
     sentiment: Sentiment
     products_discussed: list[str] = []
     follow_up_required: bool = False
-    follow_up_date: date | None = None
-    
-    
+    follow_up_date: str | None = None
+
+
 class InteractionUpdateExtraction(BaseSchema):
     """
     Structured interaction update extracted by the LLM.
@@ -36,16 +34,16 @@ class InteractionUpdateExtraction(BaseSchema):
     hcp_name: str
     interaction_id: str | None = None
 
-    interaction_date: datetime | None = None
+    interaction_date: str | None = None
     channel: InteractionChannel | None = None
     raw_notes: str | None = None
     summary: str | None = None
     sentiment: Sentiment | None = None
     products_discussed: list[str] | None = None
     follow_up_required: bool | None = None
-    follow_up_date: date | None = None
-    
-    
+    follow_up_date: str | None = None
+
+
 class HCPSearchExtraction(BaseSchema):
     """
     Structured Healthcare Professional search request
@@ -55,7 +53,8 @@ class HCPSearchExtraction(BaseSchema):
     name: str | None = None
     specialization: str | None = None
     organization: str | None = None
-    
+
+
 class InteractionHistoryExtraction(BaseSchema):
     """
     Structured interaction history request extracted
@@ -64,7 +63,8 @@ class InteractionHistoryExtraction(BaseSchema):
 
     hcp_name: str
     limit: int | None = None
-    
+
+
 class FollowUpExtraction(BaseSchema):
     """
     Structured follow-up request extracted
@@ -72,6 +72,7 @@ class FollowUpExtraction(BaseSchema):
     """
 
     hcp_name: str
+
 
 class FollowUpRecommendation(BaseSchema):
     """

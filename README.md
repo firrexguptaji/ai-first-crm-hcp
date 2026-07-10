@@ -173,6 +173,21 @@ Upcoming:
 - ⏳ Service Layer
 - ⏳ REST API Endpoints
 
+## AI Chat Endpoint
+
+The application exposes a LangGraph-powered chat endpoint.
+
+### Endpoint
+
+POST /chat
+
+### Request
+
+```json
+{
+  "message": "Find Alice Brown"
+}
+
 ## Current Progress
 
 ### Milestone 1
@@ -284,10 +299,6 @@ Next Milestone
 ## LangGraph
 
 ### Milestone 3 — LangGraph Integration
-
-## LangGraph
-
-## LangGraph
 
 Implemented tools:
 
