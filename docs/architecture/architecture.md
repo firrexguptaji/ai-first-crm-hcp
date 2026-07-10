@@ -85,3 +85,39 @@ Stores:
 - Healthcare Professionals
 - Interaction records
 - Future application data
+
+# End-to-End AI Workflow
+
+The AI workflow has been validated from the initial user request through LangGraph execution, business logic, database persistence, and structured API responses.
+
+## Workflow
+
+```text
+                User
+                  │
+                  ▼
+             POST /chat
+                  │
+                  ▼
+              FastAPI API
+                  │
+                  ▼
+             LangGraph Router
+                  │
+                  ▼
+          Selected AI Tool
+                  │
+                  ▼
+            Service Layer
+                  │
+                  ▼
+          Repository Layer
+                  │
+                  ▼
+        SQLAlchemy ORM Models
+                  │
+                  ▼
+             PostgreSQL
+                  │
+                  ▼
+        Structured JSON Response
