@@ -246,8 +246,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.3.0 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#17, #23–#29 |
-| Current Issue | #18 Build Interaction Form |
-| Next Issue | #19 Build AI Chat Interface |
-| Active Branch | feature/18-build-interaction-form |
-| Last Verified | Configure Redux Toolkit |
+| Completed Issues | #1–#18, #23–#29 |
+| Current Issue | #19 Build AI Chat Interface |
+| Next Issue | #20 Create Reusable UI Components |
+| Active Branch | feature/19-build-ai-chat-interface |
+| Last Verified | Interaction Form |
