@@ -37,8 +37,8 @@
 | #17 Configure Redux Toolkit | ✅ Completed |
 | #18 Build Interaction Form | ✅ Completed |
 | #19 Build AI Chat Interface | ✅ Completed |
-| #20 Create Reusable UI Components | 🚧 In Progress |
-| #21 Integrate Frontend with Backend APIs | ⏳ Pending |
+| #20 Create Reusable UI Components | ✅ Completed |
+| #21 Integrate Frontend with Backend APIs | 🚧 In Progress |
 | #22 Polish Frontend Experience | ⏳ Pending |
 
 ---
