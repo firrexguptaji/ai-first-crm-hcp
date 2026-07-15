@@ -246,8 +246,8 @@ Five LangGraph tools will be implemented in later milestones.
 |------|-------|
 | Version | v0.3.0 |
 | Milestone | LangGraph Integration |
-| Completed Issues | #1–#18, #23–#29 |
-| Current Issue | #19 Build AI Chat Interface |
-| Next Issue | #20 Create Reusable UI Components |
-| Active Branch | feature/19-build-ai-chat-interface |
-| Last Verified | Interaction Form |
+| Completed Issues | #1–#19, #23–#29 |
+| Current Issue | #20 Create Reusable UI Components |
+| Next Issue | #21 Integrate Frontend with Backend APIs |
+| Active Branch | feature/20-create-reusable-ui-components |
+| Last Verified | Chat Bot Interface |
