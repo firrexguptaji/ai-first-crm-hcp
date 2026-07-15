@@ -2,9 +2,9 @@
 
 ## Overview
 
-The frontend is built with React, TypeScript, and Redux Toolkit following a component-based architecture. The application provides a responsive split-screen interface where users interact with an AI assistant while viewing structured Healthcare Professional (HCP) interaction details.
+The frontend is built with React, TypeScript, Redux Toolkit, and Vite following a component-driven architecture. The application provides a responsive split-screen interface where medical representatives interact with an AI assistant while viewing structured Healthcare Professional (HCP) interaction details.
 
-The architecture emphasizes reusable UI components, centralized state management, and separation of concerns to simplify future AI integration.
+The architecture emphasizes reusable UI components, centralized API communication, centralized state management, and clear separation between presentation, business logic, and backend services.
 
 ---
 
@@ -14,6 +14,7 @@ The architecture emphasizes reusable UI components, centralized state management
 - TypeScript
 - Redux Toolkit
 - Vite
+- Axios
 - Lucide React
 
 ---
@@ -24,6 +25,11 @@ The architecture emphasizes reusable UI components, centralized state management
 src/
 │
 ├── api/
+│   ├── client.ts
+│   ├── chatApi.ts
+│   ├── hcpApi.ts
+│   └── interactionApi.ts
+│
 ├── app/
 ├── assets/
 ├── components/
@@ -31,21 +37,27 @@ src/
 │   ├── common/
 │   ├── form/
 │   └── layout/
+│
 ├── features/
 ├── hooks/
 ├── pages/
 ├── styles/
 ├── types/
+│   ├── api.ts
+│   ├── chat.ts
+│   ├── hcp.ts
+│   └── interaction.ts
+│
 └── utils/
 ```
 
 ---
 
-## Layout
+# Application Layout
 
-The application uses a responsive split-screen layout.
+The application uses a responsive split-screen interface.
 
-### Layout Components
+## Layout Components
 
 - AppLayout
 - Header
@@ -53,7 +65,7 @@ The application uses a responsive split-screen layout.
 - LeftPanel
 - RightPanel
 
-### Component Hierarchy
+## Component Hierarchy
 
 ```text
 App
@@ -81,14 +93,14 @@ AppLayout
 
 ---
 
-## Responsive Design
+## Responsive Layout
 
 ### Desktop
 
 ```text
 +-------------------------------+------------------------------+
 |                               |                              |
-|       Interaction Form        |      AI Assistant Chat       |
+|      Interaction Form         |      AI Assistant Chat       |
 |                               |                              |
 +-------------------------------+------------------------------+
 ```
@@ -97,7 +109,7 @@ AppLayout
 
 ```text
 +-------------------------------+
-|       Interaction Form        |
+|      Interaction Form         |
 +-------------------------------+
 |      AI Assistant Chat        |
 +-------------------------------+
@@ -107,7 +119,7 @@ AppLayout
 
 # Component Architecture
 
-## Layout
+## Layout Components
 
 - ✅ AppLayout
 - ✅ Header
@@ -117,7 +129,7 @@ AppLayout
 
 ---
 
-## Interaction Form
+## Interaction Form Components
 
 - ✅ InteractionForm
 - ✅ Input
@@ -131,7 +143,7 @@ AppLayout
 
 ---
 
-## AI Assistant
+## AI Assistant Components
 
 - ✅ ChatPanel
 - ✅ ChatHeader
@@ -147,41 +159,103 @@ AppLayout
 - ✅ Input
 - ✅ Dropdown
 - ✅ TextArea
+- ✅ Card
 - ✅ Loading
 - ✅ EmptyState
 
 ---
 
-## State Management
+# API Layer
 
-Redux Toolkit is configured as the global state management solution.
+The frontend communicates with the backend through a centralized Axios client.
 
-### Store
+## Architecture
 
-The application store contains three feature slices:
+```text
+React Components
+        │
+        ▼
+API Services
+(chatApi, hcpApi, interactionApi)
+        │
+        ▼
+Axios Client
+        │
+        ▼
+FastAPI REST API
+```
+
+## Implemented Services
+
+- Chat Service
+- Healthcare Professional Service
+- Interaction Service
+
+## Responsibilities
+
+- Centralized API configuration
+- Environment-based API URL
+- Typed request and response models
+- Service abstraction
+- Basic API error handling
+
+---
+
+# State Management
+
+Redux Toolkit is configured as the application's global state management solution.
+
+## Store
+
+Current slices:
 
 - App
 - Chat
 - Interaction
 
-### Provider
+## Provider
 
-The Redux Provider wraps the root application and exposes the global store throughout the component tree.
+The Redux Provider wraps the root React application and exposes the global store throughout the component tree.
 
-### Typed Hooks
-
-Custom typed hooks are provided:
+## Typed Hooks
 
 - useAppDispatch
 - useAppSelector
 
-These provide type-safe access to Redux state and actions.
+These hooks provide fully type-safe access to Redux state and actions.
 
 ---
 
-## Frontend Workflow
+# Frontend Workflow
 
-The intended application workflow is:
+Current communication flow:
+
+```text
+User
+   │
+   ▼
+React Component
+   │
+   ▼
+API Service
+   │
+   ▼
+Axios Client
+   │
+   ▼
+FastAPI
+   │
+   ▼
+LangGraph
+   │
+   ▼
+Selected AI Tool
+   │
+   ▼
+Structured Response
+```
+
+Future workflow after Redux integration:
 
 ```text
 User
@@ -193,19 +267,19 @@ AI Assistant Chat
 Redux
    │
    ▼
-FastAPI API
+API Service
+   │
+   ▼
+FastAPI
    │
    ▼
 LangGraph
    │
    ▼
-Selected AI Tool
-   │
-   ▼
 Structured Response
    │
    ▼
-Redux Store Update
+Redux Store
    │
    ▼
 Interaction Form Updates
@@ -213,86 +287,113 @@ Interaction Form Updates
 
 ---
 
-## API Integration
+# Backend API Integration
 
-The frontend communicates with the FastAPI backend using REST APIs.
+Implemented REST endpoints:
 
-### Endpoints
+## AI
 
 - POST `/chat`
+
+## Healthcare Professionals
+
 - GET `/hcps`
 - POST `/hcps`
+- GET `/hcps/{hcp_id}`
+- PUT `/hcps/{hcp_id}`
+- DELETE `/hcps/{hcp_id}`
+
+## Interactions
+
 - GET `/interactions`
 - POST `/interactions`
-
-The AI Assistant serves as the primary user interface for creating and updating interaction records.
+- GET `/interactions/{interaction_id}`
+- PUT `/interactions/{interaction_id}`
+- DELETE `/interactions/{interaction_id}`
 
 ---
 
-## UI Design Principles
+# UI Design Principles
 
-The frontend follows several design principles:
+The frontend follows these engineering principles:
 
-- Component-based architecture
+- Component-driven architecture
 - Reusable UI components
 - Responsive layouts
+- Centralized API layer
 - Centralized state management
 - Consistent styling
-- Clear separation of presentation and business logic
+- Separation of presentation and business logic
+- Type-safe API communication
 
 ---
 
-## Development Progress
+# Development Progress
 
-### Completed
+## Completed
 
-#### Layout
+### Layout
 
 - ✅ Responsive Application Layout
 - ✅ Header
 - ✅ Split Layout
 
-#### State Management
+### State Management
 
 - ✅ Redux Toolkit Configuration
 - ✅ Store Configuration
 - ✅ Provider Configuration
 - ✅ Typed Hooks
 
-#### Interaction Form
+### Interaction Form
 
-- ✅ Interaction Details Form
+- ✅ Read-only Interaction Form
 - ✅ Reusable Form Components
-- ✅ Read-only Layout
+- ✅ Structured Layout
 
-#### AI Assistant
+### AI Assistant
 
 - ✅ Chat Interface
-- ✅ Message History
+- ✅ Chat History
+- ✅ Chat Messages
 - ✅ Chat Input
-- ✅ Send Action
 
-#### Shared Components
+### Shared Components
 
 - ✅ Button
+- ✅ Card
+- ✅ Input
+- ✅ Dropdown
+- ✅ TextArea
 - ✅ Loading
 - ✅ EmptyState
 
+### API Layer
+
+- ✅ Axios Client
+- ✅ Environment Configuration
+- ✅ Chat API Service
+- ✅ HCP API Service
+- ✅ Interaction API Service
+- ✅ Typed API Models
+- ✅ Backend Connectivity Verification
+
 ---
 
-## Remaining Work
+# Remaining Work
 
-- Frontend ↔ Backend Integration
-- LangGraph Response Rendering
-- Automatic Form Population
+- Redux Async Thunks
+- Connect UI with API Services
+- Render AI Responses
+- Automatic Interaction Form Population
 - Loading & Error States
-- End-to-End Workflow Validation
+- End-to-End Frontend Workflow
 - Docker Deployment
 
 ---
 
-## Current Status
+# Current Status
 
-Frontend foundation is complete.
+The frontend foundation and API communication layer are complete.
 
-The remaining implementation focuses on integrating the frontend with the existing FastAPI and LangGraph backend to enable end-to-end AI-driven interaction management.
+The application successfully communicates with the FastAPI backend through a centralized service layer. The remaining work focuses on Redux integration, AI response rendering, automatic interaction form updates, and completing the end-to-end AI workflow.
