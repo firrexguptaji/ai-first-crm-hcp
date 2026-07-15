@@ -11,6 +11,7 @@ export interface ChatMessage {
 export interface ChatState {
     messages: ChatMessage[];
     loading: boolean;
+    error: string | null;
 }
 
 export interface InteractionState {
