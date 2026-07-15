@@ -234,46 +234,25 @@ Current communication flow:
 User
    │
    ▼
-React Component
+Chat Input
    │
    ▼
-API Service
+Redux Async Thunk
    │
    ▼
-Axios Client
+API Layer
    │
    ▼
-FastAPI
-   │
-   ▼
-LangGraph
-   │
-   ▼
-Selected AI Tool
-   │
-   ▼
-Structured Response
-```
-
-Future workflow after Redux integration:
-
-```text
-User
-   │
-   ▼
-AI Assistant Chat
-   │
-   ▼
-Redux
-   │
-   ▼
-API Service
+POST /chat
    │
    ▼
 FastAPI
    │
    ▼
 LangGraph
+   │
+   ▼
+Selected Tool
    │
    ▼
 Structured Response
@@ -282,7 +261,7 @@ Structured Response
 Redux Store
    │
    ▼
-Interaction Form Updates
+Chat Messages
 ```
 
 ---
@@ -334,60 +313,35 @@ The frontend follows these engineering principles:
 
 ### Layout
 
-- ✅ Responsive Application Layout
+- ✅ Responsive Layout
 - ✅ Header
 - ✅ Split Layout
 
 ### State Management
 
-- ✅ Redux Toolkit Configuration
+- ✅ Redux Toolkit
 - ✅ Store Configuration
-- ✅ Provider Configuration
 - ✅ Typed Hooks
 
-### Interaction Form
+### AI Chat
 
-- ✅ Read-only Interaction Form
-- ✅ Reusable Form Components
-- ✅ Structured Layout
-
-### AI Assistant
-
-- ✅ Chat Interface
-- ✅ Chat History
-- ✅ Chat Messages
 - ✅ Chat Input
+- ✅ Redux Async Thunks
+- ✅ Backend Integration
+- ✅ Request Lifecycle
+- ✅ Conversation History
+- ✅ AI Response Rendering
 
-### Shared Components
+### Components
 
-- ✅ Button
-- ✅ Card
-- ✅ Input
-- ✅ Dropdown
-- ✅ TextArea
-- ✅ Loading
-- ✅ EmptyState
+- ✅ Interaction Form
+- ✅ Shared Components
+- ✅ Chat Components
 
-### API Layer
+## Remaining Work
 
-- ✅ Axios Client
-- ✅ Environment Configuration
-- ✅ Chat API Service
-- ✅ HCP API Service
-- ✅ Interaction API Service
-- ✅ Typed API Models
-- ✅ Backend Connectivity Verification
-
----
-
-# Remaining Work
-
-- Redux Async Thunks
-- Connect UI with API Services
-- Render AI Responses
 - Automatic Interaction Form Population
-- Loading & Error States
-- End-to-End Frontend Workflow
+- Loading & Error UX Improvements
 - Docker Deployment
 
 ---

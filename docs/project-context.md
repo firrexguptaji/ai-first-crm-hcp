@@ -299,13 +299,14 @@ Docker & Deployment
 
 # Current Snapshot
 
+## Current Snapshot
+
 | Item | Value |
 |------|-------|
-| Version | v0.3.0 |
+| Version | v0.6.0 |
 | Milestone | Frontend Integration |
-| Completed Issues | #1–#21, #23–#29 |
-| Current Issue | #22 Polish Frontend Experience |
-| Active Branch | feature/22-Polish-Frontend-Experience |
-| Backend | ✅ Complete |
-| Frontend Foundation | ✅ Complete |
-| AI Integration and Development | ⏳ Pending |
+| Completed Issues | #1–#58 |
+| Current Issue | #59 Automatic Interaction Form Population |
+| Next Issue | #60 Loading & Error Handling |
+| Active Branch | feature/59-automatic-interaction-form-population |
+| Last Verified | AI Chat Workflow |
