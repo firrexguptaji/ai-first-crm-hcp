@@ -303,9 +303,9 @@ Docker & Deployment
 |------|-------|
 | Version | v0.3.0 |
 | Milestone | Frontend Integration |
-| Completed Issues | #1–#20, #23–#29 |
-| Current Issue | #21 Integrate Frontend with Backend APIs |
-| Active Branch | feature/21-integrate-frontend-backend |
+| Completed Issues | #1–#21, #23–#29 |
+| Current Issue | #22 Polish Frontend Experience |
+| Active Branch | feature/22-Polish-Frontend-Experience |
 | Backend | ✅ Complete |
 | Frontend Foundation | ✅ Complete |
-| Deployment | ⏳ Pending |
+| AI Integration and Development | ⏳ Pending |
