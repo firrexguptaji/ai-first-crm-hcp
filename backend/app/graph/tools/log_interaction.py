@@ -99,6 +99,23 @@ def log_interaction(
     extraction = extract_interaction(
         state["message"]
     )
+    if (
+        not extraction.hcp_name.strip()
+        or not extraction.interaction_date.strip()
+        or not extraction.summary.strip()
+    ):
+        state["tool_input"] = extraction.model_dump()
+
+        state["tool_output"] = {
+            "success": False,
+            "reason": "Incomplete interaction information",
+        }
+
+        state["response"] = (
+            "I couldn't identify a complete interaction. "
+            "Please include the Healthcare Professional's name "
+            "and interaction details."
+        )
 
     interaction = create_interaction_record(
         extraction

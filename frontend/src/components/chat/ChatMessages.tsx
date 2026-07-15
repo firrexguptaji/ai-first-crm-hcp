@@ -1,34 +1,54 @@
 import ChatMessage from "./ChatMessage";
 
-const messages = [
-    {
-        id: 1,
-        sender: "assistant",
-        message:
-            "Hello! I'm your AI CRM Assistant. Tell me about your interaction with an HCP.",
-        time: "10:00 AM",
-    },
-    {
-        id: 2,
-        sender: "user",
-        message:
-            "I met Dr. Alice Brown today regarding Product A.",
-        time: "10:01 AM",
-    },
-] as const;
+import { useAppSelector } from "../../app/hooks";
 
 export default function ChatMessages() {
+
+    const { messages, error } = useAppSelector(
+        (state) => state.chat
+    );
+
+    if (messages.length === 0) {
+        return (
+            <div className="chat-messages">
+
+                <ChatMessage
+                    sender="assistant"
+                    message="Hello! I'm your AI CRM Assistant. Tell me about your interaction with an HCP."
+                />
+
+                {error && (
+                    <ChatMessage
+                        sender="assistant"
+                        message={error}
+                    />
+                )}
+
+            </div>
+        );
+    }
+
     return (
         <div className="chat-messages">
 
             {messages.map((message) => (
+
                 <ChatMessage
                     key={message.id}
-                    sender={message.sender}
-                    message={message.message}
-                    time={message.time}
+                    sender={message.role}
+                    message={message.content}
                 />
+
             ))}
+
+            {error && (
+
+                <ChatMessage
+                    sender="assistant"
+                    message={error}
+                />
+
+            )}
 
         </div>
     );

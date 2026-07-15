@@ -72,28 +72,33 @@ class HealthcareProfessionalRepository:
         self.db.commit()
 
     def search_by_name(
-        self,
-        name: str,
+    self,
+    name: str,
     ) -> HealthcareProfessional | None:
         """
         Find a Healthcare Professional by name.
         """
+
+        if not name or not name.strip():
+            return None
 
         parts = name.strip().split()
 
         query = self.db.query(HealthcareProfessional)
 
         if len(parts) == 1:
+
             search = f"%{parts[0]}%"
 
             query = query.filter(
                 or_(
                     HealthcareProfessional.first_name.ilike(search),
                     HealthcareProfessional.last_name.ilike(search),
+                    )
                 )
-            )
-        
+
         else:
+
             first = f"%{parts[0]}%"
             last = f"%{parts[-1]}%"
 
@@ -101,8 +106,10 @@ class HealthcareProfessionalRepository:
                 HealthcareProfessional.first_name.ilike(first),
                 HealthcareProfessional.last_name.ilike(last),
             )
-        return query.first()
 
+        return query.first()
+    
+    
     def search(
         self,
         name: str | None = None,
@@ -116,9 +123,11 @@ class HealthcareProfessionalRepository:
         query = self.db.query(HealthcareProfessional)
 
         if name:
+
             parts = name.strip().split()
 
             if len(parts) == 1:
+
                 search = f"%{parts[0]}%"
 
                 query = query.filter(
@@ -127,17 +136,16 @@ class HealthcareProfessionalRepository:
                         HealthcareProfessional.last_name.ilike(search),
                     )
                 )
-            
-            
 
-        else:
-            first = f"%{parts[0]}%"
-            last = f"%{parts[-1]}%"
+            else:
 
-            query = query.filter(
+                first = f"%{parts[0]}%"
+                last = f"%{parts[-1]}%"
+
+                query = query.filter(
                 HealthcareProfessional.first_name.ilike(first),
                 HealthcareProfessional.last_name.ilike(last),
-            )
+            )   
 
         if specialization:
             query = query.filter(

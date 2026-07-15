@@ -28,11 +28,15 @@ def extract_update(
     )
 
     prompt = f"""
-    Extract the requested updates for an existing
-    healthcare interaction.
+        Extract the requested updates for an existing
+        healthcare interaction.
 
-    User Message:
-    {message}
+        Rules:
+        - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
+        - Only populate fields that the user wants to update.
+
+        User Message:
+        {message}
     """
 
     return structured_llm.invoke(prompt)
