@@ -306,7 +306,7 @@ Docker & Deployment
 | Version | v0.6.0 |
 | Milestone | Frontend Integration |
 | Completed Issues | #1–#58 |
-| Current Issue | #59 Automatic Interaction Form Population |
-| Next Issue | #60 Loading & Error Handling |
-| Active Branch | feature/59-automatic-interaction-form-population |
-| Last Verified | AI Chat Workflow |
+| Current Issue | #59 Integrate AI Chat Workflow |
+| Next Issue | #60 Automatic Interaction Form Population |
+| Active Branch | feature/59-integrate-ai-chat-workflow |
+| Last Verified | Integrate A |
