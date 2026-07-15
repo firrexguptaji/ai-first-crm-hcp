@@ -4,75 +4,69 @@
 
 **Project:** AI-First CRM HCP Module
 
-**Purpose**
+### Objective
 
-Build an AI-first CRM module for Healthcare Professionals where all interaction data is managed through an AI assistant powered by LangGraph.
+Develop an AI-first CRM module for Healthcare Professionals (HCPs) where interaction records are created, edited, and managed exclusively through a LangGraph-powered AI assistant.
 
-This project is being developed as a production-style technical assignment using issue-driven development.
+The project follows a production-inspired engineering workflow using issue-driven development, modular architecture, documentation-first practices, and incremental feature delivery.
 
 ---
 
-## Tech Stack
+# Technology Stack
 
-### Frontend
+## Frontend
 
 - React
 - TypeScript
 - Vite
 - Redux Toolkit
+- Lucide React
 
-### Backend
+## Backend
 
 - FastAPI
-- SQLAlchemy
+- SQLAlchemy 2.0
 - PostgreSQL
+- Pydantic v2
 
-### AI
+## AI
 
 - LangGraph
 - LangChain
 - Groq
-- Model: llama-3.3-70b-versatile
+- llama-3.3-70b-versatile
 
 ---
 
-## Engineering Principles
+# Engineering Principles
 
 - One Issue = One Feature
 - One Feature = One Pull Request
 - Documentation updated after every completed issue
 - ADRs for significant architectural decisions
-- Simplicity over unnecessary complexity
-- Stay within assignment scope
+- Incremental development
+- Component reusability
+- Keep architecture within assignment scope
 
 ---
 
-## Current Project Status
+# Current Project Status
 
-Current Milestone:
-
-Project Setup
-
-Completed Issues:
-
-- #1 Initialize Repository Structure
-- #2 Configure GitHub Project Management
-- #3 Initialize Frontend
-- #4 Initialize Backend
-- #5 Configure PostgreSQL & SQLAlchemy
-- #6 Configure LangGraph & Groq
-
-Current Issue:
-
-#7 Project Documentation Foundation
-
-Next Issue:
-
-#8 Verify Development Environment
+| Area | Status |
+|-------|--------|
+| Repository Setup | ✅ |
+| Documentation | ✅ |
+| Backend Development | ✅ |
+| Database | ✅ |
+| REST APIs | ✅ |
+| LangGraph | ✅ |
+| Frontend Foundation | ✅ |
+| Frontend Integration | 🚧 |
+| Docker Deployment | ⏳ |
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
 backend/
@@ -84,170 +78,234 @@ README.md
 
 ---
 
-## Git Workflow
+# Architecture Overview
 
-Issue
-
-↓
-
-Feature Branch
-
-↓
-
-Implementation
-
-↓
-
-Testing
-
-↓
-
-Documentation
-
-↓
-
-Commit
-
-↓
-
-Pull Request
-
-↓
-
-Merge
-
-↓
-
-Close Issue
-
----
-
-## Architecture Summary
-
-Frontend (React)
-
-↓
-
+```text
+React Frontend
+        │
+        ▼
+Redux Store
+        │
+        ▼
 FastAPI
-
-↓
-
-LangGraph
-
-↓
-
-Groq
-
-↓
-
+        │
+        ▼
+LangGraph Router
+        │
+        ▼
+Selected AI Tool
+        │
+        ▼
+Service Layer
+        │
+        ▼
+Repository Layer
+        │
+        ▼
+SQLAlchemy ORM
+        │
+        ▼
 PostgreSQL
+```
 
 ---
 
-## Backend Status
+# Backend Status
 
-### Completed
+## Completed
 
-- FastAPI initialized
-- PostgreSQL configured
-- SQLAlchemy configured
-- Database schema designed
-- SQLAlchemy models implemented
-- Pydantic schemas
-- Repository layer
-- Service layer
-- Healthcare Professional API
-- Interaction API
-- LangGraph Tools
-- AI Workflow
+- FastAPI Application
+- SQLAlchemy ORM Models
+- Pydantic Schemas
+- Repository Layer
+- Service Layer
+- REST APIs
+- PostgreSQL Integration
+- LangGraph Router
+- Tool Registry
+- AI Chat Endpoint
+- End-to-End Backend Validation
 
+---
 
-## Frontend Status
+# Frontend Status
 
-### Completed
+## Completed
 
-- React initialized
-- Vite configured
-- TypeScript configured
-- Layout
+### Layout
+
+- Responsive Layout
+- Header
+- Split Layout
+- Left Panel
+- Right Panel
+
+### State Management
+
 - Redux Toolkit
+- Store Configuration
+- Provider
+- Typed Hooks
 
-### Pending
+### Interaction Form
 
-- Read-only interaction form
-- AI chat
-- API integration
+- Read-only Interaction Form
+- Reusable Form Components
 
-## AI Status
+### AI Assistant
 
-### Completed
+- Chat Panel
+- Chat Header
+- Chat Messages
+- Chat Input
 
-- LangGraph configured
-- Groq configured
-- Base graph implemented
-- Graph invocation verified
-- Graph routing
-- Log Interaction Tool
-- Edit Interaction Tool
-- Search HCP Tool
-- Interaction History Tool
-- Follow-up Suggestion Tool
+### Shared Components
 
-## Database Status
+- Button
+- Input
+- Dropdown
+- TextArea
+- Loading
+- EmptyState
+- InfoCard
+- RadioGroup
+- SuggestionList
+- ActionRow
 
-Current Entities
+---
+
+# AI Status
+
+## Implemented LangGraph Tools
+
+- ✅ Log Interaction
+- ✅ Edit Interaction
+- ✅ Search Healthcare Professional
+- ✅ Retrieve Interaction History
+- ✅ Suggest Follow-up
+
+---
+
+# Database Status
+
+## Entities
 
 - HealthcareProfessional
 - Interaction
 
-Relationship
+## Relationship
 
-HealthcareProfessional (1)
+```text
+HealthcareProfessional
+        │
+        │ 1
+        ▼
+Interaction
+        *
+```
 
-↓
+## Completed
 
-Interaction (Many)
+- Schema Design
+- SQLAlchemy Models
+- Relationships
+- Repository Layer
 
-Current State
+---
 
-- Schema designed
-- ORM models implemented
-
-Pending
-
-- Alembic migrations
-- Repository layer
-
-
-
-## Assignment Constraints
+# Assignment Constraints
 
 - Read-only interaction form
-- All updates performed through AI chat
-- Minimum two mandatory LangGraph tools
-- Total of five LangGraph tools planned
-- Keep architecture simple
-- Avoid multi-agent workflows unless required
+- AI chat is the primary interaction interface
+- LangGraph orchestration
+- Five AI tools
+- Single-agent workflow
+- Production-style engineering practices
 
-## Notes
+---
 
-The interaction form is intentionally read-only.
+# Development Workflow
 
-Users interact exclusively through the AI chat interface.
+```text
+Issue
+   │
+   ▼
+Feature Branch
+   │
+   ▼
+Implementation
+   │
+   ▼
+Testing
+   │
+   ▼
+Documentation
+   │
+   ▼
+Commit
+   │
+   ▼
+Pull Request
+   │
+   ▼
+Merge
+```
 
-LangGraph uses a single graph architecture.
+---
 
-Five LangGraph tools will be implemented in later milestones.
+# Current Milestones
 
+## ✅ Milestone 1
 
-## Current Snapshot
+Project Setup
+
+## ✅ Milestone 2
+
+Backend Development
+
+## ✅ Milestone 3
+
+Frontend Foundation
+
+## 🚧 Milestone 4
+
+Frontend ↔ Backend Integration
+
+## ⏳ Milestone 5
+
+Docker & Deployment
+
+---
+
+# Remaining Work
+
+## Frontend Integration
+
+- Connect Chat to FastAPI
+- Redux Async Actions
+- AI Response Rendering
+- Automatic Form Population
+- Loading & Error Handling
+
+## Deployment
+
+- Backend Dockerfile
+- Frontend Dockerfile
+- Docker Compose
+- Environment Configuration
+- One-command Setup
+
+---
+
+# Current Snapshot
 
 | Item | Value |
 |------|-------|
 | Version | v0.3.0 |
-| Milestone | LangGraph Integration |
-| Completed Issues | #1–#19, #23–#29 |
-| Current Issue | #20 Create Reusable UI Components |
-| Next Issue | #21 Integrate Frontend with Backend APIs |
-| Active Branch | feature/20-create-reusable-ui-components |
-| Last Verified | Chat Bot Interface |
+| Milestone | Frontend Integration |
+| Completed Issues | #1–#20, #23–#29 |
+| Current Issue | #21 Integrate Frontend with Backend APIs |
+| Active Branch | feature/21-integrate-frontend-backend |
+| Backend | ✅ Complete |
+| Frontend Foundation | ✅ Complete |
+| Deployment | ⏳ Pending |

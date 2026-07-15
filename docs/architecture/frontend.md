@@ -2,7 +2,9 @@
 
 ## Overview
 
-The frontend is built with React and TypeScript and follows a component-based architecture. The UI is designed as a responsive split-screen interface where the left panel displays interaction details and the right panel provides an AI assistant chat.
+The frontend is built with React, TypeScript, and Redux Toolkit following a component-based architecture. The application provides a responsive split-screen interface where users interact with an AI assistant while viewing structured Healthcare Professional (HCP) interaction details.
+
+The architecture emphasizes reusable UI components, centralized state management, and separation of concerns to simplify future AI integration.
 
 ---
 
@@ -12,6 +14,7 @@ The frontend is built with React and TypeScript and follows a component-based ar
 - TypeScript
 - Redux Toolkit
 - Vite
+- Lucide React
 
 ---
 
@@ -66,7 +69,14 @@ AppLayout
 └── SplitLayout
     │
     ├── LeftPanel
+    │   │
+    │   ▼
+    │ InteractionForm
+    │
     └── RightPanel
+        │
+        ▼
+     ChatPanel
 ```
 
 ---
@@ -76,28 +86,28 @@ AppLayout
 ### Desktop
 
 ```text
-+-----------------------------+----------------------------+
-|                             |                            |
-|      Left Panel             |      Right Panel           |
-|                             |                            |
-+-----------------------------+----------------------------+
++-------------------------------+------------------------------+
+|                               |                              |
+|       Interaction Form        |      AI Assistant Chat       |
+|                               |                              |
++-------------------------------+------------------------------+
 ```
 
 ### Mobile
 
 ```text
-+-----------------------------+
-|        Left Panel           |
-+-----------------------------+
-|        Right Panel          |
-+-----------------------------+
++-------------------------------+
+|       Interaction Form        |
++-------------------------------+
+|      AI Assistant Chat        |
++-------------------------------+
 ```
 
 ---
 
-## Current Components
+# Component Architecture
 
-### Layout
+## Layout
 
 - ✅ AppLayout
 - ✅ Header
@@ -107,29 +117,38 @@ AppLayout
 
 ---
 
-## Upcoming Components
+## Interaction Form
 
-### Interaction
+- ✅ InteractionForm
+- ✅ Input
+- ✅ Dropdown
+- ✅ TextArea
+- ✅ TextAreaWithAction
+- ✅ ActionRow
+- ✅ InfoCard
+- ✅ RadioGroup
+- ✅ SuggestionList
 
-- Interaction Details Form
-- Form Sections
-- Material Cards
-- Follow-up Section
+---
 
-### AI Assistant
+## AI Assistant
 
-- Chat Panel
-- Chat History
-- Chat Input
-- Message Components
+- ✅ ChatPanel
+- ✅ ChatHeader
+- ✅ ChatMessages
+- ✅ ChatMessage
+- ✅ ChatInput
 
-### Shared Components
+---
 
-- Buttons
-- Cards
-- Inputs
-- Loading States
-- Empty States
+## Shared Components
+
+- ✅ Button
+- ✅ Input
+- ✅ Dropdown
+- ✅ TextArea
+- ✅ Loading
+- ✅ EmptyState
 
 ---
 
@@ -139,7 +158,7 @@ Redux Toolkit is configured as the global state management solution.
 
 ### Store
 
-The application store combines the following feature slices:
+The application store contains three feature slices:
 
 - App
 - Chat
@@ -147,26 +166,79 @@ The application store combines the following feature slices:
 
 ### Provider
 
-The Redux Provider wraps the root React application, making the global store available throughout the component tree.
+The Redux Provider wraps the root application and exposes the global store throughout the component tree.
 
 ### Typed Hooks
 
-Typed hooks are provided for:
+Custom typed hooks are provided:
 
 - useAppDispatch
 - useAppSelector
 
-These hooks simplify dispatching actions and selecting state while maintaining full TypeScript support.
+These provide type-safe access to Redux state and actions.
+
+---
+
+## Frontend Workflow
+
+The intended application workflow is:
+
+```text
+User
+   │
+   ▼
+AI Assistant Chat
+   │
+   ▼
+Redux
+   │
+   ▼
+FastAPI API
+   │
+   ▼
+LangGraph
+   │
+   ▼
+Selected AI Tool
+   │
+   ▼
+Structured Response
+   │
+   ▼
+Redux Store Update
+   │
+   ▼
+Interaction Form Updates
+```
+
+---
 
 ## API Integration
 
-The frontend will communicate with the FastAPI backend through:
+The frontend communicates with the FastAPI backend using REST APIs.
 
-- `/chat`
-- `/hcps`
-- `/interactions`
+### Endpoints
 
-The AI assistant will be the primary interface for creating and updating interaction records.
+- POST `/chat`
+- GET `/hcps`
+- POST `/hcps`
+- GET `/interactions`
+- POST `/interactions`
+
+The AI Assistant serves as the primary user interface for creating and updating interaction records.
+
+---
+
+## UI Design Principles
+
+The frontend follows several design principles:
+
+- Component-based architecture
+- Reusable UI components
+- Responsive layouts
+- Centralized state management
+- Consistent styling
+- Clear separation of presentation and business logic
 
 ---
 
@@ -174,61 +246,53 @@ The AI assistant will be the primary interface for creating and updating interac
 
 ### Completed
 
-- ✅ Responsive application layout
+#### Layout
+
+- ✅ Responsive Application Layout
 - ✅ Header
-- ✅ Split-screen layout
-- ✅ Reusable layout components
+- ✅ Split Layout
 
-### In Progress
+#### State Management
 
-- 🚧 Interaction Details Form
+- ✅ Redux Toolkit Configuration
+- ✅ Store Configuration
+- ✅ Provider Configuration
+- ✅ Typed Hooks
 
-### Planned
+#### Interaction Form
 
-- AI Assistant Chat
-- Redux Integration
-- Backend Integration
-- End-to-End Frontend Workflow
+- ✅ Interaction Details Form
+- ✅ Reusable Form Components
+- ✅ Read-only Layout
 
+#### AI Assistant
 
-## Interaction Form
+- ✅ Chat Interface
+- ✅ Message History
+- ✅ Chat Input
+- ✅ Send Action
 
-Implemented components:
+#### Shared Components
 
-- Input
-- Dropdown
-- TextArea
-- TextAreaWithAction
-- ActionRow
-- InfoCard
-- RadioGroup
-- SuggestionList
+- ✅ Button
+- ✅ Loading
+- ✅ EmptyState
 
-Features:
+---
 
-- Read-only interaction form
-- Responsive grid layout
-- CRM-style reusable components
-- Icon-enhanced inputs
-- Redux-ready architecture
+## Remaining Work
 
+- Frontend ↔ Backend Integration
+- LangGraph Response Rendering
+- Automatic Form Population
+- Loading & Error States
+- End-to-End Workflow Validation
+- Docker Deployment
 
+---
 
-## Chat Components
+## Current Status
 
-Implemented components
+Frontend foundation is complete.
 
-- ChatPanel
-- ChatHeader
-- ChatMessages
-- ChatMessage
-- ChatInput
-
-Features
-
-- Responsive chat layout
-- Reusable message bubbles
-- User/Assistant message support
-- Send button UI
-- Static conversation history
-- Ready for Redux integration
+The remaining implementation focuses on integrating the frontend with the existing FastAPI and LangGraph backend to enable end-to-end AI-driven interaction management.
