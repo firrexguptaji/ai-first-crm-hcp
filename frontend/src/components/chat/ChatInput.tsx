@@ -1,4 +1,5 @@
 import { SendHorizontal } from "lucide-react";
+import Button from "../common/Button";
 
 export default function ChatInput() {
     return (
@@ -12,14 +13,13 @@ export default function ChatInput() {
 
             <div className="chat-actions">
 
-                <button
-                    type="button"
-                    className="send-button"
-                >
+                <Button type="button">
+
                     <SendHorizontal size={16} />
 
                     <span>Send</span>
-                </button>
+
+                </Button>
 
             </div>
 

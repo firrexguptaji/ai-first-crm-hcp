@@ -22,3 +22,177 @@ body {
 
     color: #1f2937;
 }
+
+
+.crm-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    height: 38px;
+
+    padding: 0 16px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+
+}
+
+.crm-button.primary {
+
+    background: #2563eb;
+
+    color: white;
+
+    border: none;
+
+}
+
+.crm-button.primary:hover {
+
+    background: #1d4ed8;
+
+}
+
+.crm-button.secondary {
+
+    background: white;
+
+    color: #374151;
+
+    border: 1px solid #d6d9de;
+
+}
+
+.crm-button.secondary:hover {
+
+    background: #f9fafb;
+
+}
+
+.crm-button:disabled {
+
+    opacity: 0.7;
+
+    cursor: not-allowed;
+
+}
+
+
+.loading-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 24px;
+
+}
+
+.loading-spinner {
+
+    width: 36px;
+
+    height: 36px;
+
+    border: 3px solid #e5e7eb;
+
+    border-top-color: #2563eb;
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+
+}
+
+.loading-text {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    color: #6b7280;
+
+}
+
+@keyframes spin {
+
+    from {
+
+        transform: rotate(0deg);
+
+    }
+
+    to {
+
+        transform: rotate(360deg);
+
+    }
+
+}
+
+.empty-state {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 12px;
+
+    padding: 32px;
+
+}
+
+.empty-state-icon {
+
+    color: #9ca3af;
+
+}
+
+.empty-state-title {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #374151;
+
+}
+
+.empty-state-description {
+
+    margin: 0;
+
+    max-width: 320px;
+
+    font-size: 14px;
+
+    color: #6b7280;
+
+}

@@ -3,6 +3,8 @@ import {
     Plus,
 } from "lucide-react";
 
+import Button from "./Button";
+
 interface InfoCardProps {
     title: string;
     emptyText: string;
@@ -22,20 +24,21 @@ export default function InfoCard({
 
                 <span>{title}</span>
 
-                <button
+                <Button
                     type="button"
-                    className="card-button"
+                    variant="secondary"
+                    disabled
 >
 
                     {buttonText === "Search/Add" ? (
-                        <Search size={14} />
+                        <Search size={14}/>
                         ) : (
-                        <Plus size={14} />
+                        <Plus size={14}/>
                     )}
 
-                    <span>{buttonText}</span>
+                    {buttonText}
 
-                </button>
+                </Button>
 
             </div>
 

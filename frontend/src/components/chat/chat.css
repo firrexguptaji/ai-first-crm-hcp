@@ -204,11 +204,6 @@
 }
 
 
-.send-button:hover {
-
-    background: #1d4ed8;
-
-}
 
 .chat-actions {
 
@@ -218,37 +213,6 @@
 
 }
 
-.send-button {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    width: 110px;
-
-    height: 40px;
-
-    justify-content: center;
-
-    border: none;
-
-    border-radius: 6px;
-
-    background: #2563eb;
-
-    color: white;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: background 0.2s ease;
-
-}
 
 .send-button:hover {
 
