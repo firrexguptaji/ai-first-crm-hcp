@@ -75,8 +75,8 @@
 
 | Issue | Status |
 |-------|--------|
-| #62 Containerize Backend | 👀 Review |
-| #63 Containerize Frontend | ⏳ Ready |
+| #62 Containerize Backend | ✅ Completed |
+| #63 Containerize Frontend | 👀 Review |
 | #64 Configure Docker Compose Environment | ⏳ Ready |
 | #65 Deployment Documentation | ⏳ Ready |
 
@@ -185,6 +185,16 @@ Tests: 176 unit and integration tests, plus 47 opt-in live routing evaluations.
 | `requirements-dev.txt` | Test dependencies for local development |
 
 Verified: image builds, container starts, `/health` and `/chat` work against the host PostgreSQL.
+
+### #63 Containerize Frontend
+
+| Change | Detail |
+|--------|--------|
+| `frontend/Dockerfile` | Multi-stage: `node:22-alpine` build, `nginx:1.27-alpine` serve; `VITE_API_URL` build argument; health check |
+| `frontend/nginx.conf` | SPA fallback, long-term asset caching, no-cache `index.html`, gzip, `/health` |
+| `frontend/.dockerignore` | Keeps `node_modules`, `dist` and `.env` out of the build |
+
+Verified: image builds, app served on http://localhost:8080 and works with the backend container.
 
 ### Follow-up Issues
 

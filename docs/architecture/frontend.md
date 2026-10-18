@@ -572,3 +572,52 @@ The frontend follows these engineering principles:
 The frontend foundation, API communication layer, AI chat workflow, automatic form population, and loading and error handling are complete.
 
 The remaining work focuses on deployment and polish.
+
+---
+
+# Docker
+
+Implemented in #63. Files in `frontend/`:
+
+| File | Purpose |
+|------|---------|
+| `Dockerfile` | Multi-stage build: Node builds, nginx serves |
+| `nginx.conf` | Static hosting, SPA fallback, caching, gzip, health check |
+| `.dockerignore` | Excludes `node_modules`, `dist` and `.env` |
+
+## Build Stages
+
+```text
+Stage 1: node:22-alpine
+      │
+      ├── npm ci              (cached layer)
+      ├── VITE_API_URL        (build argument)
+      └── npm run build  ──►  dist/
+                               │
+Stage 2: nginx:1.27-alpine     │
+      │                        ▼
+      └── /usr/share/nginx/html  ◄── dist/
+```
+
+The final image contains only nginx and the built files; Node.js and the source code are not included.
+
+## Configuration
+
+`VITE_API_URL` is embedded into the JavaScript at **build time**. It is the backend URL as seen from the user's browser.
+
+| Build Argument | Default |
+|----------------|---------|
+| `VITE_API_URL` | `http://localhost:8000` |
+
+## nginx
+
+| Path | Behaviour |
+|------|-----------|
+| `/health` | Returns `ok` (container health check) |
+| `/assets/*` | Hashed build files, cached for one year |
+| `/*` | Falls back to `index.html` (single-page app); not cached |
+
+| Item | Value |
+|------|-------|
+| Container port | 80 |
+| Host port (example) | 8080 |

@@ -105,6 +105,20 @@ docker run --rm --name crm-backend -p 8000:8000 --env-file backend/.env -e "DATA
 
 Check: http://localhost:8000/health
 
+## Frontend with Docker
+
+```powershell
+# From the project root
+docker build -t ai-first-crm-frontend ./frontend
+
+# Optional: point the UI at another backend URL (baked in at build time)
+docker build --build-arg VITE_API_URL=http://localhost:8000 -t ai-first-crm-frontend ./frontend
+
+docker run --rm --name crm-frontend -p 8080:80 ai-first-crm-frontend
+```
+
+Open: http://localhost:8080
+
 ---
 
 # Environment Variables
@@ -512,10 +526,10 @@ Status
 Completed
 
 - ✅ Backend Dockerfile (#62)
+- ✅ Frontend Dockerfile (#63)
 
 Planned
 
-- Frontend Dockerfile
 - Docker Compose
 - Deployment Documentation
 
