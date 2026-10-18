@@ -3,6 +3,7 @@ from app.graph.tools.interaction_history import interaction_history
 from app.graph.tools.log_interaction import log_interaction
 from app.graph.tools.search_hcp import search_hcp
 from app.graph.tools.suggest_followup import suggest_followup
+from app.graph.tools.unsupported import unsupported
 
 TOOLS = {
     "log_interaction": log_interaction,
@@ -10,6 +11,7 @@ TOOLS = {
     "search_hcp": search_hcp,
     "interaction_history": interaction_history,
     "suggest_followup": suggest_followup,
+    "unsupported": unsupported,
 }
 
 

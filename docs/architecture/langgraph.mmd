@@ -4,13 +4,14 @@ flowchart TD
 
     G[LangGraph]
 
-    R[Intent Router]
+    R[Intent Router<br/>LLM + keyword fallback]
 
     T1[Log Interaction]
     T2[Edit Interaction]
     T3[Search HCP]
     T4[Retrieve History]
     T5[Suggest Follow-up]
+    T6[Unsupported<br/>no database]
 
     S[Service Layer]
 
@@ -26,6 +27,7 @@ flowchart TD
     R --> T3
     R --> T4
     R --> T5
+    R --> T6
 
     T1 --> S
     T2 --> S

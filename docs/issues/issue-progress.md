@@ -65,7 +65,8 @@
 | #59 Integrate AI Chat Workflow | ✅ Completed |
 | #69 Fix AI Workflow Reliability | ✅ Completed |
 | #60 Automatic Interaction Form Population | ✅ Completed |
-| #72 Add Additional Interaction Fields | 👀 Review |
+| #72 Add Additional Interaction Fields | ✅ Completed |
+| #74 LLM-based Intent Routing and Edit Safety | 👀 Review |
 | #61 Loading & Error Handling | ⏳ Ready |
 
 ---
@@ -140,10 +141,30 @@ Fixes found during live testing
 | Incomplete-interaction message was vague | Message names the missing field |
 | Duplicate HCP names resolved randomly | Oldest matching HCP is always used |
 
+### #74 LLM-based Intent Routing and Edit Safety
+
+| Iteration | Change |
+|-----------|--------|
+| 74a | LLM intent routing with keyword fallback, Unsupported tool, `ROUTER_MODE` |
+| 74b | Routing evaluation set: LLM 47 / 47, keyword 32 / 47 (ADR-004) |
+| 74c | Edit applies only mentioned fields; add/remove for lists; "nothing to update" |
+| 74d | Placeholder values ("N/A") stored as null |
+
+Fixes found during live testing
+
+| Problem | Fix |
+|---------|-----|
+| "Actually she was negative" → "HCP 'UNKNOWN' not found" | Ask "Which Healthcare Professional?" |
+| LLM returned `hcp_name: null` → parsing error | `hcp_name` optional in AI schemas |
+| HCP name missed in "Delete Product B ... with Alice Brown" | Fallback: name taken from the message |
+| History did not answer "When did I last meet...?" | Reply includes the latest interaction |
+| Capability list shown on one line | Chat bubbles keep line breaks |
+
+Tests: 176 unit and integration tests, plus 47 opt-in live routing evaluations.
+
 ### Follow-up Issues
 
+- Conversation context: understand "she" / "that meeting" without repeating the HCP name
+- Interaction history list in the chat UI
 - Use a separate test database (integration tests currently write to the development database)
-- **LLM-based intent routing with keyword fallback (next, high priority)**: 14 of 37 realistic messages are misrouted by keywords; unrecognised messages default to Log Interaction
-- Edit safety: AI defaults for sentiment, channel and follow-up flag can overwrite values; list fields cannot add to or remove from existing values; edits with no changes report success
-- Log: placeholder text ("N/A") in optional fields
 - Frontend unit tests (Vitest)

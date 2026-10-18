@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import Field
 
 from app.models.enums import InteractionChannel, Sentiment
@@ -7,6 +9,11 @@ from app.schemas.common import BaseSchema
 
 # Field descriptions are included in the JSON schema sent to the LLM,
 # so they double as extraction instructions.
+HCP_NAME_DESCRIPTION = (
+    "Name of the Healthcare Professional the request is about, "
+    "without titles, e.g. 'Alice Brown' in 'my meeting with Dr. Alice "
+    "Brown'. Never a product name. Null only if no person is named."
+)
 ATTENDEES_DESCRIPTION = (
     "Other people present besides the HCP and the representative, "
     "e.g. nurses or colleagues. Keep their titles exactly as written, "
@@ -34,7 +41,10 @@ class InteractionExtraction(BaseSchema):
     independent of the database models.
     """
 
-    hcp_name: str
+    hcp_name: str | None = Field(
+        default=None,
+        description=HCP_NAME_DESCRIPTION,
+    )
     interaction_date: str
     channel: InteractionChannel
     raw_notes: str
@@ -68,7 +78,10 @@ class InteractionUpdateExtraction(BaseSchema):
     Only the fields that should be updated are populated.
     """
 
-    hcp_name: str
+    hcp_name: str | None = Field(
+        default=None,
+        description=HCP_NAME_DESCRIPTION,
+    )
     interaction_id: str | None = None
 
     interaction_date: str | None = None
@@ -81,11 +94,17 @@ class InteractionUpdateExtraction(BaseSchema):
     follow_up_date: str | None = None
     attendees: list[str] | None = Field(
         default=None,
-        description=ATTENDEES_DESCRIPTION,
+        description=(
+            "Only when the user gives the COMPLETE list of attendees. "
+            + ATTENDEES_DESCRIPTION
+        ),
     )
     samples_distributed: list[str] | None = Field(
         default=None,
-        description=SAMPLES_DESCRIPTION,
+        description=(
+            "Only when the user gives the COMPLETE list of samples. "
+            + SAMPLES_DESCRIPTION
+        ),
     )
     outcomes: str | None = Field(
         default=None,
@@ -94,6 +113,32 @@ class InteractionUpdateExtraction(BaseSchema):
     follow_up_actions: str | None = Field(
         default=None,
         description=FOLLOW_UP_ACTIONS_DESCRIPTION,
+    )
+
+    # Incremental list changes ("add Dr. Patel", "remove Nurse Kelly").
+    attendees_to_add: list[str] | None = Field(
+        default=None,
+        description="Attendees to add, keeping titles, e.g. ['Dr. Patel'].",
+    )
+    attendees_to_remove: list[str] | None = Field(
+        default=None,
+        description="Attendees to remove, e.g. ['Nurse Kelly'].",
+    )
+    samples_to_add: list[str] | None = Field(
+        default=None,
+        description="Samples to add to the samples distributed.",
+    )
+    samples_to_remove: list[str] | None = Field(
+        default=None,
+        description="Samples to remove from the samples distributed.",
+    )
+    products_to_add: list[str] | None = Field(
+        default=None,
+        description="Products to add to the products discussed.",
+    )
+    products_to_remove: list[str] | None = Field(
+        default=None,
+        description="Products to remove from the products discussed.",
     )
 
 
@@ -114,7 +159,10 @@ class InteractionHistoryExtraction(BaseSchema):
     from natural language.
     """
 
-    hcp_name: str
+    hcp_name: str | None = Field(
+        default=None,
+        description=HCP_NAME_DESCRIPTION,
+    )
     limit: int | None = None
 
 
@@ -124,7 +172,10 @@ class FollowUpExtraction(BaseSchema):
     from natural language.
     """
 
-    hcp_name: str
+    hcp_name: str | None = Field(
+        default=None,
+        description=HCP_NAME_DESCRIPTION,
+    )
 
 
 class FollowUpRecommendation(BaseSchema):
@@ -134,3 +185,26 @@ class FollowUpRecommendation(BaseSchema):
 
     recommendation: str
     rationale: str
+
+IntentName = Literal[
+    "log_interaction",
+    "edit_interaction",
+    "search_hcp",
+    "interaction_history",
+    "suggest_followup",
+    "unsupported",
+]
+
+
+class IntentClassification(BaseSchema):
+    """
+    Tool selected by the LLM router for a user message.
+    """
+
+    tool: IntentName = Field(
+        description="The single tool that should handle the message.",
+    )
+    reason: str = Field(
+        default="",
+        description="One short sentence explaining the choice.",
+    )

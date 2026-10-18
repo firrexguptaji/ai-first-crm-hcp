@@ -3,6 +3,7 @@ from __future__ import annotations
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.graph.tools.serializers import serialize_interaction
+from app.graph.tools.validation import require_hcp_name, resolve_hcp_name
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
@@ -72,6 +73,27 @@ def get_history_records(
     finally:
         db.close()
         
+def history_response(hcp_name: str, interactions) -> str:
+    """
+    Summarise the history, including the latest interaction,
+    so questions like "When did I last meet X?" are answered.
+
+    Interactions are ordered newest first.
+    """
+
+    if not interactions:
+        return f"No interactions found for {hcp_name}."
+
+    latest = interactions[0]
+    when = latest.interaction_date.strftime("%d-%m-%Y")
+    channel = latest.channel.value.replace("_", " ").title()
+
+    return (
+        f"Retrieved {len(interactions)} interaction(s) for {hcp_name}. "
+        f"Last interaction: {when} ({channel}) — {latest.summary}"
+    )
+
+
 def interaction_history(
     state: CRMState,
 ) -> CRMState:
@@ -81,6 +103,16 @@ def interaction_history(
 
     extraction = extract_history(
         state["message"]
+    )
+
+    extraction.hcp_name = resolve_hcp_name(
+        extraction.hcp_name,
+        state["message"],
+    )
+
+    require_hcp_name(
+        extraction.hcp_name,
+        "Show my interactions with Alice Brown",
     )
 
     interactions = get_history_records(
@@ -99,9 +131,9 @@ def interaction_history(
         ],
     }
 
-    state["response"] = (
-        f"Retrieved {len(interactions)} interaction(s) "
-        f"for {extraction.hcp_name}."
+    state["response"] = history_response(
+        extraction.hcp_name,
+        interactions,
     )
 
     return state

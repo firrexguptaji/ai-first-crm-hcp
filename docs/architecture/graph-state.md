@@ -12,48 +12,41 @@ The state is intentionally lightweight and contains only the information require
 
 ## State Fields
 
-| Field | Type | Purpose |
-|--------|------|---------|
-| message | string | Original user message |
-| intent | string | Detected user intent |
-| tool | string | Selected tool name |
-| tool_input | dictionary | Structured input for the selected tool |
-| tool_output | dictionary | Result returned by the tool |
-| response | string | Final AI response |
+Defined in `app/graph/state.py` (`CRMState`).
+
+| Field | Type | Written By | Purpose |
+|-------|------|------------|---------|
+| message | string | Chat API | Original user message |
+| tool_name | string | Router | Selected tool |
+| tool_input | dictionary | Tool | Structured data extracted by the LLM |
+| tool_output | dictionary | Tool | Result returned by the tool |
+| response | string | Tool | Message shown to the user |
 
 ---
 
 ## State Flow
 
 ```text
-User Message
+POST /chat
       │
       ▼
 message
       │
       ▼
-Intent Detection
+Router (LLM + keyword fallback)
       │
       ▼
-intent
-      │
-      ▼
-Tool Selection
-      │
-      ▼
-tool
+tool_name
       │
       ▼
 Tool Execution
       │
-      ▼
-tool_output
+      ├── tool_input   (LLM extraction)
+      ├── tool_output  (success or structured error)
+      └── response     (chat message)
       │
       ▼
-LLM Response
-      │
-      ▼
-response
+ChatResponse { response, tool_name, tool_output }
 ```
 
 ---

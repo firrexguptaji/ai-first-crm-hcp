@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import logging
 import re
 
+from app.config.settings import settings
 from app.graph.state import CRMState
+
+logger = logging.getLogger(__name__)
 
 
 def _words(*phrases: str) -> re.Pattern[str]:
@@ -68,7 +72,10 @@ FOLLOWUP_MENTION = _words("follow up", "follow-up", "followup")
 
 def classify(message: str) -> str:
     """
-    Map a user message to a tool name.
+    Keyword router: map a user message to a tool name.
+
+    Used as the fallback when the LLM router is unavailable,
+    and when ROUTER_MODE=keyword.
 
     Rules are checked from most specific to least specific so that
     requests about existing records are not swallowed by the broad
@@ -97,12 +104,96 @@ def classify(message: str) -> str:
     return "log_interaction"
 
 
+ROUTER_PROMPT = """
+You route messages for a pharmaceutical CRM assistant used by
+medical representatives. Choose exactly one tool.
+
+Tools:
+- log_interaction: the user describes a NEW meeting, call, visit or
+  email with a Healthcare Professional (HCP).
+  e.g. "Met Dr. Smith today, discussed Product A"
+  e.g. "Dr. Smith rang me about side effects"
+- edit_interaction: the user corrects or changes an interaction that
+  was already recorded, including adding or removing attendees,
+  samples or products, or changing sentiment, date, channel,
+  outcomes or follow-up details.
+  e.g. "Actually she was negative, not positive"
+  e.g. "The meeting with Alice Brown was a phone call"
+  e.g. "Add Dr. Patel as an attendee to my meeting with Alice Brown"
+  e.g. "Mark follow-up as not required for Alice Brown"
+- interaction_history: the user asks about PAST interactions.
+  e.g. "When did I last meet Alice Brown?"
+  e.g. "What did I discuss with Dr. Smith last time?"
+- search_hcp: the user looks for HCPs or HCP details.
+  e.g. "Do we have an oncologist named Smith?"
+  e.g. "Find cardiologists at City Hospital"
+- suggest_followup: the user asks for advice or a recommended next step.
+  e.g. "What should I do next with Alice Brown?"
+- unsupported: anything else — greetings, questions about the
+  assistant, deleting records, or requests unrelated to HCP
+  interactions.
+  e.g. "Hi", "What can you do?", "Delete my last interaction"
+
+Rules:
+- A message that only mentions a follow-up inside a meeting note
+  ("Met Dr. Smith, follow up next week") is log_interaction.
+- If unsure between log_interaction and edit_interaction, choose
+  edit_interaction only when the message refers to an existing
+  record ("my last meeting", "actually", "change", "correct").
+
+Message:
+{message}
+"""
+
+
+def llm_classify(message: str) -> str:
+    """
+    LLM router: ask the LLM which tool should handle the message.
+    """
+
+    # Imported here so keyword-only routing works without LLM setup.
+    from app.llm.groq import structured
+    from app.schemas.ai import IntentClassification
+
+    result = structured(IntentClassification).invoke(
+        ROUTER_PROMPT.format(message=message)
+    )
+
+    logger.info(
+        "LLM routed message to %s (%s)",
+        result.tool,
+        result.reason,
+    )
+
+    return result.tool
+
+
+def select_tool(message: str) -> str:
+    """
+    Select a tool using the LLM, falling back to keywords
+    if the LLM call fails or routing is set to keyword mode.
+    """
+
+    if settings.router_mode == "keyword":
+        return classify(message)
+
+    try:
+        return llm_classify(message)
+
+    except Exception:
+        logger.warning(
+            "LLM routing failed, using keyword fallback",
+            exc_info=True,
+        )
+        return classify(message)
+
+
 def route(state: CRMState) -> CRMState:
     """
     Determine which LangGraph tool should
     handle the user's request.
     """
 
-    state["tool_name"] = classify(state["message"])
+    state["tool_name"] = select_tool(state["message"])
 
     return state

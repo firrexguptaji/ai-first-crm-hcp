@@ -226,7 +226,13 @@ The AI Chat API returns HTTP 200 even when a tool fails. Failures are reported i
 }
 ```
 
-The chat displays `response` for both success and failure. Error styling and retry are planned in #61.
+The chat displays `response` for both success and failure. Line breaks in replies are preserved (`white-space: pre-line`). Error styling and retry are planned in #61.
+
+| `error_type` | Example |
+|--------------|---------|
+| `validation` | HCP not found, missing HCP name, nothing to update |
+| `unsupported` | Greeting or unsupported request; reply lists capabilities |
+| `internal` | Unexpected server error |
 
 ## Type Alignment
 
@@ -314,6 +320,7 @@ sendChatMessage.fulfilled
 | Interaction History | Shows the latest interaction |
 | Suggest Follow-up | Adds the recommendation to AI Suggested Follow-ups |
 | Search HCP | No change |
+| Unsupported | No change |
 | Any failed response | No change |
 
 Suggestions are cleared when a different interaction is loaded.
@@ -487,6 +494,7 @@ The frontend follows these engineering principles:
 ## Remaining Work
 
 - Loading & Error UX Improvements (#61)
+- Interaction history list in chat
 - Frontend Unit Tests
 - Docker Deployment
 

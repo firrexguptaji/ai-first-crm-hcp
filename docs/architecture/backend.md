@@ -56,7 +56,14 @@ REST endpoints.
 
 ### config/
 
-Application configuration.
+Application configuration (`settings.py`).
+
+| Setting | Default | Purpose |
+|---------|---------|---------|
+| `DATABASE_URL` | — | PostgreSQL connection |
+| `GROQ_API_KEY` | — | Groq API key |
+| `MODEL_NAME` | `openai/gpt-oss-120b` | LLM model |
+| `ROUTER_MODE` | `llm` | `llm` or `keyword` routing |
 
 ---
 
@@ -81,7 +88,8 @@ Database configuration.
 Current implementation
 
 - Graph State
-- Router (whole-word, priority-ordered intent matching)
+- Router (LLM intent classification with keyword fallback, ADR-004)
+- Unsupported tool (no database access)
 - Tool Registry
 - Tool Execution with error handling
 - Log Interaction Tool
@@ -91,6 +99,7 @@ Current implementation
 - Suggest Follow-up Tool
 - Shared date parsing (`tools/dates.py`)
 - Shared interaction serialization (`tools/serializers.py`)
+- Shared validation (`tools/validation.py`): HCP name resolution, placeholder cleaning, mention checks
 
 ---
 
@@ -194,7 +203,10 @@ The AI Chat API always returns HTTP 200 with a `ChatResponse`.
 
 | Situation | `tool_output.error_type` | User Message |
 |-----------|--------------------------|--------------|
-| Incomplete interaction | `validation` | Asks for HCP name and details |
+| Incomplete interaction | `validation` | Names the missing field |
+| No HCP named | `validation` | "Which Healthcare Professional do you mean?" |
+| Edit with nothing to change | `validation` | "I couldn't tell what to change" |
+| Greeting, capability question, delete request | `unsupported` | Lists what the assistant can do |
 | HCP or interaction not found | `validation` | e.g. "HCP 'X' not found." |
 | Unreadable date | `validation` | Asks for a valid date |
 | LLM, database or routing failure | `internal` | Generic retry message |

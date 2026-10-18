@@ -11,6 +11,10 @@ class Settings(BaseSettings):
     groq_api_key: str
     model_name: str = "openai/gpt-oss-120b"
 
+    # "llm": the LLM selects the tool, keywords are the fallback.
+    # "keyword": keyword rules only (offline development, debugging).
+    router_mode: str = "llm"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",

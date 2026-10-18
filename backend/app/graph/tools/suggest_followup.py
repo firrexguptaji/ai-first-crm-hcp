@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
+from app.graph.tools.validation import require_hcp_name, resolve_hcp_name
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
@@ -107,6 +108,16 @@ def suggest_followup(
 
     extraction = extract_followup(
         state["message"]
+    )
+
+    extraction.hcp_name = resolve_hcp_name(
+        extraction.hcp_name,
+        state["message"],
+    )
+
+    require_hcp_name(
+        extraction.hcp_name,
+        "Suggest a follow-up for Alice Brown",
     )
 
     recommendation = generate_followup(

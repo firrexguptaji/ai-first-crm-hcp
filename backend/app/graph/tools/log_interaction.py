@@ -6,6 +6,12 @@ from datetime import datetime
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.graph.tools.serializers import serialize_interaction
+from app.graph.tools.validation import (  # noqa: F401
+    PLACEHOLDER_VALUES,
+    clean_list,
+    clean_text,
+    is_missing,
+)
 from app.graph.tools.dates import date_rules, parse_date, parse_datetime
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
@@ -54,6 +60,37 @@ def extract_interaction(
     return structured_llm.invoke(prompt)
 
 
+def build_create(
+    extraction: InteractionExtraction,
+    hcp_id,
+) -> InteractionCreate:
+    """
+    Convert the LLM extraction into a create schema.
+
+    Optional fields are cleaned: empty values and placeholders
+    such as "N/A" are stored as null.
+    """
+
+    return InteractionCreate(
+        hcp_id=hcp_id,
+        interaction_date=(
+            parse_datetime(extraction.interaction_date)
+            or datetime.now()
+        ),
+        channel=extraction.channel,
+        raw_notes=extraction.raw_notes,
+        summary=extraction.summary,
+        sentiment=extraction.sentiment,
+        products_discussed=clean_list(extraction.products_discussed),
+        follow_up_required=extraction.follow_up_required,
+        follow_up_date=parse_date(extraction.follow_up_date),
+        attendees=clean_list(extraction.attendees),
+        samples_distributed=clean_list(extraction.samples_distributed),
+        outcomes=clean_text(extraction.outcomes),
+        follow_up_actions=clean_text(extraction.follow_up_actions),
+    )
+
+
 def create_interaction_record(
     extraction: InteractionExtraction,
 ):
@@ -81,24 +118,7 @@ def create_interaction_record(
                 f"HCP '{extraction.hcp_name}' not found."
             )
 
-        schema = InteractionCreate(
-            hcp_id=hcp.id,
-            interaction_date=(
-                parse_datetime(extraction.interaction_date)
-                or datetime.now()
-            ),
-            channel=extraction.channel,
-            raw_notes=extraction.raw_notes,
-            summary=extraction.summary,
-            sentiment=extraction.sentiment,
-            products_discussed=extraction.products_discussed,
-            follow_up_required=extraction.follow_up_required,
-            follow_up_date=parse_date(extraction.follow_up_date),
-            attendees=extraction.attendees or None,
-            samples_distributed=extraction.samples_distributed or None,
-            outcomes=extraction.outcomes,
-            follow_up_actions=extraction.follow_up_actions,
-        )
+        schema = build_create(extraction, hcp.id)
 
         return interaction_service.create_interaction(
             schema
@@ -116,26 +136,6 @@ REQUIRED_FIELDS = {
     "interaction_date": "interaction date",
     "summary": "topics discussed",
 }
-
-
-# Placeholders an LLM may return instead of leaving a field empty.
-PLACEHOLDER_VALUES = {
-    "unknown", "n/a", "na", "none", "null", "not specified",
-    "not mentioned", "not provided", "unspecified", "-",
-}
-
-
-def is_missing(value: str | None) -> bool:
-    """
-    True when a required field is empty or only a placeholder.
-    """
-
-    if value is None:
-        return True
-
-    cleaned = value.strip().strip(".").lower()
-
-    return not cleaned or cleaned in PLACEHOLDER_VALUES
 
 
 def log_interaction(

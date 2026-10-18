@@ -111,6 +111,9 @@
 
     max-width: 88%;
 
+    /* Keep line breaks from assistant replies (e.g. capability lists). */
+    white-space: pre-line;
+
     width: fit-content;
 
     padding: 12px 14px;
