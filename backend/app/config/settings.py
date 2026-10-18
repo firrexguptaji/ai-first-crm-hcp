@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     # "keyword": keyword rules only (offline development, debugging).
     router_mode: str = "llm"
 
+    # Insert sample HCPs into an empty database on startup (Docker demo).
+    seed_demo_data: bool = False
+
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",

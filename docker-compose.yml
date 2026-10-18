@@ -1,0 +1,62 @@
+# AI-First CRM HCP — full stack (#64)
+#
+#   1. Copy .env.example to .env and set GROQ_API_KEY
+#   2. docker compose up --build
+#
+#   Frontend:  http://localhost:8080
+#   Backend:   http://localhost:8000/docs
+#   Database:  localhost:5433 (user/password from .env)
+
+name: ai-first-crm-hcp
+
+services:
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-crm}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-crm_password}
+      POSTGRES_DB: ${POSTGRES_DB:-ai_first_crm_hcp}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # 5433 on the host so it does not clash with a local PostgreSQL on 5432.
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    environment:
+      # "db" is the service name above, reachable on the Compose network.
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-crm}:${POSTGRES_PASSWORD:-crm_password}@db:5432/${POSTGRES_DB:-ai_first_crm_hcp}
+      GROQ_API_KEY: ${GROQ_API_KEY:?Set GROQ_API_KEY in .env}
+      MODEL_NAME: ${MODEL_NAME:-openai/gpt-oss-120b}
+      ROUTER_MODE: ${ROUTER_MODE:-llm}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # URL used by the browser, so it is the host port, not "backend".
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  pgdata:

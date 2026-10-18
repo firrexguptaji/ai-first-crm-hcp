@@ -64,6 +64,7 @@ Application configuration (`settings.py`).
 | `GROQ_API_KEY` | — | Groq API key |
 | `MODEL_NAME` | `openai/gpt-oss-120b` | LLM model |
 | `ROUTER_MODE` | `llm` | `llm` or `keyword` routing |
+| `SEED_DEMO_DATA` | `false` | Insert sample HCPs into an empty database on startup (`true` in Docker Compose) |
 
 ---
 
@@ -270,3 +271,42 @@ Configuration
 Environment variables are passed at runtime (`--env-file backend/.env`). Secrets are never copied into the image.
 
 Inside a container, `localhost` refers to the container itself. To use PostgreSQL running on the host, replace `localhost` with `host.docker.internal` in `DATABASE_URL`.
+
+---
+
+## Docker Compose
+
+Implemented in #64 (`docker-compose.yml` in the project root).
+
+```text
+                 ┌──────────────────────────────┐
+Browser ──8080──►│ frontend (nginx)             │
+   │             └──────────────────────────────┘
+   │             ┌──────────────────────────────┐
+   └────8000────►│ backend (FastAPI)            │
+                 └──────────────┬───────────────┘
+                                │ db:5432
+                 ┌──────────────▼───────────────┐
+pgAdmin ─5433───►│ db (PostgreSQL 16)           │
+                 │ volume: pgdata               │
+                 └──────────────────────────────┘
+```
+
+| Service | Image | Host Port | Starts After |
+|---------|-------|-----------|--------------|
+| `db` | `postgres:16-alpine` | 5433 | — |
+| `backend` | `./backend` | 8000 | `db` healthy |
+| `frontend` | `./frontend` | 8080 | `backend` healthy |
+
+- The backend reaches PostgreSQL by service name: `@db:5432`
+- The browser reaches the backend through the host: `VITE_API_URL=http://localhost:8000`
+- Data is stored in the `pgdata` volume and survives `docker compose down`
+
+## Demo Data
+
+`app/db/seed.py` inserts six sample Healthcare Professionals when the HCP table is empty. It never changes existing data.
+
+| Trigger | How |
+|---------|-----|
+| Startup | `SEED_DEMO_DATA=true` (enabled in Docker Compose) |
+| Manual | `python -m app.db.seed` |

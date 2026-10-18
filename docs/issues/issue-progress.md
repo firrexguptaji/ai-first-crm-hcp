@@ -76,8 +76,8 @@
 | Issue | Status |
 |-------|--------|
 | #62 Containerize Backend | ✅ Completed |
-| #63 Containerize Frontend | 👀 Review |
-| #64 Configure Docker Compose Environment | ⏳ Ready |
+| #63 Containerize Frontend | ✅ Completed |
+| #64 Configure Docker Compose Environment | 👀 Review |
 | #65 Deployment Documentation | ⏳ Ready |
 
 ---
@@ -196,9 +196,20 @@ Verified: image builds, container starts, `/health` and `/chat` work against the
 
 Verified: image builds, app served on http://localhost:8080 and works with the backend container.
 
+### #64 Configure Docker Compose Environment
+
+| Change | Detail |
+|--------|--------|
+| `docker-compose.yml` | `db` (PostgreSQL 16, `pgdata` volume), `backend`, `frontend`; health-based start order |
+| `.env.example` (root) | Compose configuration; only `GROQ_API_KEY` required |
+| `app/db/seed.py` | Six demo HCPs inserted into an empty database |
+| `SEED_DEMO_DATA` setting | Off by default, enabled in Compose |
+
+Verified: `docker compose up --build` starts all services; chat, routing and form population work against the Compose database.
+
 ### Follow-up Issues
 
 - Conversation context: understand "she" / "that meeting" without repeating the HCP name
 - Interaction history list in the chat UI
-- Use a separate test database (integration tests currently write to the development database)
+- Use a separate test database (integration tests currently write to the development database; Compose gives a clean database for demos)
 - Frontend unit tests (Vitest)
