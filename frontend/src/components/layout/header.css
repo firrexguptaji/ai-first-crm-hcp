@@ -21,3 +21,32 @@
 
     color: #1f2937;
 }
+
+
+.interaction-title {
+
+    margin: 0;
+
+    font-size: 1.25rem;
+
+    font-weight: 600;
+
+    color: #1f2937;
+
+}
+
+@media (max-width: 640px) {
+
+    .app-header {
+
+        padding: 0 16px;
+
+    }
+
+    .interaction-title {
+
+        font-size: 1.05rem;
+
+    }
+
+}
