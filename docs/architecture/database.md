@@ -51,14 +51,45 @@ Implemented features include:
 
 ---
 
-## Next Step
+## Interaction Fields
 
-Implement Pydantic schemas for request validation and API serialization.
+| Group | Fields |
+|-------|--------|
+| Core | `interaction_date`, `channel`, `raw_notes`, `summary`, `sentiment` |
+| Products | `products_discussed` |
+| Follow-up | `follow_up_required`, `follow_up_date`, `follow_up_actions` |
+| Participants | `attendees` |
+| Outcomes | `outcomes`, `samples_distributed` |
 
+Full field list: `database/schema/schema.md`.
+
+---
+
+## Migrations
+
+Tables are created by `create_all()` on startup. Columns added later are applied with SQL scripts.
+
+| Migration | Issue | Change |
+|-----------|-------|--------|
+| `001_add_interaction_fields.sql` | #72 | Attendees, samples, outcomes, follow-up actions |
+
+See `database/migrations/README.md`.
+
+---
 
 ## Current Implementation
 
-- SQLAlchemy ORM Models
-- Repository Layer
-- CRUD Services
-- REST API Integration
+- ✅ SQLAlchemy ORM Models
+- ✅ Pydantic Schemas
+- ✅ Repository Layer
+- ✅ Service Layer
+- ✅ REST API Integration
+- ✅ LangGraph Tool Integration
+- ✅ SQL Migrations
+
+---
+
+## Known Limitations
+
+- Integration tests use the development database
+- Duplicate HCP names resolve to the oldest record

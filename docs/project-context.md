@@ -63,7 +63,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | Frontend Foundation | ✅ |
 | AI Workflow Reliability | ✅ |
 | Automatic Form Population | ✅ |
-| Additional Interaction Fields | 👀 |
+| Additional Interaction Fields | ✅ |
+| LLM Intent Routing & Edit Safety | 👀 |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ⏳ |
 
@@ -190,6 +191,19 @@ PostgreSQL
 - ✅ Retrieve Interaction History
 - ✅ Suggest Follow-up
 
+## Routing (#74)
+
+- ✅ LLM intent routing with keyword fallback (ADR-004)
+- ✅ Unsupported tool for greetings and unsupported requests
+- ✅ Routing evaluation: LLM 47 / 47, keyword 32 / 47
+
+## Edit Safety (#74)
+
+- ✅ Only mentioned fields change
+- ✅ Add / remove attendees, samples and products
+- ✅ "Nothing to update" message
+- ✅ Placeholder values stored as null
+
 ## Reliability (#69)
 
 - ✅ Whole-word, priority-ordered intent routing
@@ -233,7 +247,8 @@ Interaction
 - Read-only interaction form
 - AI chat is the primary interaction interface
 - LangGraph orchestration
-- Five AI tools
+- Five AI tools (plus an Unsupported fallback)
+- LLM-based intent routing
 - Single-agent workflow
 - Production-style engineering practices
 
@@ -304,13 +319,13 @@ Testing & Demo
 
 ## AI Integration
 
-- Merge #72 Additional Interaction Fields
-- LLM-based Intent Routing (next issue)
+- Merge #74 LLM-based Intent Routing and Edit Safety
 - #61 Loading & Error Handling
 
 ## Improvements
 
-- Edit safety for defaults and list fields
+- Conversation context ("she", "that meeting")
+- Interaction history list in chat
 - Separate test database
 - Frontend unit tests
 
@@ -328,13 +343,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.9.0 |
+| Version | v0.10.0 |
 | Milestone | AI Integration |
-| Completed Issues | #1–#21, #23–#30, #58, #59, #60, #69 |
-| Current Issue | #72 Add Additional Interaction Fields (Review) |
-| Next Issue | LLM-based Intent Routing |
-| Active Branch | 72-add-additional-interaction-fields |
+| Completed Issues | #1–#21, #23–#30, #58–#60, #69, #72 |
+| Current Issue | #74 LLM-based Intent Routing and Edit Safety (Review) |
+| Next Issue | #61 Loading & Error Handling |
+| Active Branch | feature/74-llm-intent-routing |
 | Model | openai/gpt-oss-120b |
-| Backend Tests | 108 passing |
+| Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
+| Backend Tests | 176 passing, 47 live evaluations opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — backend tests, frontend type check, live log and edit |
+| Last Verified | 2026-10-18 — backend tests, live routing evaluation, live edit scenarios |

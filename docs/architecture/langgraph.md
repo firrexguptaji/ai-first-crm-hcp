@@ -25,7 +25,7 @@ A multi-agent architecture is intentionally avoided to keep the solution simple,
           LangGraph Graph
                   │
                   ▼
-   Intent Router (keyword-based)
+  Intent Router (LLM + fallback)
                   │
       ┌───────────┼────────────┐
       ▼           ▼            ▼
@@ -109,12 +109,16 @@ The graph does **not**:
 4. Retrieve Interaction History
 5. Suggest Follow-up
 
+### Fallback
+
+6. Unsupported — replies with capabilities, no database access
+
 ---
 
 ## Design Principles
 
 - Single graph architecture
-- Intent-based routing
+- LLM intent routing with deterministic fallback
 - Tool-driven execution
 - Reusable Service Layer
 - Repository pattern for database access
@@ -127,50 +131,53 @@ The graph does **not**:
 
 ## Intent Routing
 
-The router is a deterministic, rule-based classifier (`app/graph/router.py`).
-
-Rules
-
-- Keywords match **whole words only** ("call" does not match "recall", "met" does not match "metformin")
-- Rules are checked from **most specific to least specific**
-- An edit requires an edit verb **and** a reference to an existing record or field
-
-Priority Order
+The router (`app/graph/router.py`) selects one tool per message. See **ADR-004**.
 
 ```text
-Edit Interaction        update / change / correct  +  meeting / last / summary / date ...
-        │
-        ▼
-Interaction History     history, past meetings, show interactions ...
-        │
-        ▼
-Suggest Follow-up       suggest, recommend, next step, what should I ...
-        │
-        ▼
-Log Interaction         met, visited, called, discussed ...
-        │
-        ▼
-Search HCP              find, search, list, doctors ...
-        │
-        ▼
-Default                 Log Interaction
+User Message
+      │
+      ▼
+LLM Router (IntentClassification)
+      │
+      ├── success ─────► selected tool
+      │
+      └── failure ─────► Keyword Router ─────► selected tool
 ```
 
-Examples
+Tools
 
-| Message | Tool |
-|---------|------|
-| Update my meeting with Dr. Smith, sentiment was positive | Edit Interaction |
-| Suggest a follow-up after my call with Dr. Smith | Suggest Follow-up |
-| Met Alice Brown today. Schedule a follow-up next week. | Log Interaction |
-| Dr. Smith asked about metformin dosing | Log Interaction |
-| Add Dr. Patel as an attendee to my meeting with Alice Brown | Edit Interaction |
+| Tool | Example |
+|------|---------|
+| Log Interaction | Met Dr. Smith today, discussed Product A |
+| Edit Interaction | Actually she was negative, not positive |
+| Interaction History | When did I last meet Alice Brown? |
+| Search HCP | Do we have an oncologist named Smith? |
+| Suggest Follow-up | What should I do next with Alice Brown? |
+| Unsupported | Hi / What can you do? / Delete my last interaction |
 
-Known Limitations
+Unsupported requests reply with the assistant's capabilities and never write to the database.
 
-Keyword routing cannot understand meaning. Messages such as *"Alice Brown's sentiment should be neutral"* or *"When did I last meet Alice Brown?"* are misrouted, and unrecognised messages default to Log Interaction. LLM-based intent routing is planned as the next issue.
+Configuration
 
-Routing logic lives in `classify(message)`, which is unit-tested independently of the graph.
+| `ROUTER_MODE` | Behaviour |
+|---------------|-----------|
+| `llm` (default) | LLM selects the tool, keywords on failure |
+| `keyword` | Keyword rules only |
+
+Keyword Fallback Rules
+
+- Whole-word matching ("call" does not match "recall")
+- Priority order: Edit → History → Follow-up request → Log → Search
+- An edit requires an edit verb (`update`, `change`, `add`, `remove`, ...) **and** a record or field reference
+
+Evaluation
+
+| Router | Correct (47 messages) |
+|--------|-----------------------|
+| Keyword | 32 / 47 |
+| **LLM** | **47 / 47** |
+
+The evaluation set lives in `backend/tests/routing_cases.py`.
 
 ---
 
@@ -264,6 +271,9 @@ Implemented
 - ✅ Natural-language date resolution (#69)
 - ✅ Graceful error handling (#69)
 - ✅ Additional interaction fields extracted by AI (#72)
+- ✅ LLM intent routing with keyword fallback (#74)
+- ✅ Unsupported tool (#74)
+- ✅ Edit safety: mentioned fields only, add/remove lists (#74)
 
 ---
 

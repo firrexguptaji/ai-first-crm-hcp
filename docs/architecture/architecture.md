@@ -25,12 +25,12 @@ FastAPI
 LangGraph
  │
  ▼
-Router
+Router (LLM + keyword fallback)
  │
- ├────────────┬────────────┬────────────┬────────────┐
- ▼            ▼            ▼            ▼            ▼
-Log Tool   Edit Tool   Search Tool   History Tool   Follow-up Tool
- │            │            │            │            │
+ ├────────────┬────────────┬────────────┬────────────┬──────────────┐
+ ▼            ▼            ▼            ▼            ▼              ▼
+Log Tool   Edit Tool   Search Tool   History Tool   Follow-up Tool  Unsupported
+ │            │            │            │            │             (no database)
  └────────────┴────────────┴────────────┴────────────┘
                       │
                       ▼
@@ -72,9 +72,10 @@ Responsible for:
 Responsible for:
 
 - Understanding user prompts
-- Selecting appropriate LangGraph tools
-- Producing structured outputs
+- Selecting the LangGraph tool (LLM routing, ADR-004)
+- Extracting structured data (JSON Schema output, ADR-003)
 - Updating CRM interaction data
+- Declining unsupported requests without database writes
 
 ---
 
@@ -107,6 +108,7 @@ AppLayout
         │
         ├── LeftPanel
         └── RightPanel
+```
 
 # End-to-End AI Workflow
 

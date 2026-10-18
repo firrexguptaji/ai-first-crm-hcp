@@ -96,9 +96,14 @@ uvicorn app.main:app --reload
 ## Backend
 
 ```env
+DATABASE_URL=postgresql+psycopg://postgres:password@localhost:5432/ai_first_crm_hcp
+
 GROQ_API_KEY=your_api_key
 
 MODEL_NAME=openai/gpt-oss-120b
+
+# llm (default): LLM routing with keyword fallback | keyword: keyword rules only
+ROUTER_MODE=llm
 ```
 
 ## Frontend
@@ -135,6 +140,21 @@ psql -U postgres -d ai_first_crm_hcp -f database/migrations/001_add_interaction_
 
 ---
 
+# Testing
+
+```bash
+cd backend
+
+# Unit and integration tests (PostgreSQL and Groq required for integration tests)
+pytest -v
+
+# Live LLM routing evaluation (47 Groq calls, about 2 minutes)
+# PowerShell
+$env:RUN_LLM_EVAL="1"; pytest tests/test_routing_eval.py -v
+```
+
+---
+
 # Documentation
 
 | Document | Description |
@@ -142,7 +162,7 @@ psql -U postgres -d ai_first_crm_hcp -f database/migrations/001_add_interaction_
 | Project Context | Current project status |
 | Frontend Architecture | Frontend architecture and workflow |
 | Backend Architecture | Backend architecture |
-| ADR | Architecture decisions (ADR-001 – ADR-003) |
+| ADR | Architecture decisions (ADR-001 – ADR-004) |
 | Database Schema | ERD and schema documentation |
 | Issue Progress | Development roadmap |
 
@@ -316,10 +336,20 @@ Implemented AI tools
 - ✅ Search Healthcare Professional
 - ✅ Retrieve Interaction History
 - ✅ Suggest Follow-up
+- ✅ Unsupported (greetings, capability questions, delete requests — no database writes)
+
+Routing
+
+- ✅ LLM selects the tool, keyword rules as fallback (ADR-004)
+
+| Router | Evaluation (47 messages) |
+|--------|--------------------------|
+| Keyword | 32 / 47 |
+| **LLM** | **47 / 47** |
 
 Reliability
 
-- ✅ Whole-word, priority-ordered intent routing
+- ✅ Edits change only the fields you mention; add/remove attendees, samples and products
 - ✅ JSON Schema structured output
 - ✅ Natural-language date resolution ("tomorrow", "next week")
 - ✅ Incomplete interactions are never saved
@@ -452,10 +482,10 @@ Completed
 - ✅ AI Workflow Reliability (#69)
 - ✅ Automatic Interaction Form Population (#60)
 - ✅ Additional Interaction Fields (#72)
+- ✅ LLM Intent Routing & Edit Safety (#74)
 
 Next
 
-- LLM-based Intent Routing
 - Loading & Error Handling (#61)
 
 Status
@@ -537,7 +567,8 @@ Documentation
 
 ## AI
 
-- ✅ LangGraph Router
+- ✅ LangGraph Router (LLM + keyword fallback)
+- ✅ Routing Evaluation (47 / 47)
 - ✅ Tool Registry
 - ✅ Log Interaction
 - ✅ Edit Interaction

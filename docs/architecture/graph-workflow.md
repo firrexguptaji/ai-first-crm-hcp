@@ -30,10 +30,10 @@ Intent Detection (Router)
    ▼
 Tool Selection
    │
-   ├─────────────┬─────────────┬─────────────┬────────────────────┐
-   ▼             ▼             ▼             ▼                    ▼
-Log         Edit          Search HCP   Interaction History   Suggest Follow-up
-Interaction Interaction
+   ├─────────────┬─────────────┬─────────────┬────────────────────┬─────────────┐
+   ▼             ▼             ▼             ▼                    ▼             ▼
+Log         Edit          Search HCP   Interaction History   Suggest Follow-up  Unsupported
+Interaction Interaction                                                         (no database)
    │             │             │             │                    │
    └─────────────┴─────────────┴─────────────┴────────────────────┘
                            │
@@ -84,10 +84,9 @@ Responsibilities
 
 Implementation
 
-- Rule-based classifier in `app/graph/router.py`
-- Whole-word keyword matching
-- Priority order: Edit → History → Follow-up request → Log → Search
-- Unrecognised messages default to Log Interaction
+- LLM classifier (`IntentClassification`) selects one of six tools (ADR-004)
+- Keyword rules are used when the LLM call fails, or when `ROUTER_MODE=keyword`
+- Unrecognised requests go to **Unsupported**, which never writes to the database
 
 Possible intents include:
 
@@ -96,6 +95,7 @@ Possible intents include:
 - Search HCP
 - Retrieve Interaction History
 - Suggest Follow-up
+- Unsupported
 
 ---
 
@@ -127,6 +127,27 @@ Responsibilities
 Errors are handled at three levels.
 
 ### 1. Inside Tools
+
+Requests that do not name an HCP are answered with a question before any database access:
+
+```text
+"Actually she was negative"
+      │
+      ▼
+No HCP name (LLM and message fallback)
+      │
+      ▼
+"Which Healthcare Professional do you mean?..."
+```
+
+Edits that would change nothing are rejected:
+
+```text
+"Edit the outcome for Alice Brown"
+      │
+      ▼
+"I couldn't tell what to change..."
+```
 
 Incomplete input is rejected before anything is saved.
 
