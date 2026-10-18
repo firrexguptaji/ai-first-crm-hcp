@@ -225,3 +225,48 @@ http://127.0.0.1:<any port>
 ```
 
 Vite moves to port 5174+ when 5173 is busy, so a fixed origin list is not used.
+
+---
+
+## Docker
+
+Implemented in #62. Files in `backend/`:
+
+| File | Purpose |
+|------|---------|
+| `Dockerfile` | Production image |
+| `.dockerignore` | Excludes `.env`, virtual environments, caches and tests |
+| `requirements.txt` | Runtime dependencies (UTF-8) |
+| `requirements-dev.txt` | Runtime + test dependencies for local development |
+
+Image
+
+| Item | Value |
+|------|-------|
+| Base | `python:3.12-slim` |
+| User | Non-root `appuser` (uid 1000) |
+| Port | 8000 |
+| Command | `uvicorn app.main:app --host 0.0.0.0 --port 8000` |
+| Health check | `GET /health` every 30 s |
+
+```text
+python:3.12-slim
+      │
+      ▼
+pip install -r requirements.txt   (cached layer)
+      │
+      ▼
+COPY app/
+      │
+      ▼
+USER appuser
+      │
+      ▼
+uvicorn :8000
+```
+
+Configuration
+
+Environment variables are passed at runtime (`--env-file backend/.env`). Secrets are never copied into the image.
+
+Inside a container, `localhost` refers to the container itself. To use PostgreSQL running on the host, replace `localhost` with `host.docker.internal` in `DATABASE_URL`.

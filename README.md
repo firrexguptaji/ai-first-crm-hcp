@@ -85,10 +85,25 @@ python -m venv .venv
 
 .venv\Scripts\Activate.ps1
 
-pip install -r requirements.txt
+# App + test dependencies (requirements.txt holds runtime dependencies only)
+pip install -r requirements-dev.txt
 
 uvicorn app.main:app --reload
 ```
+
+## Backend with Docker
+
+```powershell
+# From the project root
+docker build -t ai-first-crm-backend ./backend
+
+# Use the local PostgreSQL from inside the container
+$url = (Select-String -Path backend\.env -Pattern '^DATABASE_URL=').Line.Split('=', 2)[1].Replace('@localhost', '@host.docker.internal')
+
+docker run --rm --name crm-backend -p 8000:8000 --env-file backend/.env -e "DATABASE_URL=$url" ai-first-crm-backend
+```
+
+Check: http://localhost:8000/health
 
 ---
 
@@ -494,12 +509,19 @@ Status
 
 ## Milestone 6 — Deployment
 
+Completed
+
+- ✅ Backend Dockerfile (#62)
+
 Planned
 
-- Backend Dockerfile
 - Frontend Dockerfile
 - Docker Compose
 - Deployment Documentation
+
+Status
+
+**In Progress**
 
 ---
 

@@ -57,7 +57,7 @@
 
 ---
 
-## Milestone 5 — AI Integration — 👀 Final Review
+## Milestone 5 — AI Integration — ✅ Completed
 
 | Issue | Status |
 |-------|--------|
@@ -67,15 +67,15 @@
 | #60 Automatic Interaction Form Population | ✅ Completed |
 | #72 Add Additional Interaction Fields | ✅ Completed |
 | #74 LLM-based Intent Routing and Edit Safety | ✅ Completed |
-| #61 Loading & Error Handling | 👀 Review |
+| #61 Loading & Error Handling | ✅ Completed |
 
 ---
 
-## Milestone 6 — Deployment — ⏳ Not Started
+## Milestone 6 — Deployment — 🚧 In Progress
 
 | Issue | Status |
 |-------|--------|
-| #62 Containerize Backend | ⏳ Ready |
+| #62 Containerize Backend | 👀 Review |
 | #63 Containerize Frontend | ⏳ Ready |
 | #64 Configure Docker Compose Environment | ⏳ Ready |
 | #65 Deployment Documentation | ⏳ Ready |
@@ -174,6 +174,17 @@ Tests: 176 unit and integration tests, plus 47 opt-in live routing evaluations.
 | Notice (yellow) | Missing HCP name, HCP not found, nothing to update |
 | Info (blue) | Greetings and unsupported requests |
 | Error (red) + Retry | Server unreachable, timeout, server error |
+
+### #62 Containerize Backend
+
+| Change | Detail |
+|--------|--------|
+| `backend/Dockerfile` | `python:3.12-slim`, cached dependency layer, non-root user, health check |
+| `backend/.dockerignore` | Keeps `.env` and local files out of the image |
+| `requirements.txt` | Converted from UTF-16 to UTF-8; runtime dependencies only |
+| `requirements-dev.txt` | Test dependencies for local development |
+
+Verified: image builds, container starts, `/health` and `/chat` work against the host PostgreSQL.
 
 ### Follow-up Issues
 

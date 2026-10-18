@@ -65,9 +65,10 @@ The project follows a production-inspired engineering workflow using issue-drive
 | Automatic Form Population | ✅ |
 | Additional Interaction Fields | ✅ |
 | LLM Intent Routing & Edit Safety | ✅ |
-| Loading & Error Handling | 👀 |
+| Loading & Error Handling | ✅ |
+| Backend Container | 👀 |
 | Frontend Integration | 🚧 |
-| Docker Deployment | ⏳ |
+| Docker Deployment | 🚧 |
 
 ---
 
@@ -302,11 +303,11 @@ Frontend Development
 
 LangGraph Integration
 
-## 🚧 Milestone 5
+## ✅ Milestone 5
 
 AI Integration
 
-## ⏳ Milestone 6
+## 🚧 Milestone 6
 
 Deployment
 
@@ -318,13 +319,9 @@ Testing & Demo
 
 # Remaining Work
 
-## AI Integration
-
-- Merge #61 Loading & Error Handling (completes Milestone 5)
-
 ## Deployment
 
-- #62 Containerize Backend
+- Merge #62 Containerize Backend
 - #63 Containerize Frontend
 - #64 Docker Compose
 - #65 Deployment Documentation
@@ -355,14 +352,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.11.0 |
-| Milestone | AI Integration |
-| Completed Issues | #1–#21, #23–#30, #58–#60, #69, #72, #74 |
-| Current Issue | #61 Loading & Error Handling (Review) |
-| Next Issue | #62 Containerize Backend |
-| Active Branch | 61-loading-error-handling |
+| Version | v0.12.0 |
+| Milestone | Deployment |
+| Completed Issues | #1–#21, #23–#30, #58–#61, #69, #72, #74 |
+| Current Issue | #62 Containerize Backend (Review) |
+| Next Issue | #63 Containerize Frontend |
+| Active Branch | feature/62-containerize-backend |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 176 passing, 47 live evaluations opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — frontend type check and lint, live loading, error and retry scenarios |
+| Last Verified | 2026-10-18 — backend image build and container run |

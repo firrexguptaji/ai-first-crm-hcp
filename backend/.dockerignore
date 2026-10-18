@@ -1,0 +1,21 @@
+# Keep the image small and free of secrets.
+
+# Secrets: pass environment variables at runtime instead
+.env
+.env.*
+!.env.example
+
+# Local environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Not needed at runtime
+tests/
+requirements-dev.txt
+.vscode/
+.idea/
+.git/
