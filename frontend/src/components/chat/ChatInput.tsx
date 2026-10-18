@@ -37,6 +37,7 @@ export default function ChatInput() {
                 id: crypto.randomUUID(),
                 role: "user",
                 content: trimmedMessage,
+                createdAt: new Date().toISOString(),
             })
         );
 

@@ -30,7 +30,9 @@ export default function InfoCard({
                     type="button"
                     variant="secondary"
                     disabled
->
+                    title="Filled automatically by the AI assistant"
+                    aria-label={`${buttonText} (filled automatically by the AI assistant)`}
+                >
 
                     {buttonText === "Search/Add" ? (
                         <Search size={14}/>

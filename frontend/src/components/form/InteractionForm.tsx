@@ -11,11 +11,15 @@ import {
     Clock,
     Search,
     Mic,
+    Plus,
+    Sparkles,
 } from "lucide-react";
 
 import TextAreaWithAction from "../common/TextAreaWithAction";
 
-import { useAppSelector } from "../../app/hooks";
+import Button from "../common/Button";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { clearInteraction } from "../../features/interaction/interactionSlice";
 import {
     CHANNEL_OPTIONS,
     SENTIMENT_OPTIONS,
@@ -42,22 +46,57 @@ const SOURCE_LABELS: Record<InteractionSource, string> = {
  * populated by AI chat responses (see interactionSlice.ts).
  */
 export default function InteractionForm() {
+    const dispatch = useAppDispatch();
+
     const interaction = useAppSelector(
         (state) => state.interaction
     );
 
+    const isEmpty = interaction.source === null;
+
     return (
         <div className="interaction-form">
             
-            <h2 className="interaction-section-title">
-                Interaction Details
+            <div className="interaction-form-header">
 
-                {interaction.source && (
-                    <span className="interaction-source">
-                        {SOURCE_LABELS[interaction.source]}
+                <h2 className="interaction-section-title">
+                    Interaction Details
+
+                    {interaction.source && (
+                        <span className="interaction-source">
+                            {SOURCE_LABELS[interaction.source]}
+                        </span>
+                    )}
+                </h2>
+
+                {/*
+                  Clears the form. The next edit then needs an explicit
+                  target, because no interaction is shown (#81).
+                */}
+                <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() => dispatch(clearInteraction())}
+                    disabled={isEmpty}
+                    title="Clear the form to start a new interaction"
+                >
+                    <Plus size={14} aria-hidden="true" />
+                    New interaction
+                </Button>
+
+            </div>
+
+            {isEmpty && (
+                <p className="form-hint" role="note">
+                    <Sparkles size={16} aria-hidden="true" />
+                    <span>
+                        This form fills in automatically. Describe your
+                        interaction in the chat, e.g.{" "}
+                        <em>"Met Dr. Smith today, discussed Product A,
+                        she was positive."</em>
                     </span>
-                )}
-            </h2>
+                </p>
+            )}
 
             <div className="interaction-grid">
 
@@ -113,6 +152,7 @@ export default function InteractionForm() {
 
                     <ActionRow
                         text="Summarize from Voice Note (Requires Consent)"
+                        badge="Coming soon"
                     />
 
                 </div>
