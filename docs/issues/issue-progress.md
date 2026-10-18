@@ -71,14 +71,14 @@
 
 ---
 
-## Milestone 6 — Deployment — 🚧 In Progress
+## Milestone 6 — Deployment — 👀 Final Review
 
 | Issue | Status |
 |-------|--------|
 | #62 Containerize Backend | ✅ Completed |
 | #63 Containerize Frontend | ✅ Completed |
-| #64 Configure Docker Compose Environment | 👀 Review |
-| #65 Deployment Documentation | ⏳ Ready |
+| #64 Configure Docker Compose Environment | ✅ Completed |
+| #65 Deployment Documentation | 👀 Review |
 
 ---
 
@@ -207,9 +207,14 @@ Verified: image builds, app served on http://localhost:8080 and works with the b
 
 Verified: `docker compose up --build` starts all services; chat, routing and form population work against the Compose database.
 
+### #65 Deployment Documentation
+
+`docs/deployment/deployment.md`: architecture, prerequisites, quick start, configuration reference, daily operations, data (persistence, backup, reset), running without Compose, server deployment checklist, troubleshooting for problems met during development.
+
 ### Follow-up Issues
 
 - Conversation context: understand "she" / "that meeting" without repeating the HCP name
 - Interaction history list in the chat UI
 - Use a separate test database (integration tests currently write to the development database; Compose gives a clean database for demos)
 - Frontend unit tests (Vitest)
+- Configurable CORS origins for server deployment
