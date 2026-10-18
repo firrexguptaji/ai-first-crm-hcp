@@ -1,4 +1,8 @@
+import pytest
 from app.llm.groq import llm
+
+pytestmark = pytest.mark.live
+
 
 
 def test_llm():

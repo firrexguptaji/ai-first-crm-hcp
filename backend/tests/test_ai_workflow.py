@@ -1,5 +1,7 @@
+import pytest
 from fastapi.testclient import TestClient
-from app.db.session import SessionLocal
+
+import app.db.session as db_session_module
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
 )
@@ -11,6 +13,13 @@ from app.services.interaction import InteractionService
 from app.main import app
 
 client = TestClient(app)
+
+# Calls Groq; runs against the test database with its own Alice Brown.
+pytestmark = [pytest.mark.live, pytest.mark.db, pytest.mark.usefixtures("seed_alice")]
+
+
+def SessionLocal():
+    return db_session_module.SessionLocal()
 
 
 def test_search_hcp_workflow():

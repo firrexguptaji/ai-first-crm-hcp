@@ -1,6 +1,10 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
+
+pytestmark = [pytest.mark.live, pytest.mark.db, pytest.mark.usefixtures("seed_alice")]
+
 
 client = TestClient(app)
 
