@@ -1,4 +1,9 @@
-from app.graph.tools.edit_interaction import edit_interaction
+from datetime import date, timedelta
+
+import pytest
+
+from app.graph.tools.edit_interaction import build_update, edit_interaction
+from app.schemas.ai import InteractionUpdateExtraction
 
 
 def test_edit_interaction_returns_state(monkeypatch):
@@ -50,3 +55,38 @@ def test_edit_interaction_returns_state(monkeypatch):
     assert result["response"] == (
         "Interaction updated successfully for Alice Brown."
     )
+
+
+def test_build_update_parses_relative_follow_up_date():
+    extraction = InteractionUpdateExtraction(
+        hcp_name="Alice Brown",
+        follow_up_date="tomorrow",
+    )
+
+    update = build_update(extraction)
+
+    assert update.follow_up_date == date.today() + timedelta(days=1)
+
+
+def test_build_update_only_sets_requested_fields():
+    extraction = InteractionUpdateExtraction(
+        hcp_name="Alice Brown",
+        summary="Requested updated efficacy data.",
+    )
+
+    update = build_update(extraction)
+
+    assert update.model_dump(exclude_none=True) == {
+        "summary": "Requested updated efficacy data.",
+    }
+
+
+@pytest.mark.parametrize("field", ["interaction_date", "follow_up_date"])
+def test_build_update_rejects_unreadable_date(field):
+    extraction = InteractionUpdateExtraction(
+        hcp_name="Alice Brown",
+        **{field: "whenever she is free"},
+    )
+
+    with pytest.raises(ValueError, match="couldn't understand"):
+        build_update(extraction)

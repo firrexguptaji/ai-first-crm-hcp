@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
+from app.graph.tools.dates import date_rules, parse_date, parse_datetime
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
@@ -34,12 +35,52 @@ def extract_update(
         Rules:
         - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
         - Only populate fields that the user wants to update.
+        {date_rules()}
 
         User Message:
         {message}
     """
 
     return structured_llm.invoke(prompt)
+
+def build_update(
+    extraction: InteractionUpdateExtraction,
+) -> InteractionUpdate:
+    """
+    Convert the LLM extraction into an update schema.
+
+    Natural-language dates are resolved here. A date the user
+    asked to change but that cannot be understood raises
+    ValueError, which the graph returns as a chat message.
+    """
+
+    interaction_date = parse_datetime(extraction.interaction_date)
+    if extraction.interaction_date and interaction_date is None:
+        raise ValueError(
+            f"I couldn't understand the interaction date "
+            f"'{extraction.interaction_date}'. "
+            "Please use a date like 2026-10-18 or 'yesterday'."
+        )
+
+    follow_up_date = parse_date(extraction.follow_up_date)
+    if extraction.follow_up_date and follow_up_date is None:
+        raise ValueError(
+            f"I couldn't understand the follow-up date "
+            f"'{extraction.follow_up_date}'. "
+            "Please use a date like 2026-10-25 or 'next week'."
+        )
+
+    return InteractionUpdate(
+        interaction_date=interaction_date,
+        channel=extraction.channel,
+        raw_notes=extraction.raw_notes,
+        summary=extraction.summary,
+        sentiment=extraction.sentiment,
+        products_discussed=extraction.products_discussed,
+        follow_up_required=extraction.follow_up_required,
+        follow_up_date=follow_up_date,
+    )
+
 
 def update_interaction_record(
     extraction: InteractionUpdateExtraction,
@@ -77,16 +118,7 @@ def update_interaction_record(
                 "No interaction found."
             )
 
-        schema = InteractionUpdate(
-            interaction_date=extraction.interaction_date,
-            channel=extraction.channel,
-            raw_notes=extraction.raw_notes,
-            summary=extraction.summary,
-            sentiment=extraction.sentiment,
-            products_discussed=extraction.products_discussed,
-            follow_up_required=extraction.follow_up_required,
-            follow_up_date=extraction.follow_up_date,
-        )
+        schema = build_update(extraction)
 
         return interaction_service.update_interaction(
             interaction.id,
