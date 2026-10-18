@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import Field, field_validator
 
 from app.schemas.common import BaseSchema
@@ -12,6 +14,10 @@ class ChatRequest(BaseSchema):
     """
 
     message: str = Field(min_length=1, max_length=4000)
+
+    # Interaction currently shown in the Interaction Details form.
+    # Used to resolve edits such as "add Dr. Patel as an attendee".
+    interaction_id: UUID | None = None
 
     @field_validator("message")
     @classmethod

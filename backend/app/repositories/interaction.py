@@ -87,28 +87,6 @@ class InteractionRepository:
             .first()
         )
         
-    def get_last_recorded_by_hcp(
-        self,
-        hcp_id: UUID,
-    ) -> Interaction | None:
-        """
-        Retrieve the interaction most recently saved for an HCP.
-
-        Ordered by creation time, not interaction date, so
-        "update my meeting" targets the interaction the user
-        just logged even if an older record has a later date.
-        """
-
-        return (
-            self.db.query(Interaction)
-            .filter(Interaction.hcp_id == hcp_id)
-            .order_by(
-                Interaction.created_at.desc(),
-                Interaction.interaction_date.desc(),
-            )
-            .first()
-        )
-
     def get_latest_interaction(
     self,
     hcp_id: UUID,

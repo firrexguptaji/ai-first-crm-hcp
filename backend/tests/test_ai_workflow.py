@@ -154,7 +154,7 @@ def test_edit_interaction_updates_database():
     updates the persisted record.
     """
 
-    client.post(
+    response = client.post(
         "/chat",
         json={
             "message": (
@@ -164,6 +164,8 @@ def test_edit_interaction_updates_database():
             )
         },
     )
+
+    edited_id = response.json()["tool_output"]["interaction_id"]
 
     db = SessionLocal()
 
@@ -180,12 +182,12 @@ def test_edit_interaction_updates_database():
             "Alice Brown"
         )
 
-        # Edit targets the most recently recorded interaction.
-        interaction = (
-            interaction_service.get_last_recorded_interaction(
-                hcp.id
-            )
+        # "the latest interaction" targets the newest interaction by date.
+        interaction = interaction_service.get_interaction(
+            __import__("uuid").UUID(edited_id)
         )
+
+        assert interaction.hcp_id == hcp.id
 
         assert interaction is not None
 

@@ -34,6 +34,13 @@ def chat(
         "tool_input": {},
         "tool_output": {},
         "response": "",
+        "context": {
+            "interaction_id": (
+                str(request.interaction_id)
+                if request.interaction_id
+                else None
+            ),
+        },
     }
 
     try:
