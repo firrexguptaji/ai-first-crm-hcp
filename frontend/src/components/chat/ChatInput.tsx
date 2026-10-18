@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { SendHorizontal } from "lucide-react";
 
 import Button from "../common/Button";
@@ -50,6 +50,22 @@ export default function ChatInput() {
 
     };
 
+    // Enter sends, Shift+Enter adds a new line.
+    // isComposing: ignore Enter while an IME is composing text.
+    const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (
+            event.key === "Enter"
+            && !event.shiftKey
+            && !event.nativeEvent.isComposing
+        ) {
+            event.preventDefault();
+
+            if (!loading) {
+                handleSend();
+            }
+        }
+    };
+
     return (
         <div className="chat-input-container">
 
@@ -62,9 +78,14 @@ export default function ChatInput() {
                 onChange={(event) =>
                     setMessage(event.target.value)
                 }
+                onKeyDown={handleKeyDown}
             />
 
             <div className="chat-actions">
+
+                <span className="chat-hint">
+                    Enter to send · Shift+Enter for a new line
+                </span>
 
                 <Button
                     type="button"

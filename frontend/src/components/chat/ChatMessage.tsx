@@ -1,18 +1,41 @@
-import { Bot, User } from "lucide-react";
+import {
+    AlertCircle,
+    AlertTriangle,
+    Bot,
+    Info,
+    RotateCcw,
+    User,
+} from "lucide-react";
+
+import type { ChatMessageStatus } from "../../types/redux";
 
 interface ChatMessageProps {
     sender: "user" | "assistant";
     message: string;
     time?: string;
+    status?: ChatMessageStatus;
+    /** Shown as a Retry button on failed replies. */
+    onRetry?: () => void;
+    retryDisabled?: boolean;
 }
+
+const STATUS_ICONS = {
+    notice: <AlertCircle size={14} />,
+    info: <Info size={14} />,
+    error: <AlertTriangle size={14} />,
+};
 
 export default function ChatMessage({
     sender,
     message,
     time,
+    status = "ok",
+    onRetry,
+    retryDisabled = false,
 }: ChatMessageProps) {
 
     const isUser = sender === "user";
+    const icon = status === "ok" ? null : STATUS_ICONS[status];
 
     return (
 
@@ -21,8 +44,9 @@ export default function ChatMessage({
                 isUser
                 ? "user-message"
                 : "assistant-message"
-            }`}
+            } message-${status}`}
             data-role={sender}
+            role={status === "error" ? "alert" : undefined}
         >
 
             <div className="message-avatar">
@@ -44,8 +68,28 @@ export default function ChatMessage({
                 </div>
 
                 <div className="message-bubble">
+
+                    {icon && (
+                        <span className="message-status-icon">
+                            {icon}
+                        </span>
+                    )}
+
                     {message}
+
                 </div>
+
+                {onRetry && (
+                    <button
+                        type="button"
+                        className="message-retry"
+                        onClick={onRetry}
+                        disabled={retryDisabled}
+                    >
+                        <RotateCcw size={14} />
+                        Retry
+                    </button>
+                )}
 
             </div>
 
