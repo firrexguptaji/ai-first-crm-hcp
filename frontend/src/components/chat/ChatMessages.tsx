@@ -2,34 +2,26 @@ import ChatMessage from "./ChatMessage";
 
 import { useAppSelector } from "../../app/hooks";
 
+const WELCOME_MESSAGE =
+    "Hello! I'm your AI CRM Assistant. Tell me about your interaction with an HCP.";
+
 export default function ChatMessages() {
 
-    const { messages, error } = useAppSelector(
+    // Failed requests are added to `messages` with status "error",
+    // so they appear in order with the rest of the conversation.
+    const { messages } = useAppSelector(
         (state) => state.chat
     );
 
-    if (messages.length === 0) {
-        return (
-            <div className="chat-messages">
-
-                <ChatMessage
-                    sender="assistant"
-                    message="Hello! I'm your AI CRM Assistant. Tell me about your interaction with an HCP."
-                />
-
-                {error && (
-                    <ChatMessage
-                        sender="assistant"
-                        message={error}
-                    />
-                )}
-
-            </div>
-        );
-    }
-
     return (
         <div className="chat-messages">
+
+            {messages.length === 0 && (
+                <ChatMessage
+                    sender="assistant"
+                    message={WELCOME_MESSAGE}
+                />
+            )}
 
             {messages.map((message) => (
 
@@ -40,15 +32,6 @@ export default function ChatMessages() {
                 />
 
             ))}
-
-            {error && (
-
-                <ChatMessage
-                    sender="assistant"
-                    message={error}
-                />
-
-            )}
 
         </div>
     );

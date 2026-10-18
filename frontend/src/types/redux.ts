@@ -4,10 +4,24 @@ export interface AppState {
     loading: boolean;
 }
 
+/**
+ * How an assistant message should be displayed.
+ *
+ * - ok:      normal reply
+ * - notice:  expected problem the user can fix (missing HCP name,
+ *            HCP not found, nothing to update)
+ * - info:    unsupported request, reply lists capabilities
+ * - error:   request failed; can be retried
+ */
+export type ChatMessageStatus = "ok" | "notice" | "info" | "error";
+
 export interface ChatMessage {
     id: string;
     role: "user" | "assistant";
     content: string;
+    status?: ChatMessageStatus;
+    /** Original user message, set on failed replies so they can be retried. */
+    retryMessage?: string;
 }
 
 export interface ChatState {
