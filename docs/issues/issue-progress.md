@@ -71,21 +71,22 @@
 
 ---
 
-## Milestone 6 — Deployment — 👀 Final Review
+## Milestone 6 — Deployment — ✅ Completed
 
 | Issue | Status |
 |-------|--------|
 | #62 Containerize Backend | ✅ Completed |
 | #63 Containerize Frontend | ✅ Completed |
 | #64 Configure Docker Compose Environment | ✅ Completed |
-| #65 Deployment Documentation | 👀 Review |
+| #65 Deployment Documentation | ✅ Completed |
 
 ---
 
-## Milestone 7 — Testing & Demo — ⏳ Not Started
+## Milestone 7 — Testing & Demo — 🚧 In Progress
 
 | Issue | Status |
 |-------|--------|
+| #81 Review Fixes: Targeting, Safe Fallback, Behaviour Tests, Access Control | 👀 Review |
 | #22 Polish Frontend Experience | ⏳ Backlog |
 | #66 Demo Video & Project Release | ⏳ Backlog |
 
@@ -211,6 +212,17 @@ Verified: `docker compose up --build` starts all services; chat, routing and for
 
 `docs/deployment/deployment.md`: architecture, prerequisites, quick start, configuration reference, daily operations, data (persistence, backup, reset), running without Compose, server deployment checklist, troubleshooting for problems met during development.
 
+### #81 Review Fixes
+
+| Finding | Fix |
+|---------|-----|
+| P0 — Edit ignored `interaction_id` and targeted the last recorded interaction | Explicit resolution: message ID → target date → "my last meeting" → interaction in the form → single interaction; otherwise ask, no write |
+| P0 — Keyword fallback defaulted to Log Interaction | Fallback returns Unsupported; delete-record requests unsupported; malformed requests rejected (422) |
+| P1 — Tests did not prove database behaviour; depended on existing data | Separate test database with rollback; 30 behaviour tests (extraction mapping, partial updates, failures leave rows unchanged) |
+| P1 — No access control | Endpoint review documented (`docs/security/security.md`), ADR-005, API surface guard test |
+
+The integration tests that created duplicate "Alice Brown" records now run on the test database.
+
 ### Follow-up Issues
 
 - Conversation context: understand "she" / "that meeting" without repeating the HCP name
@@ -218,3 +230,4 @@ Verified: `docker compose up --build` starts all services; chat, routing and for
 - Use a separate test database (integration tests currently write to the development database; Compose gives a clean database for demos)
 - Frontend unit tests (Vitest)
 - Configurable CORS origins for server deployment
+- Authentication, record ownership and authorization (ADR-005 production path)

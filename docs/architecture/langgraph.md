@@ -167,8 +167,12 @@ Configuration
 Keyword Fallback Rules
 
 - Whole-word matching ("call" does not match "recall")
-- Priority order: Edit → History → Follow-up request → Log → Search
+- Priority order: Delete record → Edit → History → Follow-up request → Log → Search
 - An edit requires an edit verb (`update`, `change`, `add`, `remove`, ...) **and** a record or field reference
+- Deleting a whole record ("delete my last interaction") → Unsupported
+- **No match → Unsupported.** The fallback never guesses a tool that writes (#81)
+
+Regression tests (`tests/test_fallback_safety.py`) simulate an LLM outage with greetings, unrelated questions, malformed input and delete requests, and assert that nothing is written.
 
 Evaluation
 

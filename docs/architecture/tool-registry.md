@@ -62,7 +62,13 @@ The selected tool executes the required business operation and returns a structu
 
 ### Edit Interaction
 
-- Update the interaction most recently recorded for an HCP
+- Resolve the target interaction explicitly (`tools/targeting.py`, #81):
+  1. Interaction ID in the message (must belong to the HCP)
+  2. Date of the existing interaction ("my meeting on 15 October")
+  3. Explicit "my last / latest meeting"
+  4. Interaction shown in the form (sent by the frontend)
+  5. The HCP has only one interaction
+  - Otherwise ask which interaction, listing recent ones — **no write**
 - Update only the fields the user asked to change
 - Ignore empty and placeholder values returned by the LLM
 - Apply sentiment, channel and the follow-up flag only when the message mentions them
@@ -115,6 +121,7 @@ The selected tool executes the required business operation and returns a structu
 | `require_hcp_name()` | `app/graph/tools/validation.py` | Ask "Which Healthcare Professional?" when no name is given |
 | `clean_text()` / `clean_list()` | `app/graph/tools/validation.py` | Turn empty and placeholder values into null |
 | `mentions()` | `app/graph/tools/validation.py` | Whole-word check used by edit safety |
+| `resolve_target_interaction()` | `app/graph/tools/targeting.py` | Explicit target resolution for edits |
 
 ---
 

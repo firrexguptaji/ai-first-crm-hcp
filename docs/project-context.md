@@ -69,7 +69,9 @@ The project follows a production-inspired engineering workflow using issue-drive
 | Backend Container | ✅ |
 | Frontend Container | ✅ |
 | Docker Compose | ✅ |
-| Deployment Guide | 👀 |
+| Deployment Guide | ✅ |
+| Review Fixes (#81) | 👀 |
+| Authentication | ❌ Out of scope (ADR-005) |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ✅ |
 
@@ -324,7 +326,7 @@ Testing & Demo
 
 ## Deployment
 
-- Merge #65 Deployment Documentation (completes Milestone 6)
+- Merge #81 Review Fixes
 
 ## Testing & Demo
 
@@ -352,14 +354,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.15.0 |
-| Milestone | Deployment |
-| Completed Issues | #1–#21, #23–#30, #58–#64, #69, #72, #74 |
-| Current Issue | #65 Deployment Documentation (Review) |
+| Version | v0.16.0 |
+| Milestone | Testing & Demo |
+| Completed Issues | #1–#21, #23–#30, #58–#65, #69, #72, #74 |
+| Current Issue | #81 Review Fixes (Review) |
 | Next Issue | #22 Polish Frontend Experience |
-| Active Branch | feature/65-deployment-documentation |
+| Active Branch | 81-review-fixes-interaction-targeting-safe-fallback-behaviour-tests-access-control |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
-| Backend Tests | 176 passing, 47 live evaluations opt-in |
+| Backend Tests | 281 (unit + database), live Groq tests opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — deployment guide steps against the Compose stack |
+| Last Verified | 2026-10-18 — 281 tests on a separate PostgreSQL test database (rolled back, 0 rows after run) |

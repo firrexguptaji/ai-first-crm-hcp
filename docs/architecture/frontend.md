@@ -296,6 +296,10 @@ Failures before a response arrives are converted by `getErrorMessage()` (`api/er
 | HTTP 5xx | The server ran into a problem. Please try again in a moment. |
 | HTTP 422 | The request was not valid. Please rephrase your message. |
 
+## Interaction Context
+
+Every chat request includes `interaction_id`, the interaction currently shown in the form (from the interaction slice). The backend uses it to resolve edits such as "Add Dr. Patel as an attendee". When the form is empty, it is omitted and the assistant asks which interaction to change if the HCP has several.
+
 ## Retry
 
 Failed replies store the original message in `retryMessage`. Retry removes the error bubble and sends the message again. Retry is disabled while another request is running.

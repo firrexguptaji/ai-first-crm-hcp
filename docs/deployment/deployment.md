@@ -201,7 +201,7 @@ Before exposing it publicly
 | Database port | Remove the `5433:5432` mapping so PostgreSQL is not reachable from outside. |
 | Passwords | Use a strong `POSTGRES_PASSWORD`. |
 | HTTPS | Put a reverse proxy (Caddy, nginx, Traefik) with TLS in front of ports 8080 and 8000. |
-| Authentication | The application has no user login. Do not expose it publicly without one. |
+| Authentication | The application has no user login or authorization. Do not expose it publicly. See [Security & Limitations](../security/security.md). |
 
 ---
 

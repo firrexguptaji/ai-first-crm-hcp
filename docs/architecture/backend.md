@@ -198,6 +198,20 @@ Current Routers
 
 ---
 
+## Chat Request
+
+```json
+{
+  "message": "Add Dr. Patel as an attendee for Alice Brown",
+  "interaction_id": "a1b2c3d4-..."
+}
+```
+
+| Field | Rules |
+|-------|-------|
+| `message` | Required, 1–4000 characters after trimming; otherwise HTTP 422 |
+| `interaction_id` | Optional UUID of the interaction shown in the form; passed to the graph as `context` |
+
 ## Error Handling
 
 The AI Chat API always returns HTTP 200 with a `ChatResponse`.
@@ -310,3 +324,9 @@ pgAdmin ─5433───►│ db (PostgreSQL 16)           │
 |---------|-----|
 | Startup | `SEED_DEMO_DATA=true` (enabled in Docker Compose) |
 | Manual | `python -m app.db.seed` |
+
+---
+
+## Security
+
+The API has **no authentication or authorization**. See [Security & Limitations](../security/security.md) and ADR-005.
