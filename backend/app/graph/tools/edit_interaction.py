@@ -3,6 +3,7 @@ from __future__ import annotations
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.graph.tools.serializers import serialize_interaction
+from app.graph.tools.validation import require_hcp_name
 from app.graph.tools.dates import date_rules, parse_date, parse_datetime
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
@@ -172,6 +173,11 @@ def edit_interaction(
 
     extraction = extract_update(
         state["message"]
+    )
+
+    require_hcp_name(
+        extraction.hcp_name,
+        "Change the sentiment for Alice Brown to negative",
     )
 
     interaction = update_interaction_record(

@@ -45,6 +45,6 @@ def test_interaction_history_returns_results(monkeypatch, make_interaction):
         "Met Alice Brown at her clinic."
     )
     assert result["tool_output"]["results"][0]["products_discussed"] == ["Product A"]
-    assert result["response"] == (
-        "Retrieved 1 interaction(s) for Alice Brown."
+    assert result["response"].startswith(
+        "Retrieved 1 interaction(s) for Alice Brown. Last interaction:"
     )

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import Field
 
 from app.models.enums import InteractionChannel, Sentiment
@@ -34,7 +36,7 @@ class InteractionExtraction(BaseSchema):
     independent of the database models.
     """
 
-    hcp_name: str
+    hcp_name: str | None = None
     interaction_date: str
     channel: InteractionChannel
     raw_notes: str
@@ -68,7 +70,7 @@ class InteractionUpdateExtraction(BaseSchema):
     Only the fields that should be updated are populated.
     """
 
-    hcp_name: str
+    hcp_name: str | None = None
     interaction_id: str | None = None
 
     interaction_date: str | None = None
@@ -114,7 +116,7 @@ class InteractionHistoryExtraction(BaseSchema):
     from natural language.
     """
 
-    hcp_name: str
+    hcp_name: str | None = None
     limit: int | None = None
 
 
@@ -124,7 +126,7 @@ class FollowUpExtraction(BaseSchema):
     from natural language.
     """
 
-    hcp_name: str
+    hcp_name: str | None = None
 
 
 class FollowUpRecommendation(BaseSchema):
@@ -134,3 +136,26 @@ class FollowUpRecommendation(BaseSchema):
 
     recommendation: str
     rationale: str
+
+IntentName = Literal[
+    "log_interaction",
+    "edit_interaction",
+    "search_hcp",
+    "interaction_history",
+    "suggest_followup",
+    "unsupported",
+]
+
+
+class IntentClassification(BaseSchema):
+    """
+    Tool selected by the LLM router for a user message.
+    """
+
+    tool: IntentName = Field(
+        description="The single tool that should handle the message.",
+    )
+    reason: str = Field(
+        default="",
+        description="One short sentence explaining the choice.",
+    )

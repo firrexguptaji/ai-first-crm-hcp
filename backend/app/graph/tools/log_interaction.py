@@ -6,6 +6,7 @@ from datetime import datetime
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.graph.tools.serializers import serialize_interaction
+from app.graph.tools.validation import PLACEHOLDER_VALUES, is_missing  # noqa: F401
 from app.graph.tools.dates import date_rules, parse_date, parse_datetime
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
@@ -116,26 +117,6 @@ REQUIRED_FIELDS = {
     "interaction_date": "interaction date",
     "summary": "topics discussed",
 }
-
-
-# Placeholders an LLM may return instead of leaving a field empty.
-PLACEHOLDER_VALUES = {
-    "unknown", "n/a", "na", "none", "null", "not specified",
-    "not mentioned", "not provided", "unspecified", "-",
-}
-
-
-def is_missing(value: str | None) -> bool:
-    """
-    True when a required field is empty or only a placeholder.
-    """
-
-    if value is None:
-        return True
-
-    cleaned = value.strip().strip(".").lower()
-
-    return not cleaned or cleaned in PLACEHOLDER_VALUES
 
 
 def log_interaction(
