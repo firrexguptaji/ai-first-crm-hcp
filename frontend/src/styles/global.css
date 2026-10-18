@@ -169,7 +169,7 @@ body {
 
 .empty-state-icon {
 
-    color: #9ca3af;
+    color: #6b7280;
 
 }
 
@@ -194,5 +194,25 @@ body {
     font-size: 14px;
 
     color: #6b7280;
+
+}
+
+/* ---------- Accessibility (#22) ---------- */
+
+/* Visible keyboard focus for every interactive element. */
+:focus-visible {
+
+    outline: 2px solid #2563eb;
+
+    outline-offset: 2px;
+
+}
+
+/* Placeholder text meets 4.5:1 contrast on white. */
+::placeholder {
+
+    color: #6b7280;
+
+    opacity: 1;
 
 }

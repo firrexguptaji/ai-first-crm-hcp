@@ -71,6 +71,7 @@ export default function ChatInput() {
 
             <textarea
                 className="chat-input"
+                aria-label="Message to the AI assistant"
                 placeholder="Describe your interaction with the HCP..."
                 rows={3}
                 value={message}

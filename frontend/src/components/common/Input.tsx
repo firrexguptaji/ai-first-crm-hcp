@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 interface InputProps {
     label: string;
     value?: string;
@@ -13,25 +15,29 @@ export default function Input({
     type = "text",
     icon,
 }: InputProps) {
+    const id = useId();
+
     return (
         <div className="input-group">
 
-            <label className="input-label">
+            <label className="input-label" htmlFor={id}>
                 {label}
             </label>
 
             <div className="input-wrapper">
 
                 <input
+                    id={id}
                     type={type}
                     value={value}
                     placeholder={placeholder}
                     readOnly
+                    aria-readonly="true"
                     className="crm-input"
                 />
 
                 {icon && (
-                    <span className="input-icon">
+                    <span className="input-icon" aria-hidden="true">
                         {icon}
                     </span>
                 )}

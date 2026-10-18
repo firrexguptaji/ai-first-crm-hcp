@@ -42,7 +42,13 @@ export default function ChatMessages() {
     };
 
     return (
-        <div className="chat-messages">
+        <div
+            className="chat-messages"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+            aria-label="Conversation with the AI assistant"
+        >
 
             {messages.length === 0 && (
                 <ChatMessage

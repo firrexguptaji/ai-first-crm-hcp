@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 interface DropdownProps {
@@ -13,13 +14,16 @@ export default function Dropdown({
     options,
     placeholder = "Select...",
 }: DropdownProps) {
+    const id = useId();
+
     return (
         <div className="input-group">
-            <label className="input-label">
+            <label className="input-label" htmlFor={id}>
                 {label}
             </label>
 
             <select
+                id={id}
                 className="crm-input"
                 value={value}
                 disabled
@@ -39,7 +43,7 @@ export default function Dropdown({
                     </option>
                 ))}
             </select>
-            <span className="input-icon">
+            <span className="input-icon" aria-hidden="true">
                 <ChevronDown size={16} />
             </span>
         </div>
