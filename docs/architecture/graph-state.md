@@ -21,6 +21,7 @@ Defined in `app/graph/state.py` (`CRMState`).
 | tool_input | dictionary | Tool | Structured data extracted by the LLM |
 | tool_output | dictionary | Tool | Result returned by the tool |
 | response | string | Tool | Message shown to the user |
+| context | dictionary (optional) | Chat API | Request context, e.g. `interaction_id` of the interaction shown in the form (#81) |
 
 ---
 

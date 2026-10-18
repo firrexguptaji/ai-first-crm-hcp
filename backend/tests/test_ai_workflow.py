@@ -1,5 +1,7 @@
+import pytest
 from fastapi.testclient import TestClient
-from app.db.session import SessionLocal
+
+import app.db.session as db_session_module
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
 )
@@ -11,6 +13,13 @@ from app.services.interaction import InteractionService
 from app.main import app
 
 client = TestClient(app)
+
+# Calls Groq; runs against the test database with its own Alice Brown.
+pytestmark = [pytest.mark.live, pytest.mark.db, pytest.mark.usefixtures("seed_alice")]
+
+
+def SessionLocal():
+    return db_session_module.SessionLocal()
 
 
 def test_search_hcp_workflow():
@@ -154,7 +163,7 @@ def test_edit_interaction_updates_database():
     updates the persisted record.
     """
 
-    client.post(
+    response = client.post(
         "/chat",
         json={
             "message": (
@@ -164,6 +173,8 @@ def test_edit_interaction_updates_database():
             )
         },
     )
+
+    edited_id = response.json()["tool_output"]["interaction_id"]
 
     db = SessionLocal()
 
@@ -180,12 +191,12 @@ def test_edit_interaction_updates_database():
             "Alice Brown"
         )
 
-        # Edit targets the most recently recorded interaction.
-        interaction = (
-            interaction_service.get_last_recorded_interaction(
-                hcp.id
-            )
+        # "the latest interaction" targets the newest interaction by date.
+        interaction = interaction_service.get_interaction(
+            __import__("uuid").UUID(edited_id)
         )
+
+        assert interaction.hcp_id == hcp.id
 
         assert interaction is not None
 

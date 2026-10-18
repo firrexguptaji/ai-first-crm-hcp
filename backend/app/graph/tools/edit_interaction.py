@@ -3,6 +3,7 @@ from __future__ import annotations
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.graph.tools.serializers import serialize_interaction
+from app.graph.tools.targeting import resolve_target_interaction
 from app.graph.tools.validation import (
     clean_list,
     clean_text,
@@ -43,6 +44,9 @@ def extract_update(
         Rules:
         - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from hcp_name only.
         - Keep titles in attendees, e.g. "Dr. Patel", "Nurse Kelly".
+        - target_date is the date of the EXISTING interaction the user
+          refers to ("my meeting on 15 October"); interaction_date is a
+          NEW date the user wants to set. Never fill both from one date.
         - Only populate fields that the user wants to update.
           Leave every other field null. Never return empty strings
           or empty lists for fields the user did not mention.
@@ -229,9 +233,14 @@ def build_update(
 def update_interaction_record(
     extraction: InteractionUpdateExtraction,
     message: str | None = None,
+    context_id: str | None = None,
 ):
     """
     Update an existing interaction.
+
+    The target is resolved explicitly (see targeting.py). When it
+    is ambiguous, a clarification question is raised as ValueError
+    and nothing is written.
     """
 
     db = SessionLocal()
@@ -254,16 +263,15 @@ def update_interaction_record(
                 f"HCP '{extraction.hcp_name}' not found."
             )
 
-        # The interaction the user most recently recorded,
-        # i.e. the one shown in the form after logging.
-        interaction = interaction_service.get_last_recorded_interaction(
-            hcp.id
+        interaction = resolve_target_interaction(
+            interaction_service,
+            hcp,
+            extraction.hcp_name,
+            message or "",
+            explicit_id=extraction.interaction_id,
+            target_date=extraction.target_date,
+            context_id=context_id,
         )
-
-        if interaction is None:
-            raise ValueError(
-                "No interaction found."
-            )
 
         schema = build_update(extraction, message, interaction)
 
@@ -301,9 +309,12 @@ def edit_interaction(
         "Change the sentiment for Alice Brown to negative",
     )
 
+    context = state.get("context") or {}
+
     interaction = update_interaction_record(
         extraction,
         state["message"],
+        context.get("interaction_id"),
     )
 
     state["tool_input"] = extraction.model_dump()

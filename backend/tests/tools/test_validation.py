@@ -26,7 +26,7 @@ def test_edit_without_hcp_asks_which_hcp(monkeypatch):
         lambda message: InteractionUpdateExtraction(hcp_name="UNKNOWN"),
     )
 
-    def must_not_be_called(extraction, message=None):
+    def must_not_be_called(*args, **kwargs):
         raise AssertionError("Database lookup attempted")
 
     monkeypatch.setattr(

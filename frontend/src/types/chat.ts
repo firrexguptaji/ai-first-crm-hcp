@@ -10,6 +10,11 @@ import type { InteractionRecord } from "./interaction";
 
 export interface ChatRequest {
     message: string;
+    /**
+     * Interaction currently shown in the form. Lets the backend
+     * resolve edits like "add Dr. Patel as an attendee" (#81).
+     */
+    interaction_id?: string;
 }
 
 export type ToolName =

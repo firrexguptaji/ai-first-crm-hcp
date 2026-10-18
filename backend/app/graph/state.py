@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any, TypedDict
 
+from typing_extensions import NotRequired
+
 
 class CRMState(TypedDict):
     """
@@ -25,3 +27,7 @@ class CRMState(TypedDict):
 
     # Final response returned to the user
     response: str
+
+    # Request context from the frontend, e.g.
+    # {"interaction_id": "<id of the interaction shown in the form>"}
+    context: NotRequired[dict[str, Any]]

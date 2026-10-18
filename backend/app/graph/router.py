@@ -28,7 +28,16 @@ def _words(*phrases: str) -> re.Pattern[str]:
 # purpose: "I updated Dr. Smith on Product A" is a new interaction.
 EDIT_VERBS = _words(
     "edit", "update", "modify", "change", "correct", "fix", "amend",
-    "add", "remove", "set", "replace", "include",
+    "add", "remove", "set", "replace", "include", "delete",
+)
+
+# Deleting a whole record is not supported. Checked before edit rules,
+# so "Delete my last interaction" never reaches a tool that writes.
+DELETE_RECORD = re.compile(
+    r"\b(?:delete|remove|erase|discard|drop)\s+"
+    r"(?:(?:my|the|this|that|last|latest|previous|all|an?)\s+)*"
+    r"(?:interactions?|meetings?|visits?|calls?|records?|entr(?:y|ies)|hcps?|doctors?)\b",
+    re.IGNORECASE,
 )
 
 # An edit request must also refer to an existing record or field.
@@ -80,7 +89,16 @@ def classify(message: str) -> str:
     Rules are checked from most specific to least specific so that
     requests about existing records are not swallowed by the broad
     logging keywords (e.g. "Update my meeting with Dr. Smith").
+
+    Messages that match no rule return "unsupported": the fallback
+    must never create or change data on a guess.
     """
+
+    if not message.strip():
+        return "unsupported"
+
+    if DELETE_RECORD.search(message):
+        return "unsupported"
 
     if EDIT_VERBS.search(message) and EDIT_TARGETS.search(message):
         return "edit_interaction"
@@ -100,8 +118,9 @@ def classify(message: str) -> str:
     if FOLLOWUP_MENTION.search(message):
         return "suggest_followup"
 
-    # Default: treat free text as a new interaction note.
-    return "log_interaction"
+    # Default: never guess a tool that writes to the database.
+    # Unrecognised messages get the capabilities reply instead.
+    return "unsupported"
 
 
 ROUTER_PROMPT = """

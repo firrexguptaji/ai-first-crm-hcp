@@ -19,6 +19,9 @@ import type {
     ChatState,
 } from "../../types/redux";
 
+// Type-only import: no runtime dependency on the store.
+import type { RootState } from "../../app/store";
+
 const initialState: ChatState = {
     messages: [],
     loading: false,
@@ -28,12 +31,21 @@ const initialState: ChatState = {
 export const sendChatMessage = createAsyncThunk<
     ChatResponse,
     ChatRequest,
-    { rejectValue: string }
+    { rejectValue: string; state: RootState }
 >(
     "chat/sendMessage",
     async (data, thunkAPI) => {
+        // Send the interaction shown in the form, so edits target it.
+        const interactionId =
+            data.interaction_id
+            ?? thunkAPI.getState().interaction.interactionId
+            ?? undefined;
+
         try {
-            return await sendMessage(data);
+            return await sendMessage({
+                ...data,
+                interaction_id: interactionId,
+            });
         } catch (error: unknown) {
             return thunkAPI.rejectWithValue(getErrorMessage(error));
         }

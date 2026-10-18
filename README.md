@@ -214,16 +214,33 @@ psql -U postgres -d ai_first_crm_hcp -f database/migrations/001_add_interaction_
 
 # Testing
 
-```bash
-cd backend
+| Category | Needs | Runs |
+|----------|-------|------|
+| Unit | Nothing | Always |
+| Database (`db`) | `TEST_DATABASE_URL` | When set |
+| Live (`live`) | Groq + `RUN_LIVE_TESTS=1` | When set |
+| Routing evaluation | Groq + `RUN_LLM_EVAL=1` | When set |
 
-# Unit and integration tests (PostgreSQL and Groq required for integration tests)
+Database tests use a **separate** test database. Each test runs in a transaction that is rolled back, so tests never depend on or change existing data, and the test database stays empty.
+
+```powershell
+# One-time: create the test database (pgAdmin or psql)
+psql -U postgres -c "CREATE DATABASE ai_first_crm_hcp_test;"
+
+# backend/.env
+TEST_DATABASE_URL=postgresql+psycopg://postgres:<password>@localhost:5432/ai_first_crm_hcp_test
+
+cd backend
 pytest -v
 
-# Live LLM routing evaluation (47 Groq calls, about 2 minutes)
-# PowerShell
+# Also call Groq
+$env:RUN_LIVE_TESTS="1"; pytest -v
+
+# Live LLM routing evaluation (47 Groq calls)
 $env:RUN_LLM_EVAL="1"; pytest tests/test_routing_eval.py -v
 ```
+
+Tests refuse to run if `TEST_DATABASE_URL` equals `DATABASE_URL`.
 
 ---
 
@@ -240,7 +257,8 @@ $env:RUN_LLM_EVAL="1"; pytest tests/test_routing_eval.py -v
 | [Tool Registry](docs/architecture/tool-registry.md) | AI tools and output contract |
 | [Database](docs/architecture/database.md) | Database status, migrations, Compose database |
 | [Database Schema](database/schema/schema.md) | Schema and ERD |
-| [ADR](docs/adr/README.md) | Architecture decisions (ADR-001 – ADR-004) |
+| [Security & Limitations](docs/security/security.md) | Endpoint review, risks, production requirements |
+| [ADR](docs/adr/README.md) | Architecture decisions (ADR-001 – ADR-005) |
 | [Issue Progress](docs/issues/issue-progress.md) | Development roadmap |
 
 ---
@@ -697,6 +715,18 @@ Verified
 - ✅ Repository Layer
 - ✅ Database Persistence
 - ✅ Structured Responses
+
+---
+
+# Security & Limitations
+
+> **Demo / assessment build — not production-ready.**
+
+- **No authentication or authorization.** Anyone who can reach the API can read, change and delete all records.
+- Run only on `localhost` or a trusted private network, with demo data.
+- Chat messages are sent to the Groq API; do not enter real patient or confidential data.
+
+Endpoint review, findings and production requirements: [Security & Limitations](docs/security/security.md) · ADR-005.
 
 ---
 

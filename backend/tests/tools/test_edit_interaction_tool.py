@@ -21,7 +21,7 @@ def test_edit_interaction_returns_state(monkeypatch, make_interaction):
     def fake_extract(message):
         return FakeExtraction()
 
-    def fake_update(extraction, message=None):
+    def fake_update(*args, **kwargs):
         return make_interaction(
             summary="Updated summary",
             sentiment=Sentiment.NEUTRAL,

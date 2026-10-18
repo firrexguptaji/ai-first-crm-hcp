@@ -82,7 +82,21 @@ class InteractionUpdateExtraction(BaseSchema):
         default=None,
         description=HCP_NAME_DESCRIPTION,
     )
-    interaction_id: str | None = None
+    interaction_id: str | None = Field(
+        default=None,
+        description=(
+            "ID of the interaction to edit, only if the user typed one "
+            "(a UUID). Never invent an ID."
+        ),
+    )
+    target_date: str | None = Field(
+        default=None,
+        description=(
+            "Date of the EXISTING interaction the user wants to edit, "
+            "e.g. '2026-10-15' for 'my meeting on 15 October'. Not the "
+            "new value of a date being changed. Null if not mentioned."
+        ),
+    )
 
     interaction_date: str | None = None
     channel: InteractionChannel | None = None

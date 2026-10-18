@@ -1,3 +1,4 @@
+import pytest
 from datetime import datetime
 from uuid import uuid4
 
@@ -6,6 +7,8 @@ from fastapi.testclient import TestClient
 from app.main import app
 
 client = TestClient(app)
+
+pytestmark = [pytest.mark.db, pytest.mark.usefixtures("db_session")]
 
 
 def test_interaction_crud():

@@ -1,8 +1,11 @@
+import pytest
 from fastapi.testclient import TestClient
 import uuid
 from app.main import app
 
 client = TestClient(app)
+
+pytestmark = [pytest.mark.db, pytest.mark.usefixtures("db_session")]
 
 
 def test_health():

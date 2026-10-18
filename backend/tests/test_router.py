@@ -98,7 +98,8 @@ from app.graph.router import classify
         ("Suggest a follow-up after my call with Dr. Smith", "suggest_followup"),
         ("Show my past meetings with Dr. Smith", "interaction_history"),
         # Substring false positives
-        ("Dr. Smith asked about metformin dosing", "log_interaction"),
+        # No keyword rule matches: the fallback must not guess a write.
+        ("Dr. Smith asked about metformin dosing", "unsupported"),
         ("Find doctors who recall the trial", "search_hcp"),
         # Past tense "updated" in a note is a new interaction, not an edit
         ("Met Dr. Smith and updated him on Product A", "log_interaction"),

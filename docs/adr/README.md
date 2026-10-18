@@ -18,3 +18,4 @@ Each ADR records:
 | ADR-002 | LangGraph Architecture | ✅ Accepted |
 | ADR-003 | Groq Model Migration and Structured Output | ✅ Accepted |
 | ADR-004 | LLM Intent Routing with Keyword Fallback | ✅ Accepted |
+| ADR-005 | No Authentication in the Assessment Build | ✅ Accepted (demo scope) |
