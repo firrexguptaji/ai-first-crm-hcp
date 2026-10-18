@@ -1,0 +1,15 @@
+# Keep the build context small and free of local files.
+
+node_modules/
+dist/
+dist-ssr/
+
+# Environment: VITE_API_URL is passed as a build argument
+.env
+.env.*
+!.env.example
+
+*.log
+.vscode/
+.idea/
+.git/
