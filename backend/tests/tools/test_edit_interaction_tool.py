@@ -94,3 +94,21 @@ def test_build_update_rejects_unreadable_date(field):
 
     with pytest.raises(ValueError, match="couldn't understand"):
         build_update(extraction)
+
+
+
+def test_build_update_includes_additional_fields():
+    extraction = InteractionUpdateExtraction(
+        hcp_name="Alice Brown",
+        attendees=["Nurse Kelly", "Dr. Patel"],
+        outcomes="Agreed to trial Product A.",
+        follow_up_actions="Send Phase III data.",
+    )
+
+    update = build_update(extraction)
+
+    assert update.model_dump(exclude_none=True) == {
+        "attendees": ["Nurse Kelly", "Dr. Patel"],
+        "outcomes": "Agreed to trial Product A.",
+        "follow_up_actions": "Send Phase III data.",
+    }

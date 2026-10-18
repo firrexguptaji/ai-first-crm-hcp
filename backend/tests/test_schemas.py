@@ -72,3 +72,31 @@ def test_interaction_create_schema_additional_fields_are_optional():
     assert schema.samples_distributed is None
     assert schema.outcomes is None
     assert schema.follow_up_actions is None
+
+
+
+def test_interaction_extraction_additional_field_defaults():
+    from app.schemas.ai import InteractionExtraction
+
+    extraction = InteractionExtraction(
+        hcp_name="Alice Brown",
+        interaction_date="2026-10-18",
+        channel=InteractionChannel.IN_PERSON,
+        raw_notes="Met Alice Brown.",
+        summary="Discussed Product A.",
+        sentiment=Sentiment.POSITIVE,
+    )
+
+    assert extraction.attendees == []
+    assert extraction.samples_distributed == []
+    assert extraction.outcomes is None
+    assert extraction.follow_up_actions is None
+
+
+def test_extraction_schema_describes_new_fields_for_llm():
+    from app.schemas.ai import InteractionExtraction
+
+    properties = InteractionExtraction.model_json_schema()["properties"]
+
+    for name in ("attendees", "samples_distributed", "outcomes", "follow_up_actions"):
+        assert properties[name]["description"]

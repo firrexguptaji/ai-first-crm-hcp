@@ -1,7 +1,27 @@
 from __future__ import annotations
 
+from pydantic import Field
+
 from app.models.enums import InteractionChannel, Sentiment
 from app.schemas.common import BaseSchema
+
+# Field descriptions are included in the JSON schema sent to the LLM,
+# so they double as extraction instructions.
+ATTENDEES_DESCRIPTION = (
+    "Other people present besides the HCP and the representative, "
+    "e.g. nurses or colleagues. Empty if none mentioned."
+)
+SAMPLES_DESCRIPTION = (
+    "Product samples handed to the HCP. Empty if none mentioned."
+)
+OUTCOMES_DESCRIPTION = (
+    "Agreements or results of the interaction, e.g. 'Agreed to "
+    "trial Product A'. Null if none mentioned."
+)
+FOLLOW_UP_ACTIONS_DESCRIPTION = (
+    "Concrete next steps for the representative, e.g. 'Send "
+    "Phase III data'. Null if none mentioned."
+)
 
 
 class InteractionExtraction(BaseSchema):
@@ -22,6 +42,22 @@ class InteractionExtraction(BaseSchema):
     products_discussed: list[str] = []
     follow_up_required: bool = False
     follow_up_date: str | None = None
+    attendees: list[str] = Field(
+        default_factory=list,
+        description=ATTENDEES_DESCRIPTION,
+    )
+    samples_distributed: list[str] = Field(
+        default_factory=list,
+        description=SAMPLES_DESCRIPTION,
+    )
+    outcomes: str | None = Field(
+        default=None,
+        description=OUTCOMES_DESCRIPTION,
+    )
+    follow_up_actions: str | None = Field(
+        default=None,
+        description=FOLLOW_UP_ACTIONS_DESCRIPTION,
+    )
 
 
 class InteractionUpdateExtraction(BaseSchema):
@@ -42,6 +78,22 @@ class InteractionUpdateExtraction(BaseSchema):
     products_discussed: list[str] | None = None
     follow_up_required: bool | None = None
     follow_up_date: str | None = None
+    attendees: list[str] | None = Field(
+        default=None,
+        description=ATTENDEES_DESCRIPTION,
+    )
+    samples_distributed: list[str] | None = Field(
+        default=None,
+        description=SAMPLES_DESCRIPTION,
+    )
+    outcomes: str | None = Field(
+        default=None,
+        description=OUTCOMES_DESCRIPTION,
+    )
+    follow_up_actions: str | None = Field(
+        default=None,
+        description=FOLLOW_UP_ACTIONS_DESCRIPTION,
+    )
 
 
 class HCPSearchExtraction(BaseSchema):

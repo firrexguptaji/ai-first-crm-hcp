@@ -36,6 +36,8 @@ def extract_update(
         Rules:
         - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
         - Only populate fields that the user wants to update.
+        - For list fields (attendees, samples_distributed,
+          products_discussed), return the complete new list.
         {date_rules()}
 
         User Message:
@@ -80,6 +82,10 @@ def build_update(
         products_discussed=extraction.products_discussed,
         follow_up_required=extraction.follow_up_required,
         follow_up_date=follow_up_date,
+        attendees=extraction.attendees,
+        samples_distributed=extraction.samples_distributed,
+        outcomes=extraction.outcomes,
+        follow_up_actions=extraction.follow_up_actions,
     )
 
 

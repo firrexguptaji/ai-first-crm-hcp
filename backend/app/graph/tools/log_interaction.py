@@ -37,6 +37,11 @@ def extract_interaction(
     - Never invent information. If the message does not name the HCP,
       return an empty string for hcp_name. Do the same for summary if
       nothing was discussed.
+    - summary: a short summary of the topics discussed.
+    - attendees: only other people present (not the HCP, not "I").
+    - samples_distributed: only samples actually handed over.
+    - outcomes: agreements or results; null if none.
+    - follow_up_actions: next steps for the representative; null if none.
     {date_rules()}
 
     User Message:
@@ -86,6 +91,10 @@ def create_interaction_record(
             products_discussed=extraction.products_discussed,
             follow_up_required=extraction.follow_up_required,
             follow_up_date=parse_date(extraction.follow_up_date),
+            attendees=extraction.attendees or None,
+            samples_distributed=extraction.samples_distributed or None,
+            outcomes=extraction.outcomes,
+            follow_up_actions=extraction.follow_up_actions,
         )
 
         return interaction_service.create_interaction(
