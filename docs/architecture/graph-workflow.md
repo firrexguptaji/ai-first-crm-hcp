@@ -82,6 +82,13 @@ Responsibilities
 - Identify the intended operation
 - Select the appropriate tool
 
+Implementation
+
+- Rule-based classifier in `app/graph/router.py`
+- Whole-word keyword matching
+- Priority order: Edit → History → Follow-up request → Log → Search
+- Unrecognised messages default to Log Interaction
+
 Possible intents include:
 
 - Log Interaction
@@ -99,6 +106,7 @@ Responsibilities
 - Execute the selected tool
 - Invoke the Service Layer
 - Return structured output
+- Convert tool errors into structured error responses
 
 The graph never communicates directly with the database.
 
@@ -116,23 +124,39 @@ Responsibilities
 
 ## Error Handling
 
-If a tool cannot be selected:
+Errors are handled at three levels.
+
+### 1. Inside Tools
+
+Incomplete input is rejected before anything is saved.
 
 ```text
-Unknown Request
-        │
-        ▼
-Return clarification request
+"Had a chat."
+      │
+      ▼
+HCP name / date / summary missing
+(or a placeholder such as "Unknown")
+      │
+      ▼
+success: false
+"I couldn't identify a complete interaction..."
 ```
 
-If a tool execution fails:
+### 2. Tool Execution Node
 
 ```text
 Tool Error
       │
-      ▼
-Return structured error response
+      ├── ValueError ──────► success: false, error_type: validation
+      │                      Message returned to the user
+      │
+      └── Other Exception ─► success: false, error_type: internal
+                             Logged on server, generic message returned
 ```
+
+### 3. Chat Endpoint
+
+Any failure outside the tools still returns a valid `ChatResponse` with HTTP 200, so the frontend always receives a message it can display.
 
 ---
 

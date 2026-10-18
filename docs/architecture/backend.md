@@ -39,7 +39,6 @@ app/
 ├── graph/
 ├── llm/
 ├── models/
-├── prompts/
 ├── repositories/
 ├── services/
 └── schemas/
@@ -82,24 +81,30 @@ Database configuration.
 Current implementation
 
 - Graph State
-- Router
+- Router (whole-word, priority-ordered intent matching)
 - Tool Registry
+- Tool Execution with error handling
 - Log Interaction Tool
 - Edit Interaction Tool
 - Search Healthcare Professional Tool
 - Retrieve Interaction History Tool
 - Suggest Follow-up Tool
+- Shared date parsing (`tools/dates.py`)
+
 ---
 
 ### llm/
 
-Groq client.
+Groq client configuration.
+
+| Item | Value |
+|------|-------|
+| Model | `openai/gpt-oss-120b` (configured through `MODEL_NAME`) |
+| Temperature | 0 |
+
+Provides `structured(schema)`, which binds the LLM to a Pydantic schema using JSON Schema output.
 
 ---
-
-### prompts/
-
-System prompts and prompt templates.
 
 ### models/
 
@@ -178,3 +183,32 @@ Current Routers
 
 - Healthcare Professional API
 - Interaction API
+- AI Chat API
+
+---
+
+## Error Handling
+
+The AI Chat API always returns HTTP 200 with a `ChatResponse`.
+
+| Situation | `tool_output.error_type` | User Message |
+|-----------|--------------------------|--------------|
+| Incomplete interaction | `validation` | Asks for HCP name and details |
+| HCP or interaction not found | `validation` | e.g. "HCP 'X' not found." |
+| Unreadable date | `validation` | Asks for a valid date |
+| LLM, database or routing failure | `internal` | Generic retry message |
+
+Unexpected errors are logged with their full stack trace on the server and are never returned to the client.
+
+---
+
+## CORS
+
+The API accepts requests from local development origins:
+
+```text
+http://localhost:<any port>
+http://127.0.0.1:<any port>
+```
+
+Vite moves to port 5174+ when 5173 is busy, so a fixed origin list is not used.

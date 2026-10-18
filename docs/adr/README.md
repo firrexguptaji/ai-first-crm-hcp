@@ -15,3 +15,5 @@ Each ADR records:
 | ADR | Title | Status |
 |------|-------|--------|
 | ADR-001 | Project Structure | ✅ Accepted |
+| ADR-002 | LangGraph Architecture | ✅ Accepted |
+| ADR-003 | Groq Model Migration and Structured Output | ✅ Accepted |

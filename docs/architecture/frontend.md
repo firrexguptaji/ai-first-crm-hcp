@@ -39,16 +39,17 @@ src/
 │   └── layout/
 │
 ├── features/
-├── hooks/
+│   ├── app/
+│   ├── chat/
+│   └── interaction/
+│
 ├── pages/
 ├── styles/
-├── types/
-│   ├── api.ts
-│   ├── chat.ts
-│   ├── hcp.ts
-│   └── interaction.ts
-│
-└── utils/
+└── types/
+    ├── chat.ts
+    ├── hcp.ts
+    ├── interaction.ts
+    └── redux.ts
 ```
 
 ---
@@ -198,6 +199,42 @@ FastAPI REST API
 - Typed request and response models
 - Service abstraction
 - Basic API error handling
+
+## Client Configuration
+
+| Setting | Value | Reason |
+|---------|-------|--------|
+| Base URL | `VITE_API_URL` | Environment-based configuration |
+| Timeout | 60 seconds | AI requests can make several LLM calls |
+
+## Chat Error Responses
+
+The AI Chat API returns HTTP 200 even when a tool fails. Failures are reported inside `tool_output`:
+
+```json
+{
+  "response": "HCP 'Nobody' not found.",
+  "tool_name": "log_interaction",
+  "tool_output": {
+    "success": false,
+    "error_type": "validation",
+    "error": "HCP 'Nobody' not found."
+  }
+}
+```
+
+The chat displays `response` for both success and failure. Error styling and retry are planned in #61.
+
+## Known Type Mismatches
+
+To be resolved in #60.
+
+| File | Frontend | Backend |
+|------|----------|---------|
+| `types/hcp.ts` | `specialty` | `specialization` |
+| `types/interaction.ts` | `interaction_type` | `channel`, plus `raw_notes`, `sentiment`, `products_discussed`, `follow_up_*` |
+| Interaction form | Meeting / Call / Email / Conference | `IN_PERSON` / `PHONE` / `EMAIL` / `VIDEO` / `OTHER` |
+| Interaction form | Positive / Neutral / Negative | `POSITIVE` / `NEUTRAL` / `NEGATIVE` |
 
 ---
 

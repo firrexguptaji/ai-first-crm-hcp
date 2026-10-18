@@ -61,6 +61,7 @@ The project follows a production-inspired engineering workflow using issue-drive
 | REST APIs | ✅ |
 | LangGraph | ✅ |
 | Frontend Foundation | ✅ |
+| AI Workflow Reliability | 👀 |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ⏳ |
 
@@ -125,6 +126,7 @@ PostgreSQL
 - Tool Registry
 - AI Chat Endpoint
 - End-to-End Backend Validation
+- AI Workflow Reliability Fixes (#69)
 
 ---
 
@@ -183,6 +185,15 @@ PostgreSQL
 - ✅ Search Healthcare Professional
 - ✅ Retrieve Interaction History
 - ✅ Suggest Follow-up
+
+## Reliability (#69)
+
+- ✅ Whole-word, priority-ordered intent routing
+- ✅ Model `openai/gpt-oss-120b` (ADR-003)
+- ✅ JSON Schema structured output
+- ✅ Incomplete interaction guard
+- ✅ Graceful error handling (no HTTP 500 from chat)
+- ✅ Natural-language date resolution
 
 ---
 
@@ -265,27 +276,33 @@ Backend Development
 
 ## ✅ Milestone 3
 
-Frontend Foundation
+Frontend Development
 
-## 🚧 Milestone 4
+## ✅ Milestone 4
 
-Frontend ↔ Backend Integration
+LangGraph Integration
 
-## ⏳ Milestone 5
+## 🚧 Milestone 5
 
-Docker & Deployment
+AI Integration
+
+## ⏳ Milestone 6
+
+Deployment
+
+## ⏳ Milestone 7
+
+Testing & Demo
 
 ---
 
 # Remaining Work
 
-## Frontend Integration
+## AI Integration
 
-- Connect Chat to FastAPI
-- Redux Async Actions
-- AI Response Rendering
-- Automatic Form Population
-- Loading & Error Handling
+- Merge #69 Fix AI Workflow Reliability
+- #60 Automatic Form Population (includes frontend type fixes)
+- #61 Loading & Error Handling
 
 ## Deployment
 
@@ -299,14 +316,14 @@ Docker & Deployment
 
 # Current Snapshot
 
-## Current Snapshot
-
 | Item | Value |
 |------|-------|
-| Version | v0.6.0 |
-| Milestone | Frontend Integration |
-| Completed Issues | #1–#58 |
-| Current Issue | #59 Integrate AI Chat Workflow |
+| Version | v0.7.0 |
+| Milestone | AI Integration |
+| Completed Issues | #1–#21, #23–#30, #58, #59 |
+| Current Issue | #69 Fix AI Workflow Reliability (Review) |
 | Next Issue | #60 Automatic Interaction Form Population |
-| Active Branch | feature/59-integrate-ai-chat-workflow |
-| Last Verified | Integrate A |
+| Active Branch | fix/69-ai-workflow-reliability |
+| Model | openai/gpt-oss-120b |
+| Tests | 88 passing |
+| Last Verified | 2026-10-18 — full test suite and 8 live chat scenarios |
