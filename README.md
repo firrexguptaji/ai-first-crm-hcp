@@ -85,6 +85,8 @@ docker compose up --build
 | API docs | http://localhost:8000/docs |
 | PostgreSQL | localhost:5433 |
 
+Full guide, configuration and troubleshooting: [Deployment Guide](docs/deployment/deployment.md).
+
 A fresh database is seeded with sample Healthcare Professionals (Alice Brown, John Smith, ...). Try:
 
 ```text
@@ -229,12 +231,17 @@ $env:RUN_LLM_EVAL="1"; pytest tests/test_routing_eval.py -v
 
 | Document | Description |
 |----------|-------------|
-| Project Context | Current project status |
-| Frontend Architecture | Frontend architecture and workflow |
-| Backend Architecture | Backend architecture |
-| ADR | Architecture decisions (ADR-001 – ADR-004) |
-| Database Schema | ERD and schema documentation |
-| Issue Progress | Development roadmap |
+| [Deployment Guide](docs/deployment/deployment.md) | Docker Compose, configuration, operations, troubleshooting |
+| [Project Context](docs/project-context.md) | Current project status |
+| [System Architecture](docs/architecture/architecture.md) | High-level architecture |
+| [Frontend Architecture](docs/architecture/frontend.md) | Frontend architecture, form population, error handling, Docker |
+| [Backend Architecture](docs/architecture/backend.md) | Backend layers, configuration, Docker, Compose |
+| [LangGraph](docs/architecture/langgraph.md) | Graph, intent routing, LLM integration |
+| [Tool Registry](docs/architecture/tool-registry.md) | AI tools and output contract |
+| [Database](docs/architecture/database.md) | Database status, migrations, Compose database |
+| [Database Schema](database/schema/schema.md) | Schema and ERD |
+| [ADR](docs/adr/README.md) | Architecture decisions (ADR-001 – ADR-004) |
+| [Issue Progress](docs/issues/issue-progress.md) | Development roadmap |
 
 ---
 
@@ -568,14 +575,11 @@ Completed
 - ✅ Backend Dockerfile (#62)
 - ✅ Frontend Dockerfile (#63)
 - ✅ Docker Compose with PostgreSQL and demo data (#64)
-
-Planned
-
-- Deployment Documentation
+- ✅ Deployment Guide (#65)
 
 Status
 
-**In Progress**
+**Completed**
 
 ---
 

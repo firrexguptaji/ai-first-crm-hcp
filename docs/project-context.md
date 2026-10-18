@@ -68,9 +68,10 @@ The project follows a production-inspired engineering workflow using issue-drive
 | Loading & Error Handling | ✅ |
 | Backend Container | ✅ |
 | Frontend Container | ✅ |
-| Docker Compose | 👀 |
+| Docker Compose | ✅ |
+| Deployment Guide | 👀 |
 | Frontend Integration | 🚧 |
-| Docker Deployment | 🚧 |
+| Docker Deployment | ✅ |
 
 ---
 
@@ -323,8 +324,7 @@ Testing & Demo
 
 ## Deployment
 
-- Merge #64 Docker Compose
-- #65 Deployment Documentation
+- Merge #65 Deployment Documentation (completes Milestone 6)
 
 ## Testing & Demo
 
@@ -352,14 +352,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.14.0 |
+| Version | v0.15.0 |
 | Milestone | Deployment |
-| Completed Issues | #1–#21, #23–#30, #58–#63, #69, #72, #74 |
-| Current Issue | #64 Configure Docker Compose Environment (Review) |
-| Next Issue | #65 Deployment Documentation |
-| Active Branch | feature/64-configure-docker-compose-environment |
+| Completed Issues | #1–#21, #23–#30, #58–#64, #69, #72, #74 |
+| Current Issue | #65 Deployment Documentation (Review) |
+| Next Issue | #22 Polish Frontend Experience |
+| Active Branch | feature/65-deployment-documentation |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 176 passing, 47 live evaluations opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — docker compose up with PostgreSQL, demo data, live chat |
+| Last Verified | 2026-10-18 — deployment guide steps against the Compose stack |
