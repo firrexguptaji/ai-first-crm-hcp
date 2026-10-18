@@ -57,7 +57,7 @@
 
 ---
 
-## Milestone 5 — AI Integration — 🚧 In Progress
+## Milestone 5 — AI Integration — 👀 Final Review
 
 | Issue | Status |
 |-------|--------|
@@ -66,8 +66,8 @@
 | #69 Fix AI Workflow Reliability | ✅ Completed |
 | #60 Automatic Interaction Form Population | ✅ Completed |
 | #72 Add Additional Interaction Fields | ✅ Completed |
-| #74 LLM-based Intent Routing and Edit Safety | 👀 Review |
-| #61 Loading & Error Handling | ⏳ Ready |
+| #74 LLM-based Intent Routing and Edit Safety | ✅ Completed |
+| #61 Loading & Error Handling | 👀 Review |
 
 ---
 
@@ -161,6 +161,19 @@ Fixes found during live testing
 | Capability list shown on one line | Chat bubbles keep line breaks |
 
 Tests: 176 unit and integration tests, plus 47 opt-in live routing evaluations.
+
+### #61 Loading & Error Handling
+
+| Iteration | Change |
+|-----------|--------|
+| 61a | Request errors classified (network, timeout, server); reply status per message; failed messages stored for retry; `any` removed |
+| 61b | Thinking indicator, status colours, Retry button, auto-scroll, Enter to send |
+
+| Status | Shown For |
+|--------|-----------|
+| Notice (yellow) | Missing HCP name, HCP not found, nothing to update |
+| Info (blue) | Greetings and unsupported requests |
+| Error (red) + Retry | Server unreachable, timeout, server error |
 
 ### Follow-up Issues
 

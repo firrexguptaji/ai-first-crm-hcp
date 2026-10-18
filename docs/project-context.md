@@ -64,7 +64,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | AI Workflow Reliability | ✅ |
 | Automatic Form Population | ✅ |
 | Additional Interaction Fields | ✅ |
-| LLM Intent Routing & Edit Safety | 👀 |
+| LLM Intent Routing & Edit Safety | ✅ |
+| Loading & Error Handling | 👀 |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ⏳ |
 
@@ -319,8 +320,19 @@ Testing & Demo
 
 ## AI Integration
 
-- Merge #74 LLM-based Intent Routing and Edit Safety
-- #61 Loading & Error Handling
+- Merge #61 Loading & Error Handling (completes Milestone 5)
+
+## Deployment
+
+- #62 Containerize Backend
+- #63 Containerize Frontend
+- #64 Docker Compose
+- #65 Deployment Documentation
+
+## Testing & Demo
+
+- #22 Polish Frontend Experience
+- #66 Demo Video & Project Release
 
 ## Improvements
 
@@ -343,14 +355,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.10.0 |
+| Version | v0.11.0 |
 | Milestone | AI Integration |
-| Completed Issues | #1–#21, #23–#30, #58–#60, #69, #72 |
-| Current Issue | #74 LLM-based Intent Routing and Edit Safety (Review) |
-| Next Issue | #61 Loading & Error Handling |
-| Active Branch | feature/74-llm-intent-routing |
+| Completed Issues | #1–#21, #23–#30, #58–#60, #69, #72, #74 |
+| Current Issue | #61 Loading & Error Handling (Review) |
+| Next Issue | #62 Containerize Backend |
+| Active Branch | 61-loading-error-handling |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 176 passing, 47 live evaluations opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — backend tests, live routing evaluation, live edit scenarios |
+| Last Verified | 2026-10-18 — frontend type check and lint, live loading, error and retry scenarios |

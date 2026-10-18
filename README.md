@@ -13,6 +13,7 @@
 - Healthcare Professional search
 - Interaction history retrieval
 - AI-generated follow-up recommendations
+- Loading and error feedback with retry
 - FastAPI REST API
 - PostgreSQL persistence
 - SQLAlchemy ORM
@@ -483,14 +484,11 @@ Completed
 - ✅ Automatic Interaction Form Population (#60)
 - ✅ Additional Interaction Fields (#72)
 - ✅ LLM Intent Routing & Edit Safety (#74)
-
-Next
-
-- Loading & Error Handling (#61)
+- ✅ Loading & Error Handling (#61)
 
 Status
 
-**In Progress**
+**Completed**
 
 ---
 
@@ -561,6 +559,7 @@ Documentation
 - ✅ Conversation History
 - ✅ Interaction Form
 - ✅ Automatic Form Population
+- ✅ Thinking Indicator, Error Messages and Retry
 - ✅ Reusable Components
 
 ---
