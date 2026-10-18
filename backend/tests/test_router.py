@@ -96,6 +96,13 @@ from app.graph.router import classify
         # Bare follow-up question
         ("Follow-up for Alice Brown?", "suggest_followup"),
         ("Search cardiologists at City Hospital", "search_hcp"),
+        # Edits that add/remove values on the existing record (#72)
+        ("Add Dr. Patel as an attendee to my meeting with Alice Brown", "edit_interaction"),
+        ("Remove Nurse Kelly from the attendees for Alice Brown", "edit_interaction"),
+        ("Set the outcome for my last visit with Alice Brown to agreed trial", "edit_interaction"),
+        ("Add a sample of Product B to my last interaction with Alice Brown", "edit_interaction"),
+        # "add" inside a new note without a record reference stays a log
+        ("Met Alice Brown, she wants to add Product B to her formulary", "log_interaction"),
     ],
 )
 def test_classify(message, expected):

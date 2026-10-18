@@ -127,6 +127,12 @@ Configure the database connection in:
 backend/.env
 ```
 
+Existing databases created before #72 need migration 001:
+
+```bash
+psql -U postgres -d ai_first_crm_hcp -f database/migrations/001_add_interaction_fields.sql
+```
+
 ---
 
 # Documentation
@@ -445,9 +451,11 @@ Completed
 - ✅ AI Chat Workflow
 - ✅ AI Workflow Reliability (#69)
 - ✅ Automatic Interaction Form Population (#60)
+- ✅ Additional Interaction Fields (#72)
 
 Next
 
+- LLM-based Intent Routing
 - Loading & Error Handling (#61)
 
 Status

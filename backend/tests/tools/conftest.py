@@ -25,6 +25,10 @@ def make_interaction():
             "products_discussed": ["Product A"],
             "follow_up_required": True,
             "follow_up_date": date(2026, 10, 25),
+            "attendees": ["Nurse Kelly"],
+            "samples_distributed": ["Product A starter pack"],
+            "outcomes": "Agreed to trial Product A.",
+            "follow_up_actions": "Send Phase III data.",
         }
         data.update(overrides)
         return Interaction(**data)

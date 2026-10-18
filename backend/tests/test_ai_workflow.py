@@ -180,8 +180,9 @@ def test_edit_interaction_updates_database():
             "Alice Brown"
         )
 
+        # Edit targets the most recently recorded interaction.
         interaction = (
-            interaction_service.get_latest_interaction(
+            interaction_service.get_last_recorded_interaction(
                 hcp.id
             )
         )

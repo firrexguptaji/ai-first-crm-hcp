@@ -164,6 +164,11 @@ Examples
 | Suggest a follow-up after my call with Dr. Smith | Suggest Follow-up |
 | Met Alice Brown today. Schedule a follow-up next week. | Log Interaction |
 | Dr. Smith asked about metformin dosing | Log Interaction |
+| Add Dr. Patel as an attendee to my meeting with Alice Brown | Edit Interaction |
+
+Known Limitations
+
+Keyword routing cannot understand meaning. Messages such as *"Alice Brown's sentiment should be neutral"* or *"When did I last meet Alice Brown?"* are misrouted, and unrecognised messages default to Log Interaction. LLM-based intent routing is planned as the next issue.
 
 Routing logic lives in `classify(message)`, which is unit-tested independently of the graph.
 
@@ -258,6 +263,7 @@ Implemented
 - ✅ JSON Schema structured output (#69)
 - ✅ Natural-language date resolution (#69)
 - ✅ Graceful error handling (#69)
+- ✅ Additional interaction fields extracted by AI (#72)
 
 ---
 

@@ -326,14 +326,18 @@ Suggestions are cleared when a different interaction is loaded.
 | Interaction Type | `channel` | `channel` |
 | Date | `interactionDate` | `interaction_date` |
 | Time | `interactionDate` | `interaction_date` |
-| Topics Discussed | `rawNotes` | `raw_notes` |
+| Attendees | `attendees` | `attendees` |
+| Topics Discussed | `summary` | `summary` |
 | Materials Shared | `productsDiscussed` | `products_discussed` |
+| Samples Distributed | `samplesDistributed` | `samples_distributed` |
 | Observed / Inferred Sentiment | `sentiment` | `sentiment` |
-| Outcomes | `summary` | `summary` |
-| Follow-up Actions | `followUpRequired`, `followUpDate` | `follow_up_required`, `follow_up_date` |
+| Outcomes | `outcomes` | `outcomes` |
+| Follow-up Actions | `followUpActions`, `followUpDate` | `follow_up_actions`, `follow_up_date` |
 | AI Suggested Follow-ups | `suggestions` | `recommendation.recommendation` |
-| Attendees | — | Not stored yet |
-| Samples Distributed | — | Not stored yet |
+
+`raw_notes` (the original message) is stored but not displayed.
+
+All form fields are populated by the AI (#72).
 
 ## Display Formatting
 
@@ -343,6 +347,8 @@ Suggestions are cleared when a different interaction is loaded.
 | `POSITIVE` / `NEUTRAL` / `NEGATIVE` | Positive / Neutral / Negative |
 | `2026-10-18T10:30:00` | Date `18-10-2026`, Time `10:30` |
 | `follow_up_date: 2026-10-25` | Follow up on 25-10-2026 |
+| `follow_up_actions` + `follow_up_date` | Send Phase III data. / Follow up on 25-10-2026 |
+| `attendees: ["Nurse Kelly", "Dr. Patel"]` | Nurse Kelly, Dr. Patel |
 
 Dates are read directly from the ISO string, so the browser time zone cannot shift the displayed day.
 
@@ -471,6 +477,7 @@ The frontend follows these engineering principles:
 
 ### Form Population
 
+- ✅ Additional fields: Attendees, Samples, Outcomes, Follow-up Actions (#72)
 - ✅ Backend-aligned Types
 - ✅ Interaction Slice populated from AI responses
 - ✅ Form bound to Redux
@@ -480,7 +487,6 @@ The frontend follows these engineering principles:
 ## Remaining Work
 
 - Loading & Error UX Improvements (#61)
-- Additional Interaction Fields (Attendees, Samples, Outcomes, Follow-up Actions)
 - Frontend Unit Tests
 - Docker Deployment
 

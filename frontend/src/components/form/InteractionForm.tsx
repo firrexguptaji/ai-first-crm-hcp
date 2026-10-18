@@ -22,6 +22,7 @@ import {
     channelLabel,
     formatDate,
     formatFollowUp,
+    formatList,
     formatTime,
     sentimentLabel,
 } from "../../features/interaction/formatters";
@@ -91,6 +92,7 @@ export default function InteractionForm() {
                         <TextArea
                         label="Attendees"
                         rows={1}
+                        value={formatList(interaction.attendees)}
                         placeholder="Enter names or search..."
                     />
                 </div>
@@ -100,7 +102,7 @@ export default function InteractionForm() {
                     <TextAreaWithAction
                         label="Topics Discussed"
                         rows={3}
-                        value={interaction.rawNotes}
+                        value={interaction.summary}
                         placeholder="Enter key discussion points..."
                         actionIcon={<Mic size={16} />}
                     />
@@ -137,6 +139,7 @@ export default function InteractionForm() {
                     <InfoCard
                         title="Samples Distributed"
                         emptyText="No samples added."
+                        items={interaction.samplesDistributed}
                         buttonText="Add Sample"
                     />
 
@@ -156,7 +159,7 @@ export default function InteractionForm() {
                     <TextArea
                         label="Outcomes"
                         rows={2}
-                        value={interaction.summary}
+                        value={interaction.outcomes}
                         placeholder="Key outcomes or agreements..."
                     />
                 </div>
@@ -168,6 +171,7 @@ export default function InteractionForm() {
                         value={formatFollowUp(
                             interaction.followUpRequired,
                             interaction.followUpDate,
+                            interaction.followUpActions,
                         )}
                         placeholder="Enter next steps or tasks..."
                     />

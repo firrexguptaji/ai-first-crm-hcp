@@ -24,6 +24,10 @@ export function toInteractionState(
         productsDiscussed: record.products_discussed ?? [],
         followUpRequired: record.follow_up_required,
         followUpDate: record.follow_up_date ?? "",
+        attendees: record.attendees ?? [],
+        samplesDistributed: record.samples_distributed ?? [],
+        outcomes: record.outcomes ?? "",
+        followUpActions: record.follow_up_actions ?? "",
         source,
     };
 }

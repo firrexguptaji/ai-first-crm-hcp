@@ -22,6 +22,10 @@ const initialState: InteractionState = {
     productsDiscussed: [],
     followUpRequired: false,
     followUpDate: "",
+    attendees: [],
+    samplesDistributed: [],
+    outcomes: "",
+    followUpActions: "",
     suggestions: [],
     source: null,
 };

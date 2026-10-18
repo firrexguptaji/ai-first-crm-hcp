@@ -92,6 +92,18 @@ class InteractionService:
             limit=limit,
         )
         
+    def get_last_recorded_interaction(
+        self,
+        hcp_id: UUID,
+    ) -> Interaction | None:
+        """
+        Retrieve the interaction most recently saved for an HCP.
+
+        Used by the Edit Interaction tool.
+        """
+
+        return self.repository.get_last_recorded_by_hcp(hcp_id)
+
     def get_latest_interaction(
     self,
     hcp_id: UUID,

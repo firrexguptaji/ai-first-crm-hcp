@@ -35,6 +35,10 @@ export interface InteractionState {
     followUpRequired: boolean;
     /** ISO date, e.g. 2026-10-25 */
     followUpDate: string;
+    attendees: string[];
+    samplesDistributed: string[];
+    outcomes: string;
+    followUpActions: string;
     /** AI follow-up recommendations for the current HCP. */
     suggestions: string[];
     /** Which AI tool last updated the form. */

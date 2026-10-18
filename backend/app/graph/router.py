@@ -24,6 +24,7 @@ def _words(*phrases: str) -> re.Pattern[str]:
 # purpose: "I updated Dr. Smith on Product A" is a new interaction.
 EDIT_VERBS = _words(
     "edit", "update", "modify", "change", "correct", "fix", "amend",
+    "add", "remove", "set", "replace", "include",
 )
 
 # An edit request must also refer to an existing record or field.
@@ -32,6 +33,8 @@ EDIT_TARGETS = _words(
     "record", "entry", "log", "last", "latest", "previous",
     "summary", "notes", "sentiment", "date", "channel",
     "products", "follow-up", "follow up", "follow-up date",
+    "attendee", "attendees", "sample", "samples", "outcome", "outcomes",
+    "action", "actions", "follow-up actions",
 )
 
 HISTORY = re.compile(

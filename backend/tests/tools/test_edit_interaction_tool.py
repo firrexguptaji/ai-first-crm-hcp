@@ -94,3 +94,46 @@ def test_build_update_rejects_unreadable_date(field):
 
     with pytest.raises(ValueError, match="couldn't understand"):
         build_update(extraction)
+
+
+
+def test_build_update_includes_additional_fields():
+    extraction = InteractionUpdateExtraction(
+        hcp_name="Alice Brown",
+        attendees=["Nurse Kelly", "Dr. Patel"],
+        outcomes="Agreed to trial Product A.",
+        follow_up_actions="Send Phase III data.",
+    )
+
+    update = build_update(extraction)
+
+    assert update.model_dump(exclude_none=True) == {
+        "attendees": ["Nurse Kelly", "Dr. Patel"],
+        "outcomes": "Agreed to trial Product A.",
+        "follow_up_actions": "Send Phase III data.",
+    }
+
+
+
+def test_build_update_ignores_empty_values_from_llm():
+    """
+    "Add Dr. Patel as an attendee" must not wipe other fields
+    when the LLM returns "" or [] for fields it was not asked about.
+    """
+
+    extraction = InteractionUpdateExtraction(
+        hcp_name="Alice Brown",
+        attendees=["Nurse Kelly", "Dr. Patel"],
+        summary="",
+        raw_notes="   ",
+        outcomes="",
+        follow_up_actions="",
+        samples_distributed=[],
+        products_discussed=[],
+    )
+
+    update = build_update(extraction)
+
+    assert update.model_dump(exclude_none=True) == {
+        "attendees": ["Nurse Kelly", "Dr. Patel"],
+    }

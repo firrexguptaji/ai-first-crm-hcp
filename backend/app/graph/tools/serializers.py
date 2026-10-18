@@ -33,4 +33,8 @@ def serialize_interaction(interaction: Interaction) -> dict[str, Any]:
             if interaction.follow_up_date
             else None
         ),
+        "attendees": interaction.attendees or [],
+        "samples_distributed": interaction.samples_distributed or [],
+        "outcomes": interaction.outcomes,
+        "follow_up_actions": interaction.follow_up_actions,
     }
