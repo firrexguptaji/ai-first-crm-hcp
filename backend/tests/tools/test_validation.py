@@ -26,7 +26,7 @@ def test_edit_without_hcp_asks_which_hcp(monkeypatch):
         lambda message: InteractionUpdateExtraction(hcp_name="UNKNOWN"),
     )
 
-    def must_not_be_called(extraction):
+    def must_not_be_called(extraction, message=None):
         raise AssertionError("Database lookup attempted")
 
     monkeypatch.setattr(
@@ -91,3 +91,32 @@ def test_extraction_schemas_allow_missing_hcp_name(schema_name):
     schema = getattr(ai, schema_name)
 
     assert schema.model_fields["hcp_name"].is_required() is False
+
+
+from app.graph.tools.validation import hcp_name_from_message, resolve_hcp_name
+
+
+@pytest.mark.parametrize(
+    ("message", "expected"),
+    [
+        # Regression: LLM returned no HCP for this message (#74)
+        ("Delete Product B from the products in my last meeting with Alice Brown", "Alice Brown"),
+        ("Add Dr. Patel as an attendee to my meeting with Alice Brown", "Alice Brown"),
+        ("Show interaction history for Dr. Alice Brown", "Alice Brown"),
+        ("Suggest a follow-up for Smith", "Smith"),
+        ("Remove Nurse Kelly from the attendees for Alice Brown", "Alice Brown"),
+        ("Actually she was negative, not positive", None),
+        ("Add Product A to the products", None),
+    ],
+)
+def test_hcp_name_from_message(message, expected):
+    assert hcp_name_from_message(message) == expected
+
+
+def test_resolve_prefers_llm_name():
+    assert resolve_hcp_name("Alice Brown", "meeting with Bob Stone") == "Alice Brown"
+
+
+def test_resolve_falls_back_to_message():
+    assert resolve_hcp_name(None, "my meeting with Alice Brown") == "Alice Brown"
+    assert resolve_hcp_name("UNKNOWN", "my meeting with Alice Brown") == "Alice Brown"
