@@ -82,3 +82,36 @@ def test_chat_endpoint_returns_200_on_workflow_error(monkeypatch):
     body = response.json()
     assert body["tool_output"]["success"] is False
     assert body["response"] == GENERIC_ERROR_MESSAGE
+
+
+import pytest
+
+
+@pytest.mark.parametrize(
+    "origin",
+    ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:5174"],
+)
+def test_cors_allows_local_dev_origins(origin):
+    response = client.options(
+        "/chat",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == origin
+
+
+def test_cors_rejects_unknown_origin():
+    response = client.options(
+        "/chat",
+        headers={
+            "Origin": "http://evil.example.com",
+            "Access-Control-Request-Method": "POST",
+        },
+    )
+
+    assert response.status_code == 400
