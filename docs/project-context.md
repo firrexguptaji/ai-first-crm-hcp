@@ -71,7 +71,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | Docker Compose | ✅ |
 | Deployment Guide | ✅ |
 | Review Fixes (#81) | ✅ |
-| Frontend Polish (#22) | 👀 |
+| Frontend Polish (#22) | ✅ |
+| Walkthrough & Release (#66) | 👀 |
 | Authentication | ❌ Out of scope (ADR-005) |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ✅ |
@@ -327,11 +328,7 @@ Testing & Demo
 
 ## Deployment
 
-- Merge #22 Polish Frontend Experience
-
-## Testing & Demo
-
-- #66 Demo Video & Project Release
+- Merge #66, tag v1.0.0, publish the GitHub release
 
 ## Improvements
 
@@ -353,14 +350,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.17.0 |
+| Version | v1.0.0 |
 | Milestone | Testing & Demo |
-| Completed Issues | #1–#21, #23–#30, #58–#65, #69, #72, #74, #81 |
-| Current Issue | #22 Polish Frontend Experience (Review) |
-| Next Issue | #66 Demo Video & Project Release |
-| Active Branch | feature/22-polish-frontend-experience |
+| Completed Issues | #1–#30, #58–#65, #69, #72, #74, #81 |
+| Current Issue | #66 Walkthrough, Screenshots & v1.0.0 Release (Review) |
+| Next Issue | — (release) |
+| Active Branch | feature/66-release |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 281 (unit + database), live Groq tests opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — frontend type check and lint; layout checked at desktop, tablet and phone widths |
+| Last Verified | 2026-10-18 — end-to-end walkthrough on a clean Docker Compose stack |
