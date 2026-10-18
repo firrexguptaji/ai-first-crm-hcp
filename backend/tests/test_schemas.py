@@ -100,3 +100,12 @@ def test_extraction_schema_describes_new_fields_for_llm():
 
     for name in ("attendees", "samples_distributed", "outcomes", "follow_up_actions"):
         assert properties[name]["description"]
+
+
+
+def test_attendees_description_asks_to_keep_titles():
+    from app.schemas.ai import InteractionExtraction, InteractionUpdateExtraction
+
+    for schema in (InteractionExtraction, InteractionUpdateExtraction):
+        description = schema.model_json_schema()["properties"]["attendees"]["description"]
+        assert "Dr. Patel" in description

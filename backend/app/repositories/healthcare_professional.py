@@ -107,7 +107,12 @@ class HealthcareProfessionalRepository:
                 HealthcareProfessional.last_name.ilike(last),
             )
 
-        return query.first()
+        # Deterministic choice when several HCPs share a name:
+        # always the oldest record.
+        return query.order_by(
+            HealthcareProfessional.created_at,
+            HealthcareProfessional.id,
+        ).first()
     
     
     def search(

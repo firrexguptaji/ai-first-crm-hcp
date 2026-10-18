@@ -9,7 +9,7 @@ also accept common relative phrases as a fallback.
 from __future__ import annotations
 
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, time, timedelta
 
 _RELATIVE_DAYS = {
     "today": 0,
@@ -28,6 +28,7 @@ _RELATIVE_DAYS = {
 
 _IN_N_UNITS = re.compile(r"^in (\d+) (day|days|week|weeks)$")
 _N_UNITS_AGO = re.compile(r"^(\d+) (day|days|week|weeks) ago$")
+_DATE_ONLY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
 def _offset_days(text: str) -> int | None:
@@ -75,7 +76,12 @@ def parse_datetime(
     """
     Parse an ISO datetime, ISO date or relative phrase into a datetime.
 
-    Relative phrases keep the current time of day.
+    Time of day:
+    - ISO datetime ("2026-10-18T10:30:00") → kept as given
+    - Today's date without a time ("2026-10-18", "today") → current time
+    - Relative phrases ("yesterday") → current time
+    - Other dates without a time ("2026-10-01") → midnight
+
     Returns None when the value is empty or not understood.
     """
 
@@ -83,9 +89,15 @@ def parse_datetime(
         return None
 
     now = now or datetime.now()
+    text = value.strip()
+
+    if _DATE_ONLY.match(text):
+        parsed_date = date.fromisoformat(text)
+        time_of_day = now.time() if parsed_date == now.date() else time.min
+        return datetime.combine(parsed_date, time_of_day)
 
     try:
-        return datetime.fromisoformat(value.strip())
+        return datetime.fromisoformat(text)
     except ValueError:
         pass
 

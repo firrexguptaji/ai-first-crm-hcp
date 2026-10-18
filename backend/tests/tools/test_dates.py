@@ -45,3 +45,12 @@ def test_parse_datetime_unknown_returns_none():
 
 def test_date_rules_include_today():
     assert date.today().isoformat() in date_rules()
+
+
+
+def test_parse_datetime_today_date_only_keeps_current_time():
+    assert parse_datetime("2026-10-18", now=NOW) == datetime(2026, 10, 18, 14, 30)
+
+
+def test_parse_datetime_other_date_only_is_midnight():
+    assert parse_datetime("2026-10-01", now=NOW) == datetime(2026, 10, 1, 0, 0)

@@ -9,7 +9,8 @@ from app.schemas.common import BaseSchema
 # so they double as extraction instructions.
 ATTENDEES_DESCRIPTION = (
     "Other people present besides the HCP and the representative, "
-    "e.g. nurses or colleagues. Empty if none mentioned."
+    "e.g. nurses or colleagues. Keep their titles exactly as written, "
+    "e.g. 'Dr. Patel', 'Nurse Kelly'. Empty if none mentioned."
 )
 SAMPLES_DESCRIPTION = (
     "Product samples handed to the HCP. Empty if none mentioned."

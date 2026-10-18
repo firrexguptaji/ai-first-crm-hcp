@@ -104,3 +104,24 @@ def test_log_interaction_placeholder_name_is_not_saved(monkeypatch):
 
     assert result["tool_output"]["success"] is False
     assert "couldn't identify" in result["response"]
+
+
+
+@pytest.mark.parametrize(
+    ("missing_field", "label"),
+    [
+        ("hcp_name", "Healthcare Professional name"),
+        ("interaction_date", "interaction date"),
+        ("summary", "topics discussed"),
+    ],
+)
+def test_log_interaction_reports_missing_field(monkeypatch, missing_field, label):
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.extract_interaction",
+        lambda message: make_extraction(**{missing_field: ""}),
+    )
+
+    result = log_interaction(make_state("Had a chat."))
+
+    assert result["tool_output"]["missing"] == [label]
+    assert f"Missing: {label}." in result["response"]

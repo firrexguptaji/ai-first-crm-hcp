@@ -34,8 +34,11 @@ def extract_update(
         healthcare interaction.
 
         Rules:
-        - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
+        - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from hcp_name only.
+        - Keep titles in attendees, e.g. "Dr. Patel", "Nurse Kelly".
         - Only populate fields that the user wants to update.
+          Leave every other field null. Never return empty strings
+          or empty lists for fields the user did not mention.
         - For list fields (attendees, samples_distributed,
           products_discussed), return the complete new list.
         {date_rules()}
@@ -45,6 +48,27 @@ def extract_update(
     """
 
     return structured_llm.invoke(prompt)
+
+def _provided(value):
+    """
+    Return None for values the user did not ask to change.
+
+    The LLM sometimes returns "" or [] for fields that were not
+    mentioned instead of leaving them out. Saving those would wipe
+    existing data, so empty values are treated as "not provided".
+    """
+
+    if value is None:
+        return None
+
+    if isinstance(value, str) and not value.strip():
+        return None
+
+    if isinstance(value, list) and not value:
+        return None
+
+    return value
+
 
 def build_update(
     extraction: InteractionUpdateExtraction,
@@ -76,16 +100,16 @@ def build_update(
     return InteractionUpdate(
         interaction_date=interaction_date,
         channel=extraction.channel,
-        raw_notes=extraction.raw_notes,
-        summary=extraction.summary,
+        raw_notes=_provided(extraction.raw_notes),
+        summary=_provided(extraction.summary),
         sentiment=extraction.sentiment,
-        products_discussed=extraction.products_discussed,
+        products_discussed=_provided(extraction.products_discussed),
         follow_up_required=extraction.follow_up_required,
         follow_up_date=follow_up_date,
-        attendees=extraction.attendees,
-        samples_distributed=extraction.samples_distributed,
-        outcomes=extraction.outcomes,
-        follow_up_actions=extraction.follow_up_actions,
+        attendees=_provided(extraction.attendees),
+        samples_distributed=_provided(extraction.samples_distributed),
+        outcomes=_provided(extraction.outcomes),
+        follow_up_actions=_provided(extraction.follow_up_actions),
     )
 
 
@@ -116,7 +140,9 @@ def update_interaction_record(
                 f"HCP '{extraction.hcp_name}' not found."
             )
 
-        interaction = interaction_service.get_latest_interaction(
+        # The interaction the user most recently recorded,
+        # i.e. the one shown in the form after logging.
+        interaction = interaction_service.get_last_recorded_interaction(
             hcp.id
         )
 

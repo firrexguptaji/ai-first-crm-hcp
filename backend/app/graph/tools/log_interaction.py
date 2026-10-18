@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import logging
 from datetime import datetime
+
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.graph.tools.serializers import serialize_interaction
@@ -33,12 +35,13 @@ def extract_interaction(
     Extract the healthcare interaction.
 
     Rules:
-    - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
+    - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from hcp_name only.
     - Never invent information. If the message does not name the HCP,
       return an empty string for hcp_name. Do the same for summary if
       nothing was discussed.
     - summary: a short summary of the topics discussed.
     - attendees: only other people present (not the HCP, not "I").
+      Keep their titles, e.g. "Dr. Patel", "Nurse Kelly".
     - samples_distributed: only samples actually handed over.
     - outcomes: agreements or results; null if none.
     - follow_up_actions: next steps for the representative; null if none.
@@ -105,6 +108,16 @@ def create_interaction_record(
         db.close()
         
         
+logger = logging.getLogger(__name__)
+
+# Required fields and how they are named in messages to the user.
+REQUIRED_FIELDS = {
+    "hcp_name": "Healthcare Professional name",
+    "interaction_date": "interaction date",
+    "summary": "topics discussed",
+}
+
+
 # Placeholders an LLM may return instead of leaving a field empty.
 PLACEHOLDER_VALUES = {
     "unknown", "n/a", "na", "none", "null", "not specified",
@@ -135,15 +148,24 @@ def log_interaction(
     extraction = extract_interaction(
         state["message"]
     )
-    if (
-        is_missing(extraction.hcp_name)
-        or is_missing(extraction.interaction_date)
-        or is_missing(extraction.summary)
-    ):
+    missing = [
+        label
+        for field, label in REQUIRED_FIELDS.items()
+        if is_missing(getattr(extraction, field))
+    ]
+
+    if missing:
         state["tool_input"] = extraction.model_dump()
+
+        logger.warning(
+            "Incomplete interaction, missing %s. Extraction: %s",
+            missing,
+            state["tool_input"],
+        )
 
         message = (
             "I couldn't identify a complete interaction. "
+            f"Missing: {', '.join(missing)}. "
             "Please include the Healthcare Professional's name "
             "and interaction details."
         )
@@ -153,6 +175,7 @@ def log_interaction(
             "error_type": "validation",
             "error": message,
             "reason": "Incomplete interaction information",
+            "missing": missing,
         }
 
         state["response"] = message
