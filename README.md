@@ -47,7 +47,7 @@
 - LangGraph
 - LangChain
 - Groq
-- llama-3.3-70b-versatile
+- openai/gpt-oss-120b
 
 ---
 
@@ -98,7 +98,7 @@ uvicorn app.main:app --reload
 ```env
 GROQ_API_KEY=your_api_key
 
-MODEL_NAME=llama-3.3-70b-versatile
+MODEL_NAME=openai/gpt-oss-120b
 ```
 
 ## Frontend
@@ -109,7 +109,7 @@ VITE_API_URL=http://localhost:8000
 
 > **Note**
 >
-> The original assignment specified `gemma2-9b-it`. Since the model has been deprecated by Groq, this project uses `llama-3.3-70b-versatile` while preserving the intended LangGraph architecture.
+> The original assignment specified `gemma2-9b-it`. Since the model has been deprecated by Groq, this project first moved to `llama-3.3-70b-versatile`, which Groq retired on 2026-08-16, and now uses `openai/gpt-oss-120b` (Groq's recommended replacement) while preserving the intended LangGraph architecture.
 
 ---
 

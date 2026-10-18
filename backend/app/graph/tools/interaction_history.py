@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
-from app.llm.groq import llm
+from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
 )
@@ -22,7 +22,7 @@ def extract_history(
     natural language.
     """
 
-    structured_llm = llm.with_structured_output(
+    structured_llm = structured(
         InteractionHistoryExtraction
     )
 

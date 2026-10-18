@@ -34,7 +34,7 @@ The project follows a production-inspired engineering workflow using issue-drive
 - LangGraph
 - LangChain
 - Groq
-- llama-3.3-70b-versatile
+- openai/gpt-oss-120b
 
 ---
 

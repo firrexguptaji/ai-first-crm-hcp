@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
-from app.llm.groq import llm
+from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
 )
@@ -24,7 +24,7 @@ def extract_interaction(
     natural language message.
     """
 
-    structured_llm = llm.with_structured_output(
+    structured_llm = structured(
         InteractionExtraction
     )
     prompt = f"""
