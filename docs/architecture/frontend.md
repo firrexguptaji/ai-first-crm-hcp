@@ -152,8 +152,9 @@ AppLayout
 - ✅ ChatPanel
 - ✅ ChatHeader
 - ✅ ChatMessages
-- ✅ ChatMessage
-- ✅ ChatInput
+- ✅ ChatMessage (status styling, Retry button)
+- ✅ ChatInput (Enter to send)
+- ✅ ThinkingIndicator
 
 ---
 
@@ -226,7 +227,7 @@ The AI Chat API returns HTTP 200 even when a tool fails. Failures are reported i
 }
 ```
 
-The chat displays `response` for both success and failure. Line breaks in replies are preserved (`white-space: pre-line`). Error styling and retry are planned in #61.
+The chat displays `response` for both success and failure. Line breaks in replies are preserved (`white-space: pre-line`).
 
 | `error_type` | Example |
 |--------------|---------|
@@ -250,6 +251,69 @@ Frontend types mirror the backend schemas (#60).
 - `isHistoryOutput(response)`
 - `isFollowUpOutput(response)`
 - `isToolError(output)`
+
+---
+
+# Loading & Error Handling
+
+Implemented in #61.
+
+## Request Lifecycle
+
+```text
+User presses Enter / Send
+        │
+        ▼
+addUserMessage ──► user bubble
+        │
+        ▼
+sendChatMessage.pending ──► Thinking… indicator, input disabled
+        │
+        ├── fulfilled ──► assistant bubble (status from tool_output)
+        │
+        └── rejected ───► error bubble + Retry
+```
+
+## Reply Status
+
+Each assistant message has a `status` derived from `tool_output` (`replyStatus()` in `chatSlice.ts`).
+
+| Status | Source | Style |
+|--------|--------|-------|
+| `ok` | `success: true` | Grey (default) |
+| `notice` | `error_type: validation` | Yellow, alert icon |
+| `info` | `error_type: unsupported` | Blue, info icon |
+| `error` | `error_type: internal`, or request failed | Red, warning icon, **Retry** |
+
+## Request Errors
+
+Failures before a response arrives are converted by `getErrorMessage()` (`api/errors.ts`).
+
+| Failure | Message |
+|---------|---------|
+| Backend not running / network down | Can't reach the server. Check that the backend is running, then try again. |
+| Timeout (60 s) | The AI is taking too long to respond. Please try again. |
+| HTTP 5xx | The server ran into a problem. Please try again in a moment. |
+| HTTP 422 | The request was not valid. Please rephrase your message. |
+
+## Retry
+
+Failed replies store the original message in `retryMessage`. Retry removes the error bubble and sends the message again. Retry is disabled while another request is running.
+
+## Input
+
+| Key | Action |
+|-----|--------|
+| Enter | Send |
+| Shift + Enter | New line |
+
+Enter is ignored while an IME is composing text.
+
+## Other Feedback
+
+- Thinking indicator with animated dots (static when the user prefers reduced motion)
+- Auto-scroll to the newest message
+- Send button shows "Sending..." and is disabled during a request
 
 ---
 
@@ -475,6 +539,10 @@ The frontend follows these engineering principles:
 - ✅ Request Lifecycle
 - ✅ Conversation History
 - ✅ AI Response Rendering
+- ✅ Thinking Indicator (#61)
+- ✅ Reply Status Styling (#61)
+- ✅ Request Error Messages and Retry (#61)
+- ✅ Auto-scroll and Enter to Send (#61)
 
 ### Components
 
@@ -493,7 +561,6 @@ The frontend follows these engineering principles:
 
 ## Remaining Work
 
-- Loading & Error UX Improvements (#61)
 - Interaction history list in chat
 - Frontend Unit Tests
 - Docker Deployment
@@ -502,6 +569,6 @@ The frontend follows these engineering principles:
 
 # Current Status
 
-The frontend foundation, API communication layer, AI chat workflow and automatic form population are complete.
+The frontend foundation, API communication layer, AI chat workflow, automatic form population, and loading and error handling are complete.
 
-The Interaction Details form updates automatically from AI responses. The remaining work focuses on loading and error UX, additional interaction fields and deployment.
+The remaining work focuses on deployment and polish.
