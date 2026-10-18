@@ -37,3 +37,38 @@ def test_interaction_create_schema():
 
     assert schema.channel == InteractionChannel.IN_PERSON
     assert schema.sentiment == Sentiment.POSITIVE
+
+def test_interaction_create_schema_additional_fields():
+    schema = InteractionCreate(
+        hcp_id="123e4567-e89b-12d3-a456-426614174000",
+        interaction_date=datetime.now(),
+        channel=InteractionChannel.IN_PERSON,
+        raw_notes="Met with doctor and nurse.",
+        summary="Discussed Product A.",
+        sentiment=Sentiment.POSITIVE,
+        attendees=["Nurse Kelly"],
+        samples_distributed=["Product A starter pack"],
+        outcomes="Agreed to trial Product A.",
+        follow_up_actions="Send clinical data.",
+    )
+
+    assert schema.attendees == ["Nurse Kelly"]
+    assert schema.samples_distributed == ["Product A starter pack"]
+    assert schema.outcomes == "Agreed to trial Product A."
+    assert schema.follow_up_actions == "Send clinical data."
+
+
+def test_interaction_create_schema_additional_fields_are_optional():
+    schema = InteractionCreate(
+        hcp_id="123e4567-e89b-12d3-a456-426614174000",
+        interaction_date=datetime.now(),
+        channel=InteractionChannel.PHONE,
+        raw_notes="Quick call.",
+        summary="Checked in.",
+        sentiment=Sentiment.NEUTRAL,
+    )
+
+    assert schema.attendees is None
+    assert schema.samples_distributed is None
+    assert schema.outcomes is None
+    assert schema.follow_up_actions is None

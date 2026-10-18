@@ -81,6 +81,26 @@ class Interaction(Base):
         nullable=True,
     )
 
+    attendees: Mapped[list[str] | None] = mapped_column(
+        JSONB,
+        nullable=True,
+    )
+
+    samples_distributed: Mapped[list[str] | None] = mapped_column(
+        JSONB,
+        nullable=True,
+    )
+
+    outcomes: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    follow_up_actions: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         server_default=func.now(),
         nullable=False,

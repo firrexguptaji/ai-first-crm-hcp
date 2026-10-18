@@ -19,6 +19,10 @@ class InteractionBase(BaseSchema):
     products_discussed: list[str] | None = None
     follow_up_required: bool = False
     follow_up_date: date | None = None
+    attendees: list[str] | None = None
+    samples_distributed: list[str] | None = None
+    outcomes: str | None = None
+    follow_up_actions: str | None = None
 
 
 class InteractionCreate(InteractionBase):
@@ -38,6 +42,10 @@ class InteractionUpdate(BaseSchema):
     products_discussed: list[str] | None = None
     follow_up_required: bool | None = None
     follow_up_date: date | None = None
+    attendees: list[str] | None = None
+    samples_distributed: list[str] | None = None
+    outcomes: str | None = None
+    follow_up_actions: str | None = None
 
 
 class InteractionResponse(InteractionBase):
