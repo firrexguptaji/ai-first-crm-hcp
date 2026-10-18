@@ -4,6 +4,14 @@
 
 ---
 
+![Release](https://img.shields.io/badge/release-v1.0.0-blue) ![Status](https://img.shields.io/badge/status-assessment%20build-orange)
+
+![AI-First CRM](docs/walkthrough/screenshots/02-log-interaction.png)
+
+**Try it end to end:** [Walkthrough](docs/walkthrough/walkthrough.md) · **Run it:** [Quick Start](#quick-start-docker-compose) · **Changes:** [Changelog](CHANGELOG.md)
+
+---
+
 # Features
 
 - AI-powered conversational CRM interface
@@ -249,7 +257,9 @@ Tests refuse to run if `TEST_DATABASE_URL` equals `DATABASE_URL`.
 
 | Document | Description |
 |----------|-------------|
+| [Walkthrough](docs/walkthrough/walkthrough.md) | End-to-end feature tour with screenshots |
 | [Deployment Guide](docs/deployment/deployment.md) | Docker Compose, configuration, operations, troubleshooting |
+| [Changelog](CHANGELOG.md) | Release notes |
 | [Project Context](docs/project-context.md) | Current project status |
 | [System Architecture](docs/architecture/architecture.md) | High-level architecture |
 | [Frontend Architecture](docs/architecture/frontend.md) | Frontend architecture, form population, error handling, Docker |
@@ -609,13 +619,11 @@ Completed
 - ✅ Review Fixes: targeting, safe fallback, behaviour tests, security review (#81)
 - ✅ Frontend Polish: accessibility, responsive layout, UX (#22)
 
-Planned
-
-- Demo Video & Project Release (#66)
+- ✅ Walkthrough, Screenshots & v1.0.0 Release (#66)
 
 Status
 
-**In Progress**
+**Completed**
 
 ---
 

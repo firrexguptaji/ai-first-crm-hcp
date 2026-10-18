@@ -82,13 +82,13 @@
 
 ---
 
-## Milestone 7 — Testing & Demo — 🚧 In Progress
+## Milestone 7 — Testing & Demo — 👀 Final Review
 
 | Issue | Status |
 |-------|--------|
 | #81 Review Fixes: Targeting, Safe Fallback, Behaviour Tests, Access Control | ✅ Completed |
-| #22 Polish Frontend Experience | 👀 Review |
-| #66 Demo Video & Project Release | ⏳ Backlog |
+| #22 Polish Frontend Experience | ✅ Completed |
+| #66 Walkthrough, Screenshots & v1.0.0 Release | 👀 Review |
 
 ---
 
@@ -231,11 +231,24 @@ The integration tests that created duplicate "Alice Brown" records now run on th
 | 22b | Responsive: single column ≤ 1024px with chat first, compact phone layout, scrollable form panel on desktop |
 | 22c | New interaction button, empty-state hint, message timestamps, disabled extras explained |
 
+### #66 Walkthrough, Screenshots & v1.0.0 Release
+
+Scope changed from a demo video to a written walkthrough with screenshots.
+
+| Deliverable | Location |
+|-------------|----------|
+| End-to-end walkthrough (14 steps, feature checklist) | `docs/walkthrough/walkthrough.md` |
+| Screenshots (6 captured; later steps text-only after Groq rate limit) | `docs/walkthrough/screenshots/` |
+| Release notes | `CHANGELOG.md` |
+| Version 1.0.0 | `backend/app/main.py`, `frontend/package.json` |
+| Git tag and GitHub release | `v1.0.0` |
+
 ### Follow-up Issues
 
 - Conversation context: understand "she" / "that meeting" without repeating the HCP name
 - Interaction history list in the chat UI
-- Use a separate test database (integration tests currently write to the development database; Compose gives a clean database for demos)
+- Capture remaining walkthrough screenshots (follow-up, unsupported, error/retry, mobile, API docs, tests)
+- Store and display interaction times in the user's time zone (backend container uses UTC)
 - Frontend unit tests (Vitest)
 - Configurable CORS origins for server deployment
 - Authentication, record ownership and authorization (ADR-005 production path)

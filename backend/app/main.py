@@ -10,7 +10,7 @@ from app.db.seed import seed_demo_data
 
 app = FastAPI(
     title="AI-First CRM HCP API",
-    version="0.1.0",
+    version="1.0.0",
 )
 app.add_middleware(
     CORSMiddleware,
