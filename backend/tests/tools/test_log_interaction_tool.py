@@ -28,23 +28,24 @@ def make_extraction(**overrides):
     return InteractionExtraction(**data)
 
 
-def test_log_interaction_returns_state(monkeypatch):
-    class FakeInteraction:
-        id = "123"
-
+def test_log_interaction_returns_state(monkeypatch, make_interaction):
     monkeypatch.setattr(
         "app.graph.tools.log_interaction.extract_interaction",
         lambda message: make_extraction(),
     )
     monkeypatch.setattr(
         "app.graph.tools.log_interaction.create_interaction_record",
-        lambda extraction: FakeInteraction(),
+        lambda extraction: make_interaction(),
     )
 
     result = log_interaction(make_state())
+    output = result["tool_output"]
 
-    assert result["tool_output"]["success"] is True
-    assert result["tool_output"]["interaction_id"] == "123"
+    assert output["success"] is True
+    assert output["interaction_id"] == "11111111-1111-1111-1111-111111111111"
+    assert output["hcp_name"] == "John Doe"
+    assert output["interaction"]["summary"] == "Discussed Product A."
+    assert output["interaction"]["channel"] == "IN_PERSON"
 
 
 @pytest.mark.parametrize(
