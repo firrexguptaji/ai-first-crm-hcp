@@ -66,7 +66,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | Additional Interaction Fields | ✅ |
 | LLM Intent Routing & Edit Safety | ✅ |
 | Loading & Error Handling | ✅ |
-| Backend Container | 👀 |
+| Backend Container | ✅ |
+| Frontend Container | 👀 |
 | Frontend Integration | 🚧 |
 | Docker Deployment | 🚧 |
 
@@ -321,8 +322,7 @@ Testing & Demo
 
 ## Deployment
 
-- Merge #62 Containerize Backend
-- #63 Containerize Frontend
+- Merge #63 Containerize Frontend
 - #64 Docker Compose
 - #65 Deployment Documentation
 
@@ -352,14 +352,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.12.0 |
+| Version | v0.13.0 |
 | Milestone | Deployment |
-| Completed Issues | #1–#21, #23–#30, #58–#61, #69, #72, #74 |
-| Current Issue | #62 Containerize Backend (Review) |
-| Next Issue | #63 Containerize Frontend |
-| Active Branch | feature/62-containerize-backend |
+| Completed Issues | #1–#21, #23–#30, #58–#62, #69, #72, #74 |
+| Current Issue | #63 Containerize Frontend (Review) |
+| Next Issue | #64 Configure Docker Compose Environment |
+| Active Branch | feature/63-containerize-frontend |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 176 passing, 47 live evaluations opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — backend image build and container run |
+| Last Verified | 2026-10-18 — frontend and backend images, both containers running together |
