@@ -27,3 +27,9 @@ def test_suggest_followup_registered():
     tool = get_tool("suggest_followup")
 
     assert callable(tool)
+
+
+def test_unsupported_registered():
+    tool = get_tool("unsupported")
+
+    assert callable(tool)

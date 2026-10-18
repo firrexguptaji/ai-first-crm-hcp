@@ -3,12 +3,22 @@ Tool and workflow errors must reach the user as chat replies,
 never as HTTP 500 responses.
 """
 
+import pytest
 from fastapi.testclient import TestClient
 
 from app.graph.graph import GENERIC_ERROR_MESSAGE, graph
 from app.main import app
 
 client = TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def keyword_routing(monkeypatch):
+    """
+    Error handling tests must not call the LLM router.
+    """
+
+    monkeypatch.setattr("app.graph.router.settings.router_mode", "keyword")
 
 
 def make_state(message="Met Dr. Nobody yesterday."):

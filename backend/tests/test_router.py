@@ -1,4 +1,15 @@
+import pytest
+
 from app.graph.router import route
+
+
+@pytest.fixture(autouse=True)
+def keyword_routing(monkeypatch):
+    """
+    These tests cover the keyword router, so LLM routing is off.
+    """
+
+    monkeypatch.setattr("app.graph.router.settings.router_mode", "keyword")
 
 
 def test_router_selects_log_interaction():

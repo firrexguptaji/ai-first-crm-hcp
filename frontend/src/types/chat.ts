@@ -17,13 +17,14 @@ export type ToolName =
     | "edit_interaction"
     | "search_hcp"
     | "interaction_history"
-    | "suggest_followup";
+    | "suggest_followup"
+    | "unsupported";
 
 /* ---------- Tool outputs ---------- */
 
 export interface ToolErrorOutput {
     success: false;
-    error_type?: "validation" | "internal";
+    error_type?: "validation" | "internal" | "unsupported";
     error?: string;
     reason?: string;
 }
