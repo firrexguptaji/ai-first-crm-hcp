@@ -89,6 +89,20 @@ See `database/migrations/README.md`.
 
 ---
 
+## Docker Compose Database
+
+| Item | Value |
+|------|-------|
+| Image | `postgres:16-alpine` |
+| Host port | 5433 |
+| Volume | `pgdata` |
+| Schema | Created by `create_all()` on backend startup (migrations not needed) |
+| Demo data | Six sample HCPs when the table is empty (`SEED_DEMO_DATA=true`) |
+
+Reset: `docker compose down -v`
+
+---
+
 ## Known Limitations
 
 - Integration tests use the development database

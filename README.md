@@ -66,6 +66,42 @@ README.md
 
 # Getting Started
 
+## Quick Start (Docker Compose)
+
+Runs PostgreSQL, the backend and the frontend with one command. Requires Docker Desktop.
+
+```powershell
+# 1. Configure (only GROQ_API_KEY is required)
+Copy-Item .env.example .env
+# edit .env and set GROQ_API_KEY
+
+# 2. Start
+docker compose up --build
+```
+
+| Service | URL |
+|---------|-----|
+| App | http://localhost:8080 |
+| API docs | http://localhost:8000/docs |
+| PostgreSQL | localhost:5433 |
+
+A fresh database is seeded with sample Healthcare Professionals (Alice Brown, John Smith, ...). Try:
+
+```text
+Met Alice Brown today at her clinic. Discussed Product A, she was positive.
+```
+
+| Command | Effect |
+|---------|--------|
+| `docker compose up -d` | Start in the background |
+| `docker compose logs -f backend` | Follow backend logs |
+| `docker compose down` | Stop, keep data |
+| `docker compose down -v` | Stop and delete the database |
+
+After changing `.env`, run `docker compose up -d` again to recreate the affected containers.
+
+## Local Development
+
 ## Frontend
 
 ```bash
@@ -123,7 +159,11 @@ Open: http://localhost:8080
 
 # Environment Variables
 
-## Backend
+## Docker Compose (`.env` in the project root)
+
+See `.env.example`. Required: `GROQ_API_KEY`. Optional: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`, `MODEL_NAME`, `ROUTER_MODE`, `SEED_DEMO_DATA`, `VITE_API_URL`.
+
+## Backend (`backend/.env`, local development)
 
 ```env
 DATABASE_URL=postgresql+psycopg://postgres:password@localhost:5432/ai_first_crm_hcp
@@ -527,10 +567,10 @@ Completed
 
 - ✅ Backend Dockerfile (#62)
 - ✅ Frontend Dockerfile (#63)
+- ✅ Docker Compose with PostgreSQL and demo data (#64)
 
 Planned
 
-- Docker Compose
 - Deployment Documentation
 
 Status

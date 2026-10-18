@@ -67,7 +67,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | LLM Intent Routing & Edit Safety | ✅ |
 | Loading & Error Handling | ✅ |
 | Backend Container | ✅ |
-| Frontend Container | 👀 |
+| Frontend Container | ✅ |
+| Docker Compose | 👀 |
 | Frontend Integration | 🚧 |
 | Docker Deployment | 🚧 |
 
@@ -322,8 +323,7 @@ Testing & Demo
 
 ## Deployment
 
-- Merge #63 Containerize Frontend
-- #64 Docker Compose
+- Merge #64 Docker Compose
 - #65 Deployment Documentation
 
 ## Testing & Demo
@@ -352,14 +352,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.13.0 |
+| Version | v0.14.0 |
 | Milestone | Deployment |
-| Completed Issues | #1–#21, #23–#30, #58–#62, #69, #72, #74 |
-| Current Issue | #63 Containerize Frontend (Review) |
-| Next Issue | #64 Configure Docker Compose Environment |
-| Active Branch | feature/63-containerize-frontend |
+| Completed Issues | #1–#21, #23–#30, #58–#63, #69, #72, #74 |
+| Current Issue | #64 Configure Docker Compose Environment (Review) |
+| Next Issue | #65 Deployment Documentation |
+| Active Branch | feature/64-configure-docker-compose-environment |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 176 passing, 47 live evaluations opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — frontend and backend images, both containers running together |
+| Last Verified | 2026-10-18 — docker compose up with PostgreSQL, demo data, live chat |
