@@ -57,13 +57,31 @@ export function formatTime(iso: string): string {
     return match ? `${match[1]}:${match[2]}` : "";
 }
 
+/**
+ * Combine follow-up actions and the follow-up date, e.g.
+ * "Send Phase III data." + newline + "Follow up on 25-10-2026"
+ */
 export function formatFollowUp(
     required: boolean,
     date: string,
+    actions = "",
 ): string {
-    if (date) {
-        return `Follow up on ${formatDate(date)}`;
+    const lines: string[] = [];
+
+    if (actions) {
+        lines.push(actions);
     }
 
-    return required ? "Follow-up required (no date set)" : "";
+    if (date) {
+        lines.push(`Follow up on ${formatDate(date)}`);
+    } else if (required && !actions) {
+        lines.push("Follow-up required (no date set)");
+    }
+
+    return lines.join("\n");
+}
+
+/** ["Nurse Kelly", "Dr. Patel"] → "Nurse Kelly, Dr. Patel" */
+export function formatList(items: string[]): string {
+    return items.join(", ");
 }

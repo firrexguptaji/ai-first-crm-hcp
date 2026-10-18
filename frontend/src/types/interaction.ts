@@ -32,14 +32,23 @@ export interface InteractionRecord {
     products_discussed: string[];
     follow_up_required: boolean;
     follow_up_date: string | null;
+    attendees: string[];
+    samples_distributed: string[];
+    outcomes: string | null;
+    follow_up_actions: string | null;
 }
 
 /**
  * Interaction as returned by the REST API.
  */
 export interface Interaction
-    extends Omit<InteractionRecord, "products_discussed"> {
+    extends Omit<
+        InteractionRecord,
+        "products_discussed" | "attendees" | "samples_distributed"
+    > {
     products_discussed: string[] | null;
+    attendees: string[] | null;
+    samples_distributed: string[] | null;
     created_at: string;
     updated_at: string;
 }
@@ -54,6 +63,10 @@ export interface CreateInteraction {
     products_discussed?: string[] | null;
     follow_up_required?: boolean;
     follow_up_date?: string | null;
+    attendees?: string[] | null;
+    samples_distributed?: string[] | null;
+    outcomes?: string | null;
+    follow_up_actions?: string | null;
 }
 
 export type UpdateInteraction =
