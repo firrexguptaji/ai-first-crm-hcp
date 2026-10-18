@@ -68,6 +68,7 @@ def test_log_interaction_incomplete_is_not_saved(monkeypatch, missing_field):
 
     assert result["tool_output"]["success"] is False
     assert result["tool_output"]["reason"] == "Incomplete interaction information"
+    assert result["tool_output"]["error_type"] == "validation"
     assert "couldn't identify" in result["response"]
 
 

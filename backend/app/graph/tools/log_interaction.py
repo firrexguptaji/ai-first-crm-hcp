@@ -132,16 +132,20 @@ def log_interaction(
     ):
         state["tool_input"] = extraction.model_dump()
 
-        state["tool_output"] = {
-            "success": False,
-            "reason": "Incomplete interaction information",
-        }
-
-        state["response"] = (
+        message = (
             "I couldn't identify a complete interaction. "
             "Please include the Healthcare Professional's name "
             "and interaction details."
         )
+
+        state["tool_output"] = {
+            "success": False,
+            "error_type": "validation",
+            "error": message,
+            "reason": "Incomplete interaction information",
+        }
+
+        state["response"] = message
 
         return state
 
