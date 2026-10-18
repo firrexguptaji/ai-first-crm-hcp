@@ -1,6 +1,6 @@
 import pytest
 
-from app.graph.tools.log_interaction import log_interaction
+from app.graph.tools.log_interaction import is_missing, log_interaction
 from app.models.enums import InteractionChannel, Sentiment
 from app.schemas.ai import InteractionExtraction
 
@@ -68,4 +68,37 @@ def test_log_interaction_incomplete_is_not_saved(monkeypatch, missing_field):
 
     assert result["tool_output"]["success"] is False
     assert result["tool_output"]["reason"] == "Incomplete interaction information"
+    assert "couldn't identify" in result["response"]
+
+
+
+@pytest.mark.parametrize(
+    "value",
+    [None, "", "  ", "Unknown", "unknown.", "N/A", "None", "not specified"],
+)
+def test_is_missing_detects_placeholders(value):
+    assert is_missing(value) is True
+
+
+@pytest.mark.parametrize("value", ["Alice Brown", "Product A discussed", "2026-10-18"])
+def test_is_missing_accepts_real_values(value):
+    assert is_missing(value) is False
+
+
+def test_log_interaction_placeholder_name_is_not_saved(monkeypatch):
+    def fail_if_called(extraction):
+        raise AssertionError("Placeholder HCP must not be saved")
+
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.extract_interaction",
+        lambda message: make_extraction(hcp_name="Unknown"),
+    )
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.create_interaction_record",
+        fail_if_called,
+    )
+
+    result = log_interaction(make_state("Had a chat."))
+
+    assert result["tool_output"]["success"] is False
     assert "couldn't identify" in result["response"]

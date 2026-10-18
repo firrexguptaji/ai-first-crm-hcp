@@ -33,6 +33,9 @@ def extract_interaction(
 
     Rules:
     - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
+    - Never invent information. If the message does not name the HCP,
+      return an empty string for hcp_name. Do the same for summary if
+      nothing was discussed.
     {date_rules()}
 
     User Message:
@@ -92,6 +95,26 @@ def create_interaction_record(
         db.close()
         
         
+# Placeholders an LLM may return instead of leaving a field empty.
+PLACEHOLDER_VALUES = {
+    "unknown", "n/a", "na", "none", "null", "not specified",
+    "not mentioned", "not provided", "unspecified", "-",
+}
+
+
+def is_missing(value: str | None) -> bool:
+    """
+    True when a required field is empty or only a placeholder.
+    """
+
+    if value is None:
+        return True
+
+    cleaned = value.strip().strip(".").lower()
+
+    return not cleaned or cleaned in PLACEHOLDER_VALUES
+
+
 def log_interaction(
     state: CRMState,
 ) -> CRMState:
@@ -103,9 +126,9 @@ def log_interaction(
         state["message"]
     )
     if (
-        not extraction.hcp_name.strip()
-        or not extraction.interaction_date.strip()
-        or not extraction.summary.strip()
+        is_missing(extraction.hcp_name)
+        or is_missing(extraction.interaction_date)
+        or is_missing(extraction.summary)
     ):
         state["tool_input"] = extraction.model_dump()
 
