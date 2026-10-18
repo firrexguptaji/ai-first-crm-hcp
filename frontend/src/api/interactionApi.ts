@@ -3,6 +3,7 @@ import apiClient from "./client";
 import type {
     Interaction,
     CreateInteraction,
+    UpdateInteraction,
 } from "../types/interaction";
 
 export async function getInteractions(): Promise<Interaction[]> {
@@ -30,7 +31,7 @@ export async function createInteraction(
 
 export async function updateInteraction(
     id: string,
-    data: Partial<CreateInteraction>,
+    data: UpdateInteraction,
 ): Promise<Interaction> {
 
     const response =
