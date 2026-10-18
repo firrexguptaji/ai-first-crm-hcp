@@ -64,7 +64,8 @@
 | #58 Integrate Redux with Backend Services | ✅ Completed |
 | #59 Integrate AI Chat Workflow | ✅ Completed |
 | #69 Fix AI Workflow Reliability | ✅ Completed |
-| #60 Automatic Interaction Form Population | 👀 Review |
+| #60 Automatic Interaction Form Population | ✅ Completed |
+| #72 Add Additional Interaction Fields | 👀 Review |
 | #61 Loading & Error Handling | ⏳ Ready |
 
 ---
@@ -119,9 +120,30 @@ Live validation: 8 / 8 chat scenarios passing.
 
 Form fields without database columns (Attendees, Samples Distributed) remain empty.
 
+### #72 Add Additional Interaction Fields
+
+| Iteration | Change |
+|-----------|--------|
+| 72a | Columns `attendees`, `samples_distributed`, `outcomes`, `follow_up_actions`; SQL migration 001 |
+| 72b | AI extraction of the new fields |
+| 72c | Form shows all fields; Topics Discussed now shows the AI summary |
+
+Fixes found during live testing
+
+| Problem | Fix |
+|---------|-----|
+| "Add Dr. Patel as an attendee…" routed to Log Interaction | `add`, `remove`, `set`, `replace`, `include` and field names added to edit routing |
+| Edit wiped fields the user did not mention | Empty LLM values are ignored |
+| Edit changed an older interaction | Edit targets the most recently recorded interaction |
+| "today" saved as midnight | Today's date keeps the current time |
+| Attendee titles removed ("Patel") | Titles removed from the HCP name only |
+| Incomplete-interaction message was vague | Message names the missing field |
+| Duplicate HCP names resolved randomly | Oldest matching HCP is always used |
+
 ### Follow-up Issues
 
 - Use a separate test database (integration tests currently write to the development database)
-- LLM-based intent routing with keyword fallback
-- Additional interaction fields: Attendees, Materials, Samples, Outcomes, Follow-up Actions
+- **LLM-based intent routing with keyword fallback (next, high priority)**: 14 of 37 realistic messages are misrouted by keywords; unrecognised messages default to Log Interaction
+- Edit safety: AI defaults for sentiment, channel and follow-up flag can overwrite values; list fields cannot add to or remove from existing values; edits with no changes report success
+- Log: placeholder text ("N/A") in optional fields
 - Frontend unit tests (Vitest)

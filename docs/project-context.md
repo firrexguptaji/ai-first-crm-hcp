@@ -62,7 +62,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | LangGraph | ✅ |
 | Frontend Foundation | ✅ |
 | AI Workflow Reliability | ✅ |
-| Automatic Form Population | 👀 |
+| Automatic Form Population | ✅ |
+| Additional Interaction Fields | 👀 |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ⏳ |
 
@@ -155,6 +156,7 @@ PostgreSQL
 - Read-only Interaction Form
 - Reusable Form Components
 - Automatic population from AI responses (#60)
+- All fields populated, including attendees, samples, outcomes and follow-up actions (#72)
 
 ### AI Assistant
 
@@ -302,12 +304,13 @@ Testing & Demo
 
 ## AI Integration
 
-- Merge #60 Automatic Form Population
+- Merge #72 Additional Interaction Fields
+- LLM-based Intent Routing (next issue)
 - #61 Loading & Error Handling
 
 ## Improvements
 
-- Additional interaction fields (Attendees, Samples, Outcomes, Follow-up Actions)
+- Edit safety for defaults and list fields
 - Separate test database
 - Frontend unit tests
 
@@ -325,12 +328,13 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.8.0 |
+| Version | v0.9.0 |
 | Milestone | AI Integration |
-| Completed Issues | #1–#21, #23–#30, #58, #59, #69 |
-| Current Issue | #60 Automatic Interaction Form Population (Review) |
-| Next Issue | #61 Loading & Error Handling |
-| Active Branch | feature/60-automatic-form-population |
+| Completed Issues | #1–#21, #23–#30, #58, #59, #60, #69 |
+| Current Issue | #72 Add Additional Interaction Fields (Review) |
+| Next Issue | LLM-based Intent Routing |
+| Active Branch | 72-add-additional-interaction-fields |
 | Model | openai/gpt-oss-120b |
-| Backend Tests | 90 passing |
-| Last Verified | 2026-10-18 — backend tests, frontend type check and lint |
+| Backend Tests | 108 passing |
+| Database Migrations | 001 |
+| Last Verified | 2026-10-18 — backend tests, frontend type check, live log and edit |

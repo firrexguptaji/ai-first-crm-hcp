@@ -45,6 +45,10 @@ A Healthcare Professional can have multiple interactions, while each interaction
                         | products_discussed : JSONB     |
                         | follow_up_required : Boolean   |
                         | follow_up_date : Date          |
+                        | attendees : JSONB              |
+                        | samples_distributed : JSONB    |
+                        | outcomes : Text                |
+                        | follow_up_actions : Text       |
                         | created_at : Timestamp         |
                         | updated_at : Timestamp         |
                         +----------------------------------+

@@ -62,6 +62,10 @@ Each interaction belongs to exactly one Healthcare Professional.
 | products_discussed | JSONB | No | List of products discussed |
 | follow_up_required | Boolean | Yes | Indicates whether follow-up is required |
 | follow_up_date | Date | No | Scheduled follow-up date |
+| attendees | JSONB | No | Other people present, e.g. nurses (#72) |
+| samples_distributed | JSONB | No | Product samples handed over (#72) |
+| outcomes | Text | No | Agreements or results of the interaction (#72) |
+| follow_up_actions | Text | No | Next steps for the representative (#72) |
 | created_at | Timestamp | Yes | Record creation timestamp |
 | updated_at | Timestamp | Yes | Record update timestamp |
 
@@ -127,6 +131,19 @@ Each Interaction belongs to exactly one Healthcare Professional.
 - `raw_notes` is required
 - `summary` is required
 - `follow_up_date` is nullable
+- `attendees`, `samples_distributed`, `outcomes`, `follow_up_actions` are nullable
+
+---
+
+# Migrations
+
+Columns added after the initial schema are applied with SQL scripts in `database/migrations/`.
+
+| Migration | Issue | Change |
+|-----------|-------|--------|
+| `001_add_interaction_fields.sql` | #72 | Add `attendees`, `samples_distributed`, `outcomes`, `follow_up_actions` |
+
+See `database/migrations/README.md`.
 
 ---
 
@@ -161,6 +178,6 @@ Future enhancements may include:
 - User authentication and authorization
 - Activity history
 - Soft deletes
-- Database migrations using Alembic
+- Database migrations using Alembic (manual SQL migrations are used for now)
 
 These features are outside the current project scope and are therefore not included in the initial schema.

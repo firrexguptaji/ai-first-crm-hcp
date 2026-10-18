@@ -52,14 +52,17 @@ The selected tool executes the required business operation and returns a structu
 - Create interaction records
 - Validate input
 - Reject incomplete input (missing or placeholder HCP name, date or summary)
+- Report which required field is missing
+- Extract attendees, samples, outcomes and follow-up actions (#72)
 - Call the Interaction Service
 
 ---
 
 ### Edit Interaction
 
-- Update the latest interaction for an HCP
+- Update the interaction most recently recorded for an HCP
 - Update only the fields the user asked to change
+- Ignore empty values returned by the LLM, so unmentioned fields are never wiped
 - Resolve natural-language dates ("tomorrow", "next week")
 - Reject dates that cannot be understood with a clear message
 - Call the Interaction Service
@@ -133,7 +136,11 @@ Produced by `serialize_interaction()` in `app/graph/tools/serializers.py`.
   "sentiment": "POSITIVE",
   "products_discussed": ["Product A"],
   "follow_up_required": true,
-  "follow_up_date": "2026-10-25"
+  "follow_up_date": "2026-10-25",
+  "attendees": ["Nurse Kelly"],
+  "samples_distributed": ["Product A starter pack"],
+  "outcomes": "Agreed to trial Product A.",
+  "follow_up_actions": "Send Phase III data."
 }
 ```
 
