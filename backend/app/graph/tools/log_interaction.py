@@ -117,6 +117,8 @@ def log_interaction(
             "and interaction details."
         )
 
+        return state
+
     interaction = create_interaction_record(
         extraction
     )
