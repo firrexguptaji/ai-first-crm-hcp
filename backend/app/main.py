@@ -4,7 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.healthcare_professional import router as hcp_router
 from app.api.interaction import router as interaction_router
 from app.api.chat import router as chat_router
+from app.config.settings import settings
 from app.db.init_db import init_db
+from app.db.seed import seed_demo_data
 
 app = FastAPI(
     title="AI-First CRM HCP API",
@@ -23,6 +25,9 @@ app.add_middleware(
 @app.on_event("startup")
 def startup():
     init_db()
+
+    if settings.seed_demo_data:
+        seed_demo_data()
 
 
 @app.get("/health")
