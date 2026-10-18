@@ -86,8 +86,8 @@
 
 | Issue | Status |
 |-------|--------|
-| #81 Review Fixes: Targeting, Safe Fallback, Behaviour Tests, Access Control | 👀 Review |
-| #22 Polish Frontend Experience | ⏳ Backlog |
+| #81 Review Fixes: Targeting, Safe Fallback, Behaviour Tests, Access Control | ✅ Completed |
+| #22 Polish Frontend Experience | 👀 Review |
 | #66 Demo Video & Project Release | ⏳ Backlog |
 
 ---
@@ -222,6 +222,14 @@ Verified: `docker compose up --build` starts all services; chat, routing and for
 | P1 — No access control | Endpoint review documented (`docs/security/security.md`), ADR-005, API surface guard test |
 
 The integration tests that created duplicate "Alice Brown" records now run on the test database.
+
+### #22 Polish Frontend Experience
+
+| Iteration | Change |
+|-----------|--------|
+| 22a | Accessibility: linked labels, radiogroup, chat input label, live chat log, icon button names, focus styles, contrast, page title |
+| 22b | Responsive: single column ≤ 1024px with chat first, compact phone layout, scrollable form panel on desktop |
+| 22c | New interaction button, empty-state hint, message timestamps, disabled extras explained |
 
 ### Follow-up Issues
 

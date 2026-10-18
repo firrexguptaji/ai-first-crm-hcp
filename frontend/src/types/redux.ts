@@ -22,6 +22,8 @@ export interface ChatMessage {
     status?: ChatMessageStatus;
     /** Original user message, set on failed replies so they can be retried. */
     retryMessage?: string;
+    /** ISO timestamp, shown as HH:MM next to the sender. */
+    createdAt?: string;
 }
 
 export interface ChatState {

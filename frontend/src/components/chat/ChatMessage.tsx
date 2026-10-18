@@ -61,9 +61,11 @@ export default function ChatMessage({
                         {isUser ? "You" : "AI Assistant"}
                     </span>
 
-                    <span className="message-time">
-                        {time}
-                    </span>
+                    {time && (
+                        <time className="message-time">
+                            {time}
+                        </time>
+                    )}
 
                 </div>
 

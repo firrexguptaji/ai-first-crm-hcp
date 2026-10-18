@@ -109,6 +109,7 @@ const chatSlice = createSlice({
                     id: crypto.randomUUID(),
                     role: "assistant",
                     content: action.payload.response,
+                    createdAt: new Date().toISOString(),
                     status,
                     // Internal errors can be retried with the same message.
                     retryMessage:
@@ -131,6 +132,7 @@ const chatSlice = createSlice({
                     id: crypto.randomUUID(),
                     role: "assistant",
                     content: message,
+                    createdAt: new Date().toISOString(),
                     status: "error",
                     retryMessage: action.meta.arg.message,
                 });

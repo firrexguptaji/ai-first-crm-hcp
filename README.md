@@ -14,6 +14,7 @@
 - Interaction history retrieval
 - AI-generated follow-up recommendations
 - Loading and error feedback with retry
+- Accessible, responsive interface (keyboard, screen readers, tablet and phone)
 - FastAPI REST API
 - PostgreSQL persistence
 - SQLAlchemy ORM
@@ -603,10 +604,18 @@ Status
 
 ## Milestone 7 — Testing & Demo
 
+Completed
+
+- ✅ Review Fixes: targeting, safe fallback, behaviour tests, security review (#81)
+- ✅ Frontend Polish: accessibility, responsive layout, UX (#22)
+
 Planned
 
-- Frontend Polish
-- Demo Video & Project Release
+- Demo Video & Project Release (#66)
+
+Status
+
+**In Progress**
 
 ---
 

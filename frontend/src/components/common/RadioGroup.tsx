@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 interface RadioGroupProps {
     label: string;
     options: string[];
@@ -9,12 +11,19 @@ export default function RadioGroup({
     options,
     selected,
 }: RadioGroupProps) {
-    return (
-        <div className="radio-group">
+    const id = useId();
 
-            <label className="input-label">
+    return (
+        <div
+            className="radio-group"
+            role="radiogroup"
+            aria-labelledby={id}
+            aria-readonly="true"
+        >
+
+            <span className="input-label" id={id}>
                 {label}
-            </label>
+            </span>
 
             <div className="radio-options">
 
@@ -27,6 +36,7 @@ export default function RadioGroup({
                             type="radio"
                             checked={selected === option}
                             readOnly
+                            tabIndex={-1}
                         />
 
                         <span>{option}</span>

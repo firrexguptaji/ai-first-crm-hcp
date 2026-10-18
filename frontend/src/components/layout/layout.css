@@ -9,7 +9,8 @@
 
     padding: 24px;
 
-    height: calc(100vh - 80px);
+    /* Fill the viewport below the 64px header; panels scroll inside. */
+    height: calc(100vh - 64px);
 
     background: #f3f4f6;
 }
@@ -57,15 +58,66 @@
     color: #6b7280;
 }
 
-@media (max-width: 768px) {
+
+/* ---------- Responsive (#22) ---------- */
+
+/*
+ * Tablets and phones: one column with natural page height.
+ * The chat comes first because it is the primary input
+ * (the form is read-only and fills from the chat).
+ */
+@media (max-width: 1024px) {
 
     .split-layout {
 
         grid-template-columns: 1fr;
 
+        height: auto;
+
+        min-height: calc(100vh - 64px);
+
         gap: 16px;
 
         padding: 16px;
+
+    }
+
+    .left-panel,
+    .right-panel {
+
+        height: auto;
+
+    }
+
+    .right-panel {
+
+        order: -1;
+
+        /* Chat keeps its own scroll area. */
+        height: min(70vh, 640px);
+
+        min-height: 420px;
+
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    .split-layout {
+
+        padding: 12px;
+
+        gap: 12px;
+
+    }
+
+    .right-panel {
+
+        height: 75vh;
+
+        min-height: 360px;
+
     }
 
 }

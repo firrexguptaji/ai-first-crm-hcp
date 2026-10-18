@@ -13,6 +13,17 @@ import {
     sendChatMessage,
 } from "../../features/chat/chatSlice";
 
+function formatTime(iso?: string): string | undefined {
+    if (!iso) {
+        return undefined;
+    }
+
+    return new Date(iso).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
 const WELCOME_MESSAGE =
     "Hello! I'm your AI CRM Assistant. Tell me about your interaction with an HCP.";
 
@@ -42,7 +53,13 @@ export default function ChatMessages() {
     };
 
     return (
-        <div className="chat-messages">
+        <div
+            className="chat-messages"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+            aria-label="Conversation with the AI assistant"
+        >
 
             {messages.length === 0 && (
                 <ChatMessage
@@ -60,6 +77,7 @@ export default function ChatMessages() {
                         key={message.id}
                         sender={message.role}
                         message={message.content}
+                        time={formatTime(message.createdAt)}
                         status={message.status}
                         onRetry={
                             retryMessage
