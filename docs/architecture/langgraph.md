@@ -25,7 +25,7 @@ A multi-agent architecture is intentionally avoided to keep the solution simple,
           LangGraph Graph
                   │
                   ▼
-           Intent Router
+   Intent Router (keyword-based)
                   │
       ┌───────────┼────────────┐
       ▼           ▼            ▼
@@ -96,7 +96,7 @@ The graph does **not**:
 
 ---
 
-## Planned Tools
+## Tools
 
 ### Mandatory
 
@@ -123,6 +123,125 @@ The graph does **not**:
 
 ---
 
+---
+
+## Intent Routing
+
+The router is a deterministic, rule-based classifier (`app/graph/router.py`).
+
+Rules
+
+- Keywords match **whole words only** ("call" does not match "recall", "met" does not match "metformin")
+- Rules are checked from **most specific to least specific**
+- An edit requires an edit verb **and** a reference to an existing record or field
+
+Priority Order
+
+```text
+Edit Interaction        update / change / correct  +  meeting / last / summary / date ...
+        │
+        ▼
+Interaction History     history, past meetings, show interactions ...
+        │
+        ▼
+Suggest Follow-up       suggest, recommend, next step, what should I ...
+        │
+        ▼
+Log Interaction         met, visited, called, discussed ...
+        │
+        ▼
+Search HCP              find, search, list, doctors ...
+        │
+        ▼
+Default                 Log Interaction
+```
+
+Examples
+
+| Message | Tool |
+|---------|------|
+| Update my meeting with Dr. Smith, sentiment was positive | Edit Interaction |
+| Suggest a follow-up after my call with Dr. Smith | Suggest Follow-up |
+| Met Alice Brown today. Schedule a follow-up next week. | Log Interaction |
+| Dr. Smith asked about metformin dosing | Log Interaction |
+
+Routing logic lives in `classify(message)`, which is unit-tested independently of the graph.
+
+---
+
+## LLM Integration
+
+| Item | Value |
+|------|-------|
+| Provider | Groq |
+| Model | `openai/gpt-oss-120b` |
+| Temperature | 0 |
+| Structured Output | JSON Schema response format |
+
+All tools obtain a schema-bound LLM through a shared helper:
+
+```python
+from app.llm.groq import structured
+
+structured_llm = structured(InteractionExtraction)
+```
+
+The helper uses Groq's JSON Schema response format instead of forced tool calling, which prevents reasoning models from answering in prose.
+
+See **ADR-003** for the model migration decision.
+
+---
+
+## Date Resolution
+
+Dates are resolved in two steps (`app/graph/tools/dates.py`):
+
+1. The prompt gives the LLM today's date and asks for ISO dates (`YYYY-MM-DD`)
+2. A fallback parser resolves common phrases
+
+Supported Phrases
+
+- today, yesterday, tomorrow
+- next week, last week
+- in N days / weeks
+- N days / weeks ago
+- ISO dates and datetimes
+
+---
+
+## Error Handling
+
+Tool errors never reach the client as HTTP 500 responses.
+
+```text
+Tool Execution
+      │
+      ├── Success ──────────► Tool Output
+      │
+      ├── ValueError ───────► Message shown to user
+      │                       (e.g. "HCP 'X' not found.")
+      │
+      └── Unexpected Error ─► Logged on server
+                              Generic message shown to user
+```
+
+Error Output
+
+```json
+{
+  "success": false,
+  "error_type": "validation",
+  "error": "HCP 'Nobody' not found."
+}
+```
+
+| error_type | Meaning |
+|------------|---------|
+| `validation` | Expected business error, safe to show |
+| `internal` | Unexpected failure, details hidden |
+
+---
+
 ## Current Status
 
 Implemented
@@ -135,7 +254,12 @@ Implemented
 - ✅ Search HCP Tool
 - ✅ Retrieve Interaction History Tool
 - ✅ Suggest Follow-up Tool
+- ✅ Whole-word, priority-ordered routing (#69)
+- ✅ JSON Schema structured output (#69)
+- ✅ Natural-language date resolution (#69)
+- ✅ Graceful error handling (#69)
 
+---
 
 # Workflow Validation
 
@@ -162,6 +286,7 @@ Selected Tool
    │
    ▼
 END
+```
 
 ## Status
 

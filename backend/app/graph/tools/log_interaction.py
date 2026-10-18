@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from datetime import date, datetime, timedelta
+from datetime import datetime
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
-from app.llm.groq import llm
+from app.graph.tools.dates import date_rules, parse_date, parse_datetime
+from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
 )
@@ -24,7 +25,7 @@ def extract_interaction(
     natural language message.
     """
 
-    structured_llm = llm.with_structured_output(
+    structured_llm = structured(
         InteractionExtraction
     )
     prompt = f"""
@@ -32,8 +33,10 @@ def extract_interaction(
 
     Rules:
     - Remove titles like Dr., Doctor, Prof., Mr., Mrs., and Ms. from the HCP name.
-    - interaction_date may be natural language such as "today" or "yesterday".
-    - follow_up_date may be natural language such as "tomorrow" or "next week".
+    - Never invent information. If the message does not name the HCP,
+      return an empty string for hcp_name. Do the same for summary if
+      nothing was discussed.
+    {date_rules()}
 
     User Message:
     {message}
@@ -71,14 +74,17 @@ def create_interaction_record(
 
         schema = InteractionCreate(
             hcp_id=hcp.id,
-            interaction_date=parse_interaction_date(extraction.interaction_date),
+            interaction_date=(
+                parse_datetime(extraction.interaction_date)
+                or datetime.now()
+            ),
             channel=extraction.channel,
             raw_notes=extraction.raw_notes,
             summary=extraction.summary,
             sentiment=extraction.sentiment,
             products_discussed=extraction.products_discussed,
             follow_up_required=extraction.follow_up_required,
-            follow_up_date=parse_followup_date(extraction.follow_up_date),
+            follow_up_date=parse_date(extraction.follow_up_date),
         )
 
         return interaction_service.create_interaction(
@@ -89,6 +95,26 @@ def create_interaction_record(
         db.close()
         
         
+# Placeholders an LLM may return instead of leaving a field empty.
+PLACEHOLDER_VALUES = {
+    "unknown", "n/a", "na", "none", "null", "not specified",
+    "not mentioned", "not provided", "unspecified", "-",
+}
+
+
+def is_missing(value: str | None) -> bool:
+    """
+    True when a required field is empty or only a placeholder.
+    """
+
+    if value is None:
+        return True
+
+    cleaned = value.strip().strip(".").lower()
+
+    return not cleaned or cleaned in PLACEHOLDER_VALUES
+
+
 def log_interaction(
     state: CRMState,
 ) -> CRMState:
@@ -100,22 +126,28 @@ def log_interaction(
         state["message"]
     )
     if (
-        not extraction.hcp_name.strip()
-        or not extraction.interaction_date.strip()
-        or not extraction.summary.strip()
+        is_missing(extraction.hcp_name)
+        or is_missing(extraction.interaction_date)
+        or is_missing(extraction.summary)
     ):
         state["tool_input"] = extraction.model_dump()
 
-        state["tool_output"] = {
-            "success": False,
-            "reason": "Incomplete interaction information",
-        }
-
-        state["response"] = (
+        message = (
             "I couldn't identify a complete interaction. "
             "Please include the Healthcare Professional's name "
             "and interaction details."
         )
+
+        state["tool_output"] = {
+            "success": False,
+            "error_type": "validation",
+            "error": message,
+            "reason": "Incomplete interaction information",
+        }
+
+        state["response"] = message
+
+        return state
 
     interaction = create_interaction_record(
         extraction
@@ -134,48 +166,3 @@ def log_interaction(
     )
 
     return state
-
-
-def parse_interaction_date(value: str) -> datetime:
-    """
-    Convert natural language or ISO datetime into datetime.
-    """
-
-    value = value.strip().lower()
-
-    if value == "today":
-        return datetime.now()
-
-    if value == "yesterday":
-        return datetime.now() - timedelta(days=1)
-
-    try:
-        return datetime.fromisoformat(value)
-    except ValueError:
-        # Fallback if the LLM returns something unexpected
-        return datetime.now()
-
-
-def parse_followup_date(value: str | None) -> date | None:
-    """
-    Convert natural language or ISO date into date.
-    """
-
-    if value is None:
-        return None
-
-    value = value.strip().lower()
-
-    if value == "today":
-        return date.today()
-
-    if value == "tomorrow":
-        return date.today() + timedelta(days=1)
-
-    if value == "next week":
-        return date.today() + timedelta(days=7)
-
-    try:
-        return date.fromisoformat(value)
-    except ValueError:
-        return None

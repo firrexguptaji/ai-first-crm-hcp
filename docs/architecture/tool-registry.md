@@ -33,7 +33,7 @@ The selected tool executes the required business operation and returns a structu
 
 ---
 
-## Planned Tools
+## Registered Tools
 
 | Tool | Responsibility |
 |------|----------------|
@@ -51,13 +51,17 @@ The selected tool executes the required business operation and returns a structu
 
 - Create interaction records
 - Validate input
+- Reject incomplete input (missing or placeholder HCP name, date or summary)
 - Call the Interaction Service
 
 ---
 
 ### Edit Interaction
 
-- Update existing interaction records
+- Update the latest interaction for an HCP
+- Update only the fields the user asked to change
+- Resolve natural-language dates ("tomorrow", "next week")
+- Reject dates that cannot be understood with a clear message
 - Call the Interaction Service
 
 ---
@@ -80,6 +84,34 @@ The selected tool executes the required business operation and returns a structu
 
 - Analyze interaction history
 - Generate AI-assisted follow-up suggestions
+
+---
+
+## Shared Helpers
+
+| Helper | Location | Purpose |
+|--------|----------|---------|
+| `structured(schema)` | `app/llm/groq.py` | Schema-bound LLM using JSON Schema output |
+| `parse_date` / `parse_datetime` | `app/graph/tools/dates.py` | Resolve ISO dates and relative phrases |
+| `date_rules()` | `app/graph/tools/dates.py` | Prompt rules containing today's date |
+
+---
+
+## Tool Output Contract
+
+Every tool returns `tool_output` with a `success` flag.
+
+Success
+
+```json
+{ "success": true, "...": "tool-specific fields" }
+```
+
+Failure
+
+```json
+{ "success": false, "error_type": "validation", "error": "..." }
+```
 
 ---
 

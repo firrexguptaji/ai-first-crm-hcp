@@ -72,3 +72,31 @@ def test_router_selects_suggest_followup():
     result = route(state)
 
     assert result["tool_name"] == "suggest_followup"
+
+import pytest
+
+from app.graph.router import classify
+
+
+@pytest.mark.parametrize(
+    ("message", "expected"),
+    [
+        # Previously misrouted to log_interaction ("meeting"/"call" matched first)
+        ("Update my meeting with Dr. Smith, sentiment was positive", "edit_interaction"),
+        ("Change the summary of my last call with Alice Brown", "edit_interaction"),
+        ("Suggest a follow-up after my call with Dr. Smith", "suggest_followup"),
+        ("Show my past meetings with Dr. Smith", "interaction_history"),
+        # Substring false positives
+        ("Dr. Smith asked about metformin dosing", "log_interaction"),
+        ("Find doctors who recall the trial", "search_hcp"),
+        # Past tense "updated" in a note is a new interaction, not an edit
+        ("Met Dr. Smith and updated him on Product A", "log_interaction"),
+        # A follow-up mentioned inside a note stays a log
+        ("Met Alice Brown today. Schedule a follow-up next week.", "log_interaction"),
+        # Bare follow-up question
+        ("Follow-up for Alice Brown?", "suggest_followup"),
+        ("Search cardiologists at City Hospital", "search_hcp"),
+    ],
+)
+def test_classify(message, expected):
+    assert classify(message) == expected

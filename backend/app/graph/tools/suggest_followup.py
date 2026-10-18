@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
-from app.llm.groq import llm
+from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
 )
@@ -24,7 +24,7 @@ def extract_followup(
     from the user's request.
     """
 
-    structured_llm = llm.with_structured_output(
+    structured_llm = structured(
         FollowUpExtraction
     )
 
@@ -72,7 +72,7 @@ def generate_followup(
             hcp.id
         )
 
-        structured_llm = llm.with_structured_output(
+        structured_llm = structured(
             FollowUpRecommendation
         )
 

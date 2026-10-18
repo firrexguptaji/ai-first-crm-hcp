@@ -1,40 +1,105 @@
-from app.graph.tools.log_interaction import log_interaction
+import pytest
+
+from app.graph.tools.log_interaction import is_missing, log_interaction
+from app.models.enums import InteractionChannel, Sentiment
+from app.schemas.ai import InteractionExtraction
 
 
-def test_log_interaction_returns_state(monkeypatch):
-    def fake_extract(message):
-        class FakeExtraction:
-            hcp_name = "John Doe"
-
-            def model_dump(self):
-                return {"hcp_name": "John Doe"}
-
-        return FakeExtraction()
-
-    def fake_create(extraction):
-        class FakeInteraction:
-            id = "123"
-
-        return FakeInteraction()
-
-    monkeypatch.setattr(
-        "app.graph.tools.log_interaction.extract_interaction",
-        fake_extract,
-    )
-
-    monkeypatch.setattr(
-        "app.graph.tools.log_interaction.create_interaction_record",
-        fake_create,
-    )
-
-    state = {
-        "message": "Met Dr. John Doe yesterday.",
+def make_state(message="Met Dr. John Doe yesterday."):
+    return {
+        "message": message,
         "tool_name": "log_interaction",
         "tool_input": {},
         "tool_output": {},
         "response": "",
     }
 
-    result = log_interaction(state)
+
+def make_extraction(**overrides):
+    data = {
+        "hcp_name": "John Doe",
+        "interaction_date": "yesterday",
+        "channel": InteractionChannel.IN_PERSON,
+        "raw_notes": "Met Dr. John Doe yesterday.",
+        "summary": "Discussed Product A.",
+        "sentiment": Sentiment.NEUTRAL,
+    }
+    data.update(overrides)
+    return InteractionExtraction(**data)
+
+
+def test_log_interaction_returns_state(monkeypatch):
+    class FakeInteraction:
+        id = "123"
+
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.extract_interaction",
+        lambda message: make_extraction(),
+    )
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.create_interaction_record",
+        lambda extraction: FakeInteraction(),
+    )
+
+    result = log_interaction(make_state())
 
     assert result["tool_output"]["success"] is True
+    assert result["tool_output"]["interaction_id"] == "123"
+
+
+@pytest.mark.parametrize(
+    "missing_field",
+    ["hcp_name", "interaction_date", "summary"],
+)
+def test_log_interaction_incomplete_is_not_saved(monkeypatch, missing_field):
+    def fail_if_called(extraction):
+        raise AssertionError("Incomplete interaction must not be saved")
+
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.extract_interaction",
+        lambda message: make_extraction(**{missing_field: "  "}),
+    )
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.create_interaction_record",
+        fail_if_called,
+    )
+
+    result = log_interaction(make_state("Had a chat."))
+
+    assert result["tool_output"]["success"] is False
+    assert result["tool_output"]["reason"] == "Incomplete interaction information"
+    assert result["tool_output"]["error_type"] == "validation"
+    assert "couldn't identify" in result["response"]
+
+
+
+@pytest.mark.parametrize(
+    "value",
+    [None, "", "  ", "Unknown", "unknown.", "N/A", "None", "not specified"],
+)
+def test_is_missing_detects_placeholders(value):
+    assert is_missing(value) is True
+
+
+@pytest.mark.parametrize("value", ["Alice Brown", "Product A discussed", "2026-10-18"])
+def test_is_missing_accepts_real_values(value):
+    assert is_missing(value) is False
+
+
+def test_log_interaction_placeholder_name_is_not_saved(monkeypatch):
+    def fail_if_called(extraction):
+        raise AssertionError("Placeholder HCP must not be saved")
+
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.extract_interaction",
+        lambda message: make_extraction(hcp_name="Unknown"),
+    )
+    monkeypatch.setattr(
+        "app.graph.tools.log_interaction.create_interaction_record",
+        fail_if_called,
+    )
+
+    result = log_interaction(make_state("Had a chat."))
+
+    assert result["tool_output"]["success"] is False
+    assert "couldn't identify" in result["response"]

@@ -47,7 +47,7 @@
 - LangGraph
 - LangChain
 - Groq
-- llama-3.3-70b-versatile
+- openai/gpt-oss-120b
 
 ---
 
@@ -98,7 +98,7 @@ uvicorn app.main:app --reload
 ```env
 GROQ_API_KEY=your_api_key
 
-MODEL_NAME=llama-3.3-70b-versatile
+MODEL_NAME=openai/gpt-oss-120b
 ```
 
 ## Frontend
@@ -109,7 +109,7 @@ VITE_API_URL=http://localhost:8000
 
 > **Note**
 >
-> The original assignment specified `gemma2-9b-it`. Since the model has been deprecated by Groq, this project uses `llama-3.3-70b-versatile` while preserving the intended LangGraph architecture.
+> The original assignment specified `gemma2-9b-it`. Since the model has been deprecated by Groq, this project first moved to `llama-3.3-70b-versatile`, which Groq retired on 2026-08-16, and now uses `openai/gpt-oss-120b` (Groq's recommended replacement) while preserving the intended LangGraph architecture.
 
 ---
 
@@ -136,7 +136,7 @@ backend/.env
 | Project Context | Current project status |
 | Frontend Architecture | Frontend architecture and workflow |
 | Backend Architecture | Backend architecture |
-| ADR | Architecture decisions |
+| ADR | Architecture decisions (ADR-001 – ADR-003) |
 | Database Schema | ERD and schema documentation |
 | Issue Progress | Development roadmap |
 
@@ -298,6 +298,28 @@ Implemented AI tools
 - ✅ Retrieve Interaction History
 - ✅ Suggest Follow-up
 
+Reliability
+
+- ✅ Whole-word, priority-ordered intent routing
+- ✅ JSON Schema structured output
+- ✅ Natural-language date resolution ("tomorrow", "next week")
+- ✅ Incomplete interactions are never saved
+- ✅ Tool errors returned as chat messages, never HTTP 500
+
+Example error response
+
+```json
+{
+  "response": "HCP 'Nobody' not found.",
+  "tool_name": "log_interaction",
+  "tool_output": {
+    "success": false,
+    "error_type": "validation",
+    "error": "HCP 'Nobody' not found."
+  }
+}
+```
+
 Workflow
 
 ```text
@@ -350,11 +372,13 @@ Chat Interface
 - ✅ Development Environment
 - ✅ Documentation Foundation
 
+Status
+
+**Completed**
+
 ---
 
 ## Milestone 2 — Backend Development
-
-Completed
 
 - ✅ FastAPI
 - ✅ PostgreSQL
@@ -363,8 +387,6 @@ Completed
 - ✅ Repository Layer
 - ✅ Service Layer
 - ✅ REST API
-- ✅ LangGraph Integration
-- ✅ AI Chat Endpoint
 
 Status
 
@@ -372,25 +394,48 @@ Status
 
 ---
 
-### Milestone 3
-
-✅ Frontend Development
-
-Completed
+## Milestone 3 — Frontend Development
 
 - ✅ Application Layout
 - ✅ Responsive Split Layout
 - ✅ Redux Toolkit Configuration
 - ✅ Interaction Details Form
 - ✅ AI Assistant Chat Interface
+- ✅ Reusable UI Components
+- ✅ Frontend ↔ Backend API Integration
+
+Status
+
+**Completed**
+
+---
+
+## Milestone 4 — LangGraph Integration
+
+- ✅ LangGraph Router
+- ✅ Tool Registry
+- ✅ Five AI Tools
+- ✅ LangGraph ↔ FastAPI Integration
+- ✅ End-to-End AI Workflow Validation
+
+Status
+
+**Completed**
+
+---
+
+## Milestone 5 — AI Integration
+
+Completed
+
 - ✅ Redux ↔ Backend Integration
 - ✅ AI Chat Workflow
-- ✅ End-to-End Chat Communication
+- ✅ AI Workflow Reliability (#69)
 
 Next
 
-- Automatic Interaction Form Population
-- Streaming AI Responses
+- Automatic Interaction Form Population (#60)
+- Loading & Error Handling (#61)
 
 Status
 
@@ -398,29 +443,23 @@ Status
 
 ---
 
-## Milestone 4 — AI Integration
-
-Completed
-
-- ✅ LangGraph Router
-- ✅ Tool Registry
-- ✅ AI Workflow
-- ✅ Five AI Tools
-
-Status
-
-**Completed**
-
----
-
-## Milestone 5 — DevOps & Deployment
+## Milestone 6 — Deployment
 
 Planned
 
-- Docker
+- Backend Dockerfile
+- Frontend Dockerfile
 - Docker Compose
-- Production Configuration
-- Deployment Guide
+- Deployment Documentation
+
+---
+
+## Milestone 7 — Testing & Demo
+
+Planned
+
+- Frontend Polish
+- Demo Video & Project Release
 
 ---
 

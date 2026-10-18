@@ -9,7 +9,7 @@ load_dotenv()
 class Settings(BaseSettings):
     database_url: str
     groq_api_key: str
-    model_name: str = "gemma2-9b-it"
+    model_name: str = "openai/gpt-oss-120b"
 
     model_config = SettingsConfigDict(
         env_file=".env",
