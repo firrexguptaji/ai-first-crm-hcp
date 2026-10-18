@@ -1,9 +1,11 @@
 interface SuggestionListProps {
     suggestions: string[];
+    emptyText?: string;
 }
 
 export default function SuggestionList({
     suggestions,
+    emptyText = "No suggestions yet.",
 }: SuggestionListProps) {
     return (
 
@@ -13,17 +15,27 @@ export default function SuggestionList({
                 AI Suggested Follow-ups
             </label>
 
-            <ul>
+            {suggestions.length > 0 ? (
 
-                {suggestions.map((item) => (
+                <ul>
 
-                    <li key={item}>
-                        {item}
-                    </li>
+                    {suggestions.map((item) => (
 
-                ))}
+                        <li key={item}>
+                            {item}
+                        </li>
 
-            </ul>
+                    ))}
+
+                </ul>
+
+            ) : (
+
+                <p className="empty-text">
+                    {emptyText}
+                </p>
+
+            )}
 
         </div>
 

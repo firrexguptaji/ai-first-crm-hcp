@@ -4,12 +4,14 @@ interface DropdownProps {
     label: string;
     value: string;
     options: string[];
+    placeholder?: string;
 }
 
 export default function Dropdown({
     label,
     value,
     options,
+    placeholder = "Select...",
 }: DropdownProps) {
     return (
         <div className="input-group">
@@ -22,6 +24,12 @@ export default function Dropdown({
                 value={value}
                 disabled
             >
+                {!value && (
+                    <option value="">
+                        {placeholder}
+                    </option>
+                )}
+
                 {options.map((option) => (
                     <option
                         key={option}

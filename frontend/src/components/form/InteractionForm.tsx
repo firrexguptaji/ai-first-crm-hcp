@@ -15,42 +15,75 @@ import {
 
 import TextAreaWithAction from "../common/TextAreaWithAction";
 
+import { useAppSelector } from "../../app/hooks";
+import {
+    CHANNEL_OPTIONS,
+    SENTIMENT_OPTIONS,
+    channelLabel,
+    formatDate,
+    formatFollowUp,
+    formatTime,
+    sentimentLabel,
+} from "../../features/interaction/formatters";
+
+import type { InteractionSource } from "../../types/redux";
+
+const SOURCE_LABELS: Record<InteractionSource, string> = {
+    log_interaction: "Logged by AI",
+    edit_interaction: "Updated by AI",
+    interaction_history: "Latest from history",
+};
+
+/**
+ * Read-only Interaction Details form.
+ *
+ * All values come from the interaction slice, which is
+ * populated by AI chat responses (see interactionSlice.ts).
+ */
 export default function InteractionForm() {
+    const interaction = useAppSelector(
+        (state) => state.interaction
+    );
+
     return (
         <div className="interaction-form">
             
             <h2 className="interaction-section-title">
                 Interaction Details
+
+                {interaction.source && (
+                    <span className="interaction-source">
+                        {SOURCE_LABELS[interaction.source]}
+                    </span>
+                )}
             </h2>
 
             <div className="interaction-grid">
 
                 <Input 
                     label="HCP Name" 
+                    value={interaction.hcpName}
                     placeholder="Search or select HCP..."
                     icon={<Search size={16} />}
                 />
 
                 <Dropdown
                      label="Interaction Type"
-                    value="Meeting"
-                    options={[
-                        "Meeting",
-                        "Call",
-                        "Email",
-                        "Conference",
-                    ]}
+                    value={channelLabel(interaction.channel)}
+                    options={CHANNEL_OPTIONS}
                 />
 
                 <Input
                     label="Date"
-                    value="19-04-2025"
+                    value={formatDate(interaction.interactionDate)}
+                    placeholder="DD-MM-YYYY"
                     icon={<Calendar size={16} />}
                 />
 
                 <Input
                     label="Time"
-                    value="19:36"
+                    value={formatTime(interaction.interactionDate)}
+                    placeholder="HH:MM"
                     icon={<Clock size={16} />}
                 />
 
@@ -67,6 +100,7 @@ export default function InteractionForm() {
                     <TextAreaWithAction
                         label="Topics Discussed"
                         rows={3}
+                        value={interaction.rawNotes}
                         placeholder="Enter key discussion points..."
                         actionIcon={<Mic size={16} />}
                     />
@@ -92,6 +126,7 @@ export default function InteractionForm() {
                     <InfoCard
                         title="Materials Shared"
                         emptyText="No materials added."
+                        items={interaction.productsDiscussed}
                         buttonText="Search/Add"
                     />
 
@@ -111,12 +146,8 @@ export default function InteractionForm() {
 
                     <RadioGroup
                         label="Observed / Inferred HCP Sentiment"
-                        options={[
-                                "Positive",
-                                "Neutral",
-                                "Negative",
-                            ]}
-                        selected="Neutral"
+                        options={SENTIMENT_OPTIONS}
+                        selected={sentimentLabel(interaction.sentiment)}
                     />
 
                 </div>
@@ -125,6 +156,7 @@ export default function InteractionForm() {
                     <TextArea
                         label="Outcomes"
                         rows={2}
+                        value={interaction.summary}
                         placeholder="Key outcomes or agreements..."
                     />
                 </div>
@@ -133,6 +165,10 @@ export default function InteractionForm() {
                     <TextArea
                         label="Follow-up Actions"
                         rows={2}
+                        value={formatFollowUp(
+                            interaction.followUpRequired,
+                            interaction.followUpDate,
+                        )}
                         placeholder="Enter next steps or tasks..."
                     />
                 </div>
@@ -140,12 +176,9 @@ export default function InteractionForm() {
                 <div className="full-width">
 
                     <SuggestionList
-                        suggestions={[
-                            "Schedule follow-up meeting",
-                            "Share Product A clinical trial",
-                            "Invite to educational webinar",
-                    ]}
-                />
+                        suggestions={interaction.suggestions}
+                        emptyText='Ask the AI, e.g. "Suggest a follow-up for Alice Brown".'
+                    />
 
                 </div>
 
