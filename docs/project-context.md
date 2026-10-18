@@ -70,7 +70,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | Frontend Container | ✅ |
 | Docker Compose | ✅ |
 | Deployment Guide | ✅ |
-| Review Fixes (#81) | 👀 |
+| Review Fixes (#81) | ✅ |
+| Frontend Polish (#22) | 👀 |
 | Authentication | ❌ Out of scope (ADR-005) |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ✅ |
@@ -326,18 +327,16 @@ Testing & Demo
 
 ## Deployment
 
-- Merge #81 Review Fixes
+- Merge #22 Polish Frontend Experience
 
 ## Testing & Demo
 
-- #22 Polish Frontend Experience
 - #66 Demo Video & Project Release
 
 ## Improvements
 
 - Conversation context ("she", "that meeting")
 - Interaction history list in chat
-- Separate test database
 - Frontend unit tests
 
 ## Deployment
@@ -354,14 +353,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.16.0 |
+| Version | v0.17.0 |
 | Milestone | Testing & Demo |
-| Completed Issues | #1–#21, #23–#30, #58–#65, #69, #72, #74 |
-| Current Issue | #81 Review Fixes (Review) |
-| Next Issue | #22 Polish Frontend Experience |
-| Active Branch | 81-review-fixes-interaction-targeting-safe-fallback-behaviour-tests-access-control |
+| Completed Issues | #1–#21, #23–#30, #58–#65, #69, #72, #74, #81 |
+| Current Issue | #22 Polish Frontend Experience (Review) |
+| Next Issue | #66 Demo Video & Project Release |
+| Active Branch | feature/22-polish-frontend-experience |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 281 (unit + database), live Groq tests opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — 281 tests on a separate PostgreSQL test database (rolled back, 0 rows after run) |
+| Last Verified | 2026-10-18 — frontend type check and lint; layout checked at desktop, tablet and phone widths |

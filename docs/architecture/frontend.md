@@ -99,25 +99,35 @@ AppLayout
 
 ## Responsive Layout
 
-### Desktop
+| Width | Layout |
+|-------|--------|
+| > 1024px | Two columns; form and chat each scroll inside their card |
+| ≤ 1024px | One column, **chat first**, form below at natural height; the page scrolls |
+| ≤ 640px | Compact spacing; chat 75% of the viewport height |
+
+### Desktop (> 1024px)
 
 ```text
 +-------------------------------+------------------------------+
 |                               |                              |
 |      Interaction Form         |      AI Assistant Chat       |
-|                               |                              |
+|      (scrolls)                |      (scrolls)               |
 +-------------------------------+------------------------------+
 ```
 
-### Mobile
+### Tablet and Mobile (≤ 1024px)
 
 ```text
 +-------------------------------+
-|      Interaction Form         |
-+-------------------------------+
 |      AI Assistant Chat        |
+|      (own scroll)             |
++-------------------------------+
+|      Interaction Form         |
+|      (natural height)         |
 +-------------------------------+
 ```
+
+The chat comes first because it is the input; the form is read-only and fills from the chat.
 
 ---
 
@@ -504,6 +514,36 @@ Implemented REST endpoints:
 
 ---
 
+# Accessibility
+
+Implemented in #22.
+
+| Area | Implementation |
+|------|----------------|
+| Labels | Every field has a `<label htmlFor>` linked by `useId()`; read-only fields set `aria-readonly` |
+| Sentiment | `role="radiogroup"` with `aria-labelledby` |
+| Chat input | `aria-label="Message to the AI assistant"` |
+| New replies | Conversation is `role="log"` with `aria-live="polite"` |
+| Icon buttons | Accessible names (e.g. mic: "Voice input (not available)"); decorative icons `aria-hidden` |
+| Keyboard | Visible `:focus-visible` outline on all controls; Enter sends, Shift+Enter new line |
+| Contrast | Secondary text and placeholders `#6b7280` (≈ 4.8:1 on white) |
+| Motion | Thinking animation disabled with `prefers-reduced-motion` |
+| Page | Title "AI-First CRM — HCP Interactions", `lang="en"` |
+
+---
+
+# Interaction Form UX
+
+| Element | Behaviour |
+|---------|-----------|
+| Empty-state hint | Shown while the form is empty; explains that the chat fills it |
+| New interaction | Clears the form and the interaction context; disabled when empty |
+| Source badge | Logged by AI / Updated by AI / Latest from history |
+| Disabled extras | Search/Add and Add Sample: tooltip "Filled automatically by the AI assistant"; Voice Note: "Coming soon" badge |
+| Message times | Each chat message shows its time (HH:MM, local format) |
+
+---
+
 # UI Design Principles
 
 The frontend follows these engineering principles:
@@ -563,19 +603,22 @@ The frontend follows these engineering principles:
 - ✅ Enum labels and date formatting
 - ✅ AI Suggested Follow-ups
 
+### Polish (#22)
+
+- ✅ Accessibility (labels, live region, focus, contrast)
+- ✅ Responsive layout (tablet and phone)
+- ✅ New interaction button, empty-state hint, timestamps
+
 ## Remaining Work
 
 - Interaction history list in chat
 - Frontend Unit Tests
-- Docker Deployment
 
 ---
 
 # Current Status
 
-The frontend foundation, API communication layer, AI chat workflow, automatic form population, and loading and error handling are complete.
-
-The remaining work focuses on deployment and polish.
+The frontend is feature-complete for the assessment: AI chat workflow, automatic form population, loading and error handling, Docker image, accessibility and responsive layout.
 
 ---
 
