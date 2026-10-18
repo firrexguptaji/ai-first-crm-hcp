@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
+from app.graph.tools.serializers import serialize_interaction
 from app.graph.tools.dates import date_rules, parse_date, parse_datetime
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
@@ -150,6 +151,8 @@ def edit_interaction(
     state["tool_output"] = {
         "success": True,
         "interaction_id": str(interaction.id),
+        "hcp_name": extraction.hcp_name,
+        "interaction": serialize_interaction(interaction),
     }
 
     state["response"] = (

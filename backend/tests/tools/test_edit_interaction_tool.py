@@ -3,10 +3,11 @@ from datetime import date, timedelta
 import pytest
 
 from app.graph.tools.edit_interaction import build_update, edit_interaction
+from app.models.enums import Sentiment
 from app.schemas.ai import InteractionUpdateExtraction
 
 
-def test_edit_interaction_returns_state(monkeypatch):
+def test_edit_interaction_returns_state(monkeypatch, make_interaction):
     class FakeExtraction:
         hcp_name = "Alice Brown"
 
@@ -17,14 +18,14 @@ def test_edit_interaction_returns_state(monkeypatch):
                 "sentiment": "NEUTRAL",
             }
 
-    class FakeInteraction:
-        id = "123"
-
     def fake_extract(message):
         return FakeExtraction()
 
     def fake_update(extraction):
-        return FakeInteraction()
+        return make_interaction(
+            summary="Updated summary",
+            sentiment=Sentiment.NEUTRAL,
+        )
 
     monkeypatch.setattr(
         "app.graph.tools.edit_interaction.extract_update",
@@ -50,7 +51,10 @@ def test_edit_interaction_returns_state(monkeypatch):
     result = edit_interaction(state)
 
     assert result["tool_output"]["success"] is True
-    assert result["tool_output"]["interaction_id"] == "123"
+    assert result["tool_output"]["interaction_id"] == "11111111-1111-1111-1111-111111111111"
+    assert result["tool_output"]["hcp_name"] == "Alice Brown"
+    assert result["tool_output"]["interaction"]["summary"] == "Updated summary"
+    assert result["tool_output"]["interaction"]["sentiment"] == "NEUTRAL"
     assert result["tool_input"]["hcp_name"] == "Alice Brown"
     assert result["response"] == (
         "Interaction updated successfully for Alice Brown."

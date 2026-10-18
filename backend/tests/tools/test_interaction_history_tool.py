@@ -1,7 +1,7 @@
 from app.graph.tools.interaction_history import interaction_history
 
 
-def test_interaction_history_returns_results(monkeypatch):
+def test_interaction_history_returns_results(monkeypatch, make_interaction):
     class FakeExtraction:
         hcp_name = "Alice Brown"
         limit = 2
@@ -12,28 +12,11 @@ def test_interaction_history_returns_results(monkeypatch):
                 "limit": 2,
             }
 
-    class FakeInteraction:
-        id = "123"
-        interaction_date = __import__("datetime").datetime.now()
-
-        class Channel:
-            value = "IN_PERSON"
-
-        class Sentiment:
-            value = "POSITIVE"
-
-        channel = Channel()
-        sentiment = Sentiment()
-
-        summary = "Discussed Product A"
-        follow_up_required = True
-        follow_up_date = None
-
     def fake_extract(message):
         return FakeExtraction()
 
     def fake_history(extraction):
-        return [FakeInteraction()]
+        return [make_interaction()]
 
     monkeypatch.setattr(
         "app.graph.tools.interaction_history.extract_history",
@@ -57,6 +40,11 @@ def test_interaction_history_returns_results(monkeypatch):
 
     assert result["tool_output"]["success"] is True
     assert result["tool_output"]["count"] == 1
+    assert result["tool_output"]["hcp_name"] == "Alice Brown"
+    assert result["tool_output"]["results"][0]["raw_notes"] == (
+        "Met Alice Brown at her clinic."
+    )
+    assert result["tool_output"]["results"][0]["products_discussed"] == ["Product A"]
     assert result["response"] == (
         "Retrieved 1 interaction(s) for Alice Brown."
     )

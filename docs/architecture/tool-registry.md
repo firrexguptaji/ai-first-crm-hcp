@@ -94,6 +94,7 @@ The selected tool executes the required business operation and returns a structu
 | `structured(schema)` | `app/llm/groq.py` | Schema-bound LLM using JSON Schema output |
 | `parse_date` / `parse_datetime` | `app/graph/tools/dates.py` | Resolve ISO dates and relative phrases |
 | `date_rules()` | `app/graph/tools/dates.py` | Prompt rules containing today's date |
+| `serialize_interaction()` | `app/graph/tools/serializers.py` | JSON-safe interaction for tool output |
 
 ---
 
@@ -105,6 +106,35 @@ Success
 
 ```json
 { "success": true, "...": "tool-specific fields" }
+```
+
+Tool-specific Fields
+
+| Tool | Fields |
+|------|--------|
+| Log Interaction | `interaction_id`, `hcp_name`, `interaction` |
+| Edit Interaction | `interaction_id`, `hcp_name`, `interaction` |
+| Retrieve Interaction History | `count`, `hcp_name`, `results` (newest first) |
+| Search HCP | `count`, `results` |
+| Suggest Follow-up | `recommendation.recommendation`, `recommendation.rationale` |
+
+Interaction Shape
+
+Produced by `serialize_interaction()` in `app/graph/tools/serializers.py`.
+
+```json
+{
+  "id": "uuid",
+  "hcp_id": "uuid",
+  "interaction_date": "2026-10-18T10:30:00",
+  "channel": "IN_PERSON",
+  "raw_notes": "Met Alice Brown at her clinic.",
+  "summary": "Discussed Product A.",
+  "sentiment": "POSITIVE",
+  "products_discussed": ["Product A"],
+  "follow_up_required": true,
+  "follow_up_date": "2026-10-25"
+}
 ```
 
 Failure

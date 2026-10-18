@@ -202,7 +202,20 @@ App
 │           └── Chat Input
 │
 └── Redux Store
+    ├── chat
+    └── interaction  ← populated by AI responses
 ```
+
+## Automatic Form Population
+
+The Interaction Details form is read-only and fills itself from AI chat responses.
+
+| Chat Message | Form |
+|--------------|------|
+| Met Alice Brown today, discussed Product A, she was positive | Shows the logged interaction |
+| Update my meeting with Alice Brown, sentiment was neutral | Shows the updated interaction |
+| Show interaction history for Alice Brown | Shows the latest interaction |
+| Suggest a follow-up for Alice Brown | Adds an AI suggested follow-up |
 
 ---
 
@@ -431,10 +444,10 @@ Completed
 - ✅ Redux ↔ Backend Integration
 - ✅ AI Chat Workflow
 - ✅ AI Workflow Reliability (#69)
+- ✅ Automatic Interaction Form Population (#60)
 
 Next
 
-- Automatic Interaction Form Population (#60)
 - Loading & Error Handling (#61)
 
 Status
@@ -509,6 +522,7 @@ Documentation
 - ✅ Request Lifecycle
 - ✅ Conversation History
 - ✅ Interaction Form
+- ✅ Automatic Form Population
 - ✅ Reusable Components
 
 ---

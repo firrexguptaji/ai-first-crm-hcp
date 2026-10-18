@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
+from app.graph.tools.serializers import serialize_interaction
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
     HealthcareProfessionalRepository,
@@ -91,20 +92,9 @@ def interaction_history(
     state["tool_output"] = {
         "success": True,
         "count": len(interactions),
+        "hcp_name": extraction.hcp_name,
         "results": [
-            {
-                "id": str(interaction.id),
-                "interaction_date": interaction.interaction_date.isoformat(),
-                "channel": interaction.channel.value,
-                "summary": interaction.summary,
-                "sentiment": interaction.sentiment.value,
-                "follow_up_required": interaction.follow_up_required,
-                "follow_up_date": (
-                    interaction.follow_up_date.isoformat()
-                    if interaction.follow_up_date
-                    else None
-                ),
-            }
+            serialize_interaction(interaction)
             for interaction in interactions
         ],
     }

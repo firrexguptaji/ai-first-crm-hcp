@@ -42,6 +42,9 @@ src/
 │   ├── app/
 │   ├── chat/
 │   └── interaction/
+│       ├── interactionSlice.ts
+│       ├── mappers.ts
+│       └── formatters.ts
 │
 ├── pages/
 ├── styles/
@@ -225,16 +228,22 @@ The AI Chat API returns HTTP 200 even when a tool fails. Failures are reported i
 
 The chat displays `response` for both success and failure. Error styling and retry are planned in #61.
 
-## Known Type Mismatches
+## Type Alignment
 
-To be resolved in #60.
+Frontend types mirror the backend schemas (#60).
 
-| File | Frontend | Backend |
-|------|----------|---------|
-| `types/hcp.ts` | `specialty` | `specialization` |
-| `types/interaction.ts` | `interaction_type` | `channel`, plus `raw_notes`, `sentiment`, `products_discussed`, `follow_up_*` |
-| Interaction form | Meeting / Call / Email / Conference | `IN_PERSON` / `PHONE` / `EMAIL` / `VIDEO` / `OTHER` |
-| Interaction form | Positive / Neutral / Negative | `POSITIVE` / `NEUTRAL` / `NEGATIVE` |
+| File | Mirrors |
+|------|---------|
+| `types/hcp.ts` | `schemas/healthcare_professional.py` |
+| `types/interaction.ts` | `schemas/interaction.py`, `models/enums.py` |
+| `types/chat.ts` | `schemas/chat.py` and each tool's `tool_output` |
+
+`types/chat.ts` provides type guards for reading tool output safely:
+
+- `isInteractionOutput(response)`
+- `isHistoryOutput(response)`
+- `isFollowUpOutput(response)`
+- `isToolError(output)`
 
 ---
 
@@ -260,6 +269,90 @@ The Redux Provider wraps the root React application and exposes the global store
 - useAppSelector
 
 These hooks provide fully type-safe access to Redux state and actions.
+
+---
+
+# Automatic Form Population
+
+The Interaction Details form is read-only. It is populated exclusively by AI chat responses.
+
+## Workflow
+
+```text
+Chat Input
+   │
+   ▼
+sendChatMessage (Async Thunk)
+   │
+   ▼
+POST /chat
+   │
+   ▼
+sendChatMessage.fulfilled
+   │
+   ├──────────────► chatSlice
+   │                Adds assistant message
+   │
+   └──────────────► interactionSlice
+                    Reads tool_output
+                         │
+                         ▼
+                    mappers.ts
+                    snake_case → camelCase
+                         │
+                         ▼
+                    InteractionForm
+                    formatters.ts → labels, dates
+```
+
+## Update Rules
+
+| Tool | Form Update |
+|------|-------------|
+| Log Interaction | Shows the saved interaction |
+| Edit Interaction | Shows the updated interaction |
+| Interaction History | Shows the latest interaction |
+| Suggest Follow-up | Adds the recommendation to AI Suggested Follow-ups |
+| Search HCP | No change |
+| Any failed response | No change |
+
+Suggestions are cleared when a different interaction is loaded.
+
+## Field Mapping
+
+| Form Field | State | Backend Field |
+|------------|-------|---------------|
+| HCP Name | `hcpName` | `tool_output.hcp_name` |
+| Interaction Type | `channel` | `channel` |
+| Date | `interactionDate` | `interaction_date` |
+| Time | `interactionDate` | `interaction_date` |
+| Topics Discussed | `rawNotes` | `raw_notes` |
+| Materials Shared | `productsDiscussed` | `products_discussed` |
+| Observed / Inferred Sentiment | `sentiment` | `sentiment` |
+| Outcomes | `summary` | `summary` |
+| Follow-up Actions | `followUpRequired`, `followUpDate` | `follow_up_required`, `follow_up_date` |
+| AI Suggested Follow-ups | `suggestions` | `recommendation.recommendation` |
+| Attendees | — | Not stored yet |
+| Samples Distributed | — | Not stored yet |
+
+## Display Formatting
+
+| Value | Display |
+|-------|---------|
+| `IN_PERSON` / `PHONE` / `EMAIL` / `VIDEO` / `OTHER` | In Person / Phone / Email / Video / Other |
+| `POSITIVE` / `NEUTRAL` / `NEGATIVE` | Positive / Neutral / Negative |
+| `2026-10-18T10:30:00` | Date `18-10-2026`, Time `10:30` |
+| `follow_up_date: 2026-10-25` | Follow up on 25-10-2026 |
+
+Dates are read directly from the ISO string, so the browser time zone cannot shift the displayed day.
+
+## Source Badge
+
+| Source | Badge |
+|--------|-------|
+| `log_interaction` | Logged by AI |
+| `edit_interaction` | Updated by AI |
+| `interaction_history` | Latest from history |
 
 ---
 
@@ -297,8 +390,9 @@ Structured Response
    ▼
 Redux Store
    │
-   ▼
-Chat Messages
+   ├──────────► Chat Messages
+   │
+   └──────────► Interaction Form
 ```
 
 ---
@@ -375,16 +469,25 @@ The frontend follows these engineering principles:
 - ✅ Shared Components
 - ✅ Chat Components
 
+### Form Population
+
+- ✅ Backend-aligned Types
+- ✅ Interaction Slice populated from AI responses
+- ✅ Form bound to Redux
+- ✅ Enum labels and date formatting
+- ✅ AI Suggested Follow-ups
+
 ## Remaining Work
 
-- Automatic Interaction Form Population
-- Loading & Error UX Improvements
+- Loading & Error UX Improvements (#61)
+- Additional Interaction Fields (Attendees, Samples, Outcomes, Follow-up Actions)
+- Frontend Unit Tests
 - Docker Deployment
 
 ---
 
 # Current Status
 
-The frontend foundation and API communication layer are complete.
+The frontend foundation, API communication layer, AI chat workflow and automatic form population are complete.
 
-The application successfully communicates with the FastAPI backend through a centralized service layer. The remaining work focuses on Redux integration, AI response rendering, automatic interaction form updates, and completing the end-to-end AI workflow.
+The Interaction Details form updates automatically from AI responses. The remaining work focuses on loading and error UX, additional interaction fields and deployment.

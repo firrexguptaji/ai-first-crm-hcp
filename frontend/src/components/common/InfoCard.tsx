@@ -9,12 +9,14 @@ interface InfoCardProps {
     title: string;
     emptyText: string;
     buttonText: string;
+    items?: string[];
 }
 
 export default function InfoCard({
     title,
     emptyText,
     buttonText,
+    items = [],
 }: InfoCardProps) {
     return (
 
@@ -42,9 +44,23 @@ export default function InfoCard({
 
             </div>
 
-            <p className="empty-text">
-                {emptyText}
-            </p>
+            {items.length > 0 ? (
+
+                <ul className="info-items">
+                    {items.map((item) => (
+                        <li key={item} className="info-item">
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+
+            ) : (
+
+                <p className="empty-text">
+                    {emptyText}
+                </p>
+
+            )}
 
         </div>
 

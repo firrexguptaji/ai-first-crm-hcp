@@ -61,7 +61,8 @@ The project follows a production-inspired engineering workflow using issue-drive
 | REST APIs | ✅ |
 | LangGraph | ✅ |
 | Frontend Foundation | ✅ |
-| AI Workflow Reliability | 👀 |
+| AI Workflow Reliability | ✅ |
+| Automatic Form Population | 👀 |
 | Frontend Integration | 🚧 |
 | Docker Deployment | ⏳ |
 
@@ -153,6 +154,7 @@ PostgreSQL
 
 - Read-only Interaction Form
 - Reusable Form Components
+- Automatic population from AI responses (#60)
 
 ### AI Assistant
 
@@ -300,9 +302,14 @@ Testing & Demo
 
 ## AI Integration
 
-- Merge #69 Fix AI Workflow Reliability
-- #60 Automatic Form Population (includes frontend type fixes)
+- Merge #60 Automatic Form Population
 - #61 Loading & Error Handling
+
+## Improvements
+
+- Additional interaction fields (Attendees, Samples, Outcomes, Follow-up Actions)
+- Separate test database
+- Frontend unit tests
 
 ## Deployment
 
@@ -318,12 +325,12 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v0.7.0 |
+| Version | v0.8.0 |
 | Milestone | AI Integration |
-| Completed Issues | #1–#21, #23–#30, #58, #59 |
-| Current Issue | #69 Fix AI Workflow Reliability (Review) |
-| Next Issue | #60 Automatic Interaction Form Population |
-| Active Branch | fix/69-ai-workflow-reliability |
+| Completed Issues | #1–#21, #23–#30, #58, #59, #69 |
+| Current Issue | #60 Automatic Interaction Form Population (Review) |
+| Next Issue | #61 Loading & Error Handling |
+| Active Branch | feature/60-automatic-form-population |
 | Model | openai/gpt-oss-120b |
-| Tests | 88 passing |
-| Last Verified | 2026-10-18 — full test suite and 8 live chat scenarios |
+| Backend Tests | 90 passing |
+| Last Verified | 2026-10-18 — backend tests, frontend type check and lint |

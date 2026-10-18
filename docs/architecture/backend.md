@@ -90,6 +90,7 @@ Current implementation
 - Retrieve Interaction History Tool
 - Suggest Follow-up Tool
 - Shared date parsing (`tools/dates.py`)
+- Shared interaction serialization (`tools/serializers.py`)
 
 ---
 
