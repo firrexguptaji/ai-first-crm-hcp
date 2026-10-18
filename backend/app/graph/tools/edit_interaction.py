@@ -3,7 +3,13 @@ from __future__ import annotations
 from app.db.session import SessionLocal
 from app.graph.state import CRMState
 from app.graph.tools.serializers import serialize_interaction
-from app.graph.tools.validation import mentions, require_hcp_name, resolve_hcp_name
+from app.graph.tools.validation import (
+    clean_list,
+    clean_text,
+    mentions,
+    require_hcp_name,
+    resolve_hcp_name,
+)
 from app.graph.tools.dates import date_rules, parse_date, parse_datetime
 from app.llm.groq import structured
 from app.repositories.healthcare_professional import (
@@ -57,19 +63,17 @@ def _provided(value):
     """
     Return None for values the user did not ask to change.
 
-    The LLM sometimes returns "" or [] for fields that were not
-    mentioned instead of leaving them out. Saving those would wipe
-    existing data, so empty values are treated as "not provided".
+    The LLM sometimes returns "", [] or placeholders such as "N/A"
+    for fields that were not mentioned instead of leaving them out.
+    Saving those would wipe existing data, so they are treated as
+    "not provided".
     """
 
-    if value is None:
-        return None
+    if isinstance(value, str):
+        return clean_text(value)
 
-    if isinstance(value, str) and not value.strip():
-        return None
-
-    if isinstance(value, list) and not value:
-        return None
+    if isinstance(value, list):
+        return clean_list(value)
 
     return value
 

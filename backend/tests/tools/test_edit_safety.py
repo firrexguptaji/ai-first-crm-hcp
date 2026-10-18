@@ -187,3 +187,13 @@ def test_nothing_to_update_when_only_defaults(make_interaction):
 )
 def test_mentions(message, words, expected):
     assert mentions(message, words) is expected
+
+
+def test_placeholder_values_never_saved_on_edit(make_interaction):
+    update = build_update(
+        extraction(outcomes="N/A", follow_up_actions="None", attendees_to_add=["N/A"]),
+        "Edit the outcome for Alice Brown",
+        make_interaction(),
+    )
+
+    assert changes(update) == {}

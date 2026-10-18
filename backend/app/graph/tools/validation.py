@@ -93,3 +93,28 @@ def resolve_hcp_name(extracted: str | None, message: str) -> str | None:
         return extracted
 
     return hcp_name_from_message(message)
+
+
+def clean_text(value: str | None) -> str | None:
+    """
+    Optional text from the LLM: empty or placeholder ("N/A") → None.
+    """
+
+    if is_missing(value):
+        return None
+
+    return value.strip()
+
+
+def clean_list(values: list[str] | None) -> list[str] | None:
+    """
+    Optional list from the LLM: drop empty or placeholder items;
+    an empty result → None.
+    """
+
+    if not values:
+        return None
+
+    cleaned = [item.strip() for item in values if not is_missing(item)]
+
+    return cleaned or None

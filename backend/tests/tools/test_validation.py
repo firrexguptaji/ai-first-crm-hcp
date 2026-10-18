@@ -120,3 +120,34 @@ def test_resolve_prefers_llm_name():
 def test_resolve_falls_back_to_message():
     assert resolve_hcp_name(None, "my meeting with Alice Brown") == "Alice Brown"
     assert resolve_hcp_name("UNKNOWN", "my meeting with Alice Brown") == "Alice Brown"
+
+
+from app.graph.tools.validation import clean_list, clean_text
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (None, None),
+        ("", None),
+        ("N/A", None),
+        ("None", None),
+        ("  Agreed to trial.  ", "Agreed to trial."),
+    ],
+)
+def test_clean_text(value, expected):
+    assert clean_text(value) == expected
+
+
+@pytest.mark.parametrize(
+    ("values", "expected"),
+    [
+        (None, None),
+        ([], None),
+        (["N/A"], None),
+        (["Nurse Kelly", "none", ""], ["Nurse Kelly"]),
+        ([" Product A "], ["Product A"]),
+    ],
+)
+def test_clean_list(values, expected):
+    assert clean_list(values) == expected

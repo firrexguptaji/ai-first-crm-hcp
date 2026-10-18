@@ -125,3 +125,29 @@ def test_log_interaction_reports_missing_field(monkeypatch, missing_field, label
 
     assert result["tool_output"]["missing"] == [label]
     assert f"Missing: {label}." in result["response"]
+
+
+
+def test_build_create_cleans_placeholder_optional_fields():
+    """
+    "N/A" in optional fields is stored as null (#74).
+    """
+
+    import uuid
+
+    from app.graph.tools.log_interaction import build_create
+
+    schema = build_create(
+        make_extraction(
+            outcomes="N/A",
+            follow_up_actions="None",
+            attendees=["N/A", "Nurse Kelly"],
+            samples_distributed=["none"],
+        ),
+        uuid.uuid4(),
+    )
+
+    assert schema.outcomes is None
+    assert schema.follow_up_actions is None
+    assert schema.attendees == ["Nurse Kelly"]
+    assert schema.samples_distributed is None
