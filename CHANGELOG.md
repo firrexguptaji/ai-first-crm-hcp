@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Documentation
+
+- Walkthrough now has all 12 screenshots (follow-up, unsupported request, error and retry, mobile layout, API docs, tests added)
+
+---
+
 ## v1.0.0 — 2026-10-18
 
 First release of the AI-First CRM HCP module.

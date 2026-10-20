@@ -154,6 +154,8 @@ Suggest a follow-up for Alice Brown
 
 Expected: an AI recommendation in the chat and under **AI Suggested Follow-ups** in the form.
 
+![Follow-up suggestion](screenshots/06-follow-up.png)
+
 ---
 
 # 9. Unsupported Requests
@@ -164,6 +166,8 @@ Hi
 
 Expected: a **blue** reply listing what the assistant can do. Requests such as `Delete my last interaction with Alice Brown` or `What's the weather today?` get the same treatment. **Nothing is written to the database.**
 
+![Unsupported request](screenshots/07-unsupported.png)
+
 ---
 
 # 10. Error Handling and Retry
@@ -172,6 +176,8 @@ Expected: a **blue** reply listing what the assistant can do. Requests such as `
 2. Send any message, e.g. `Find Alice Brown`
 
 Expected: a **red** message *Can't reach the server…* with a **Retry** button.
+
+![Error with retry](screenshots/08-error-retry.png)
 
 3. Start the backend: `docker compose start backend`
 4. Wait about 10 seconds, then click **Retry**
@@ -186,11 +192,15 @@ Open DevTools (**F12**) → device toolbar (**Ctrl + Shift + M**) → **iPhone 1
 
 Expected: one column, chat on top, form below; nothing cut off.
 
+![Mobile layout](screenshots/09-mobile.png)
+
 ---
 
 # 12. API
 
 Open **http://localhost:8000/docs**. The AI workflow is `POST /chat`; HCPs and interactions also have REST endpoints.
+
+![API docs](screenshots/10-api-docs.png)
 
 Example request:
 
@@ -211,7 +221,9 @@ pip install -r requirements-dev.txt
 pytest -v
 ```
 
-Expected: about 280 passed; Groq tests are skipped unless `RUN_LIVE_TESTS=1`.
+Expected: `281 passed, 55 skipped`. Groq tests are skipped unless `RUN_LIVE_TESTS=1`.
+
+![Tests](screenshots/12-tests.png)
 
 Optional live routing evaluation (47 messages):
 
@@ -258,6 +270,5 @@ This is an assessment build without authentication. See [Security & Limitations]
 
 ## Notes
 
-- **Screenshots:** startup, empty state, logging, editing, ambiguous edit and history are captured. Follow-up onward is text-only — capture stopped when the Groq free-tier rate limit was reached. Expected results are described in each step.
 - **Rate limits:** the Groq free tier limits requests per minute and per day. If replies fail with an error, wait a minute (or until the daily quota resets) and press **Retry**.
 - **Times:** the backend container runs in UTC, so the interaction **Time** field can differ from your local chat timestamp (for example `12:29` vs `05:59 pm` IST).
