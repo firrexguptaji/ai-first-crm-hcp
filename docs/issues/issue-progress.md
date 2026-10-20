@@ -238,7 +238,7 @@ Scope changed from a demo video to a written walkthrough with screenshots.
 | Deliverable | Location |
 |-------------|----------|
 | End-to-end walkthrough (14 steps, feature checklist) | `docs/walkthrough/walkthrough.md` |
-| Screenshots (6 captured; later steps text-only after Groq rate limit) | `docs/walkthrough/screenshots/` |
+| Screenshots (all 12) | `docs/walkthrough/screenshots/` |
 | Release notes | `CHANGELOG.md` |
 | Version 1.0.0 | `backend/app/main.py`, `frontend/package.json` |
 | Git tag and GitHub release | `v1.0.0` |
@@ -247,7 +247,7 @@ Scope changed from a demo video to a written walkthrough with screenshots.
 
 - Conversation context: understand "she" / "that meeting" without repeating the HCP name
 - Interaction history list in the chat UI
-- Capture remaining walkthrough screenshots (follow-up, unsupported, error/retry, mobile, API docs, tests)
+- Replace deprecated `@app.on_event("startup")` with a lifespan handler (pytest shows 3 deprecation warnings)
 - Store and display interaction times in the user's time zone (backend container uses UTC)
 - Frontend unit tests (Vitest)
 - Configurable CORS origins for server deployment
