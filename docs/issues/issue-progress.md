@@ -88,7 +88,7 @@
 |-------|--------|
 | #81 Review Fixes: Targeting, Safe Fallback, Behaviour Tests, Access Control | ✅ Completed |
 | #22 Polish Frontend Experience | ✅ Completed |
-| #66 Walkthrough, Screenshots & v1.0.0 Release | 👀 Review |
+| #66 Walkthrough, Screenshots & v1.0.0 Release | ✅ Completed |
 
 ---
 
@@ -247,6 +247,7 @@ Scope changed from a demo video to a written walkthrough with screenshots.
 
 - Conversation context: understand "she" / "that meeting" without repeating the HCP name
 - Interaction history list in the chat UI
+- Restrict the follow-up prompt to facts from the interaction history
 - Replace deprecated `@app.on_event("startup")` with a lifespan handler (pytest shows 3 deprecation warnings)
 - Store and display interaction times in the user's time zone (backend container uses UTC)
 - Frontend unit tests (Vitest)

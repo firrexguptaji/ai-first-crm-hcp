@@ -4,7 +4,7 @@
 
 ---
 
-![Release](https://img.shields.io/badge/release-v1.0.0-blue) ![Status](https://img.shields.io/badge/status-assessment%20build-orange)
+![Release](https://img.shields.io/badge/release-v1.0.1-blue) ![Status](https://img.shields.io/badge/status-assessment%20build-orange)
 
 ![AI-First CRM](docs/walkthrough/screenshots/02-log-interaction.png)
 
