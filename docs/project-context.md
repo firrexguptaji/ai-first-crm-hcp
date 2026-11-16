@@ -350,14 +350,14 @@ Testing & Demo
 
 | Item | Value |
 |------|-------|
-| Version | v1.0.0 |
-| Milestone | Testing & Demo |
-| Completed Issues | #1–#30, #58–#65, #69, #72, #74, #81 |
-| Current Issue | #66 Walkthrough, Screenshots & v1.0.0 Release (Review) |
-| Next Issue | — (release) |
-| Active Branch | feature/66-release |
+| Version | v1.0.1 |
+| Status | ✅ Closed — all milestones complete |
+| Completed Issues | #1–#30, #58–#66, #69, #72, #74, #81 |
+| Current Issue | — |
+| Next Issue | — (see Follow-up Issues in `docs/issues/issue-progress.md`) |
+| Active Branch | main |
 | Model | openai/gpt-oss-120b |
 | Routing | LLM + keyword fallback (47 / 47 on evaluation set) |
 | Backend Tests | 281 (unit + database), live Groq tests opt-in |
 | Database Migrations | 001 |
-| Last Verified | 2026-10-18 — end-to-end walkthrough on a clean Docker Compose stack |
+| Last Verified | 2026-10-20 — all 12 walkthrough screenshots captured; 281 passed, 55 skipped |

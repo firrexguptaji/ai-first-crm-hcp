@@ -1,10 +1,17 @@
 # Changelog
 
-## Unreleased
+## v1.0.1 — 2026-10-20
+
+Documentation update. No code changes.
 
 ### Documentation
 
 - Walkthrough now has all 12 screenshots (follow-up, unsupported request, error and retry, mobile layout, API docs, tests added)
+
+### Known Issues
+
+- The follow-up suggestion prompt does not restrict the model to facts from the interaction history, so a suggestion may mention details that were never logged
+- `@app.on_event("startup")` is deprecated in FastAPI (3 warnings in pytest)
 
 ---
 
